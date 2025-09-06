@@ -2,6 +2,7 @@
 
 #include "LyraStarterGameClone.h"
 #include "Modules/ModuleManager.h"
+#include "LogChannels.h"
 
 class FLyraStarterGameCloneModule : public FDefaultGameModuleImpl
 {
@@ -13,7 +14,7 @@ public:
 void FLyraStarterGameCloneModule::StartupModule()
 {
 	FDefaultGameModuleImpl::StartupModule();
-	UE_LOG(LogTemp, Warning, TEXT("StartupModule!!!"));
+	UE_LOG(LogLyra, Warning, TEXT("StartupModule!!!"));
 }
 
 void FLyraStarterGameCloneModule::ShutdownModule()
