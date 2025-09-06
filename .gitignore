@@ -7,6 +7,7 @@ DerivedDataCache/
 Intermediate/
 Saved/
 Build/
+Packages/
 
 # VSCode/IDE/환경설정 파일 무시
 .vscode/*
