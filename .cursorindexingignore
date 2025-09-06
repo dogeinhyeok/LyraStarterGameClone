@@ -1,0 +1,5 @@
+# .cursorindexingignore: Cursor에서 인덱싱만 제외 (편집은 가능)
+
+# 워크스페이스/개인 설정 인덱싱 무시
+.ignore
+*.code-workspace

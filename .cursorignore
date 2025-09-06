@@ -1,5 +1,6 @@
 # Unreal Engine 5 .gitignore
 # 참고: https://github.com/github/gitignore/blob/main/UnrealEngine.gitignore
+# .cursorignore: Cursor에서 편집/접근 제한 + 인덱싱 제한
 
 # 빌드/캐시/임시/IDE 파일 무시
 Binaries/
@@ -43,10 +44,6 @@ Build/
 *.DS_Store
 Thumbs.db
 ehthumbs.db
-
-# 워크스페이스/개인 설정 파일 무시
-.ignore
-*.code-workspace
 
 # 플러그인 빌드/임시 폴더 무시
 /Plugins/*/Intermediate/
