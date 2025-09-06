@@ -1,0 +1,63 @@
+# Unreal Engine 5 .gitignore
+# 참고: https://github.com/github/gitignore/blob/main/UnrealEngine.gitignore
+
+# 빌드/캐시/임시/IDE 파일 무시
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+Build/
+
+# VSCode/IDE/환경설정 파일 무시
+.vscode/*
+!.vscode/settings.json
+.idea/
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+*.log
+*.tlog
+*.ipch
+*.aps
+*.ncb
+*.user
+*.userprefs
+*.dbmdl
+*.cache
+*.pdb
+*.obj
+*.exe
+*.dll
+*.app
+*.dylib
+*.icns
+*.ipa
+*.lib
+*.a
+*.exp
+*.vs/
+*.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# 워크스페이스/개인 설정 파일 무시
+.ignore
+*.code-workspace
+
+# 플러그인 빌드/임시 폴더 무시
+/Plugins/*/Intermediate/
+/Plugins/*/Binaries/
+/Plugins/*/*/Intermediate/
+/Plugins/*/*/Binaries/
+
+# 민감 정보 파일 무시
+.cursor/mcp.json
+.env
+
+# 기타
+# (필요시 추가 규칙 작성) 
