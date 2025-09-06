@@ -13,7 +13,7 @@ public:
 void FLyraStarterGameCloneModule::StartupModule()
 {
 	FDefaultGameModuleImpl::StartupModule();
-	UE_LOG(LogTemp, Log, TEXT("LyraStarterGameClone module started"));
+	UE_LOG(LogTemp, Warning, TEXT("StartupModule!!!"));
 }
 
 void FLyraStarterGameCloneModule::ShutdownModule()
