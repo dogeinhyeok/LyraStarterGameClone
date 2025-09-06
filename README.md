@@ -13,6 +13,24 @@ LyraStarterGame 클론 코딩은 언리얼 엔진의 공식 샘플 프로젝트�
 - 실전 게임 개발 패턴과 베스트 프랙티스 학습
 - C++와 블루프린트의 효율적인 조합 방법 익히기
 
+### 프로젝트 편집하기
+
+폴더 구조가 변경된 경우 반드시 `Generate Visual Studio project files`를 실행해야 합니다.
+
+#### C++ 클래스 파일 생성하기
+
+1. 언리얼 에디터에서 `Tools > New C++ Class` 메뉴를 선택합니다.
+2. 컴파일 오류를 방지하기 위해 프로젝트 소스 폴더 루트에 파일을 생성합니다.
+3. 하위 경로에 파일을 생성할 경우 헤더 연결 오류가 발생할 수 있습니다.
+4. 경로 문제가 발생하면 수정 후 재컴파일합니다.
+   - 예시: `System/LyraAssetManager.h` → `LyraAssetManager.cpp`
+
+#### C++ 클래스 파일 삭제하기
+
+1. 삭제할 `.cpp`, `.h` 파일을 제거합니다.
+2. 프로젝트 폴더에서 `LyraStarterGameClone.uproject` 파일을 우클릭합니다.
+3. `Generate Visual Studio project files`를 실행하여 프로젝트 구조를 업데이트합니다.
+
 ### Visual Studio로 개발하기
 
 #### 필수 확장 프로그램 설치하기

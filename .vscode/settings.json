@@ -1,4 +1,16 @@
 {
     "editor.inlayHints.enabled": "off",
-    "unreal-clangd.systemIncludes.showMissingWarning": false
+    "unreal-clangd.systemIncludes.showMissingWarning": false,
+    "[cpp]": {
+        "editor.insertSpaces": false,
+    },
+    "[c]": {
+        "editor.insertSpaces": false,
+    },
+    "[h]": {
+        "editor.insertSpaces": false,
+    },
+    "[hpp]": {
+        "editor.insertSpaces": false,
+    }
 }
