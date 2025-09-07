@@ -3,7 +3,7 @@
     "C_Cpp.formatting": "disabled",
     "C_Cpp.errorSquiggles": "disabled",
     "unreal-clangd.creation.overwrite": "partial",
-    "unreal-clangd.utility.createProjectOnStartup": false,
+    "unreal-clangd.utility.createProjectOnStartup": true,
     "C_Cpp.intelliSenseEngine": "disabled",
     "unreal-clangd.creation.compilerPath": "c:\\Program Files\\LLVM\\bin\\clang-cl.exe",
     "editor.suggest.snippetsPreventQuickSuggestions": false,
