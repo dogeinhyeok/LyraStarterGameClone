@@ -3,6 +3,8 @@
 
 #include "LyraAssetManager.h"
 #include "LyraStarterGameClone/LogChannels.h"
+#include "Engine/Engine.h"
+#include "Misc/CommandLine.h"
 
 ULyraAssetManager& ULyraAssetManager::Get()
 {
