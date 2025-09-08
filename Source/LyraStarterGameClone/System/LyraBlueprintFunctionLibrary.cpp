@@ -14,13 +14,14 @@
  * 도와주는 유틸리티 함수들을 구현합니다.
  */
 
-void ULyraBlueprintFunctionLibrary::LyraPrintLog(const UObject* WorldContextObject, const FString& InString, bool bPrintToScreen, bool bPrintToLog, 
+void ULyraBlueprintFunctionLibrary::PrintLog(const UObject* WorldContextObject, const FText InText, bool bPrintToScreen, bool bPrintToLog, 
 	FLinearColor TextColor, float Duration, const FName Key)
 {
+#if !UE_BUILD_SHIPPING
 	if (bPrintToLog)
 	{
 		FString ObjectName = GetNameSafe(WorldContextObject);
-		UE_LOG(LogLyra, Log, TEXT("[%s] %s"), *ObjectName, *InString);
+		UE_LOG(LogLyra, Log, TEXT("[%s] %s"), *ObjectName, *InText.ToString());
 	}
 	
 	if (bPrintToScreen && GEngine)
@@ -30,17 +31,19 @@ void ULyraBlueprintFunctionLibrary::LyraPrintLog(const UObject* WorldContextObje
 		{
 			InnerKey = GetTypeHash(Key);
 		}
-		GEngine->AddOnScreenDebugMessage(InnerKey, Duration, TextColor.ToFColor(true), InString);
+		GEngine->AddOnScreenDebugMessage(InnerKey, Duration, TextColor.ToFColor(true), InText.ToString());
 	}
+#endif
 }
 
-void ULyraBlueprintFunctionLibrary::LyraPrintWarning(const UObject* WorldContextObject, const FString& InString, bool bPrintToScreen, bool bPrintToLog, 
+void ULyraBlueprintFunctionLibrary::PrintWarning(const UObject* WorldContextObject, const FText InText, bool bPrintToScreen, bool bPrintToLog, 
 	FLinearColor TextColor, float Duration, const FName Key)
 {
+#if !UE_BUILD_SHIPPING
 	if (bPrintToLog)
 	{
 		FString ObjectName = GetNameSafe(WorldContextObject);
-		UE_LOG(LogLyra, Warning, TEXT("[%s] %s"), *ObjectName, *InString);
+		UE_LOG(LogLyra, Warning, TEXT("[%s] %s"), *ObjectName, *InText.ToString());
 	}
 	
 	if (bPrintToScreen && GEngine)
@@ -50,17 +53,19 @@ void ULyraBlueprintFunctionLibrary::LyraPrintWarning(const UObject* WorldContext
 		{
 			InnerKey = GetTypeHash(Key);
 		}
-		GEngine->AddOnScreenDebugMessage(InnerKey, Duration, TextColor.ToFColor(true), InString);
+		GEngine->AddOnScreenDebugMessage(InnerKey, Duration, TextColor.ToFColor(true), InText.ToString());
 	}
+#endif
 }
 
-void ULyraBlueprintFunctionLibrary::LyraPrintError(const UObject* WorldContextObject, const FString& InString, bool bPrintToScreen, bool bPrintToLog, 
+void ULyraBlueprintFunctionLibrary::PrintError(const UObject* WorldContextObject, const FText InText, bool bPrintToScreen, bool bPrintToLog, 
 	FLinearColor TextColor, float Duration, const FName Key)
 {
+#if !UE_BUILD_SHIPPING
 	if (bPrintToLog)
 	{
 		FString ObjectName = GetNameSafe(WorldContextObject);
-		UE_LOG(LogLyra, Error, TEXT("[%s] %s"), *ObjectName, *InString);
+		UE_LOG(LogLyra, Error, TEXT("[%s] %s"), *ObjectName, *InText.ToString());
 	}
 	
 	if (bPrintToScreen && GEngine)
@@ -70,6 +75,7 @@ void ULyraBlueprintFunctionLibrary::LyraPrintError(const UObject* WorldContextOb
 		{
 			InnerKey = GetTypeHash(Key);
 		}
-		GEngine->AddOnScreenDebugMessage(InnerKey, Duration, TextColor.ToFColor(true), InString);
+		GEngine->AddOnScreenDebugMessage(InnerKey, Duration, TextColor.ToFColor(true), InText.ToString());
 	}
+#endif
 }
