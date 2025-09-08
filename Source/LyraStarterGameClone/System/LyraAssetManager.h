@@ -96,23 +96,30 @@ template <typename AssetType>
 AssetType* ULyraAssetManager::GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bkeepInMemory)
 {
 	AssetType* LoadedAsset = nullptr;
-	// 소프트 포인터에서 실제 에셋 경로를 가져옴
+	
+	// 소프트 포인터에서 실제 에셋 경로를 추출
 	const FSoftObjectPath AssetPath = AssetPointer.ToSoftObjectPath();
 
-	// 에셋 경로가 유효한지 확인
+	// 에셋 경로의 유효성 검증
 	if (AssetPath.IsValid())
 	{
 		// 소프트 포인터에서 실제 에셋 객체를 가져옴
 		LoadedAsset = AssetPointer.Get();
-		// 에셋 로딩 실패 시 에러 메시지 출력
-		ensureAlwaysMsgf(LoadedAsset, TEXT("Failed to load asset : [%s]"), *AssetPath.ToString());
-	}
-	
-	// 에셋이 성공적으로 로딩되었고 메모리에 유지하도록 설정된 경우
-	if (LoadedAsset && bkeepInMemory)
-	{
-		// 로딩된 에셋 목록에 추가하여 메모리에서 해제되지 않도록 함
-		Get().AddLoadedAsset(Cast<UObject>(LoadedAsset));
+
+		// 에셋이 아직 로딩되지 않은 경우 동기적 로딩 수행
+		if (!LoadedAsset)
+		{
+			LoadedAsset = Cast<AssetType>(SynchronousLoadAsset(AssetPath));
+			// 로딩 실패 시 상세한 에러 메시지와 함께 어서션 발생
+			ensureAlwaysMsgf(LoadedAsset, TEXT("Failed to load asset: [%s]"), *AssetPath.ToString());
+		}
+
+		// 에셋 로딩 성공 및 메모리 유지 옵션이 활성화된 경우
+		if (LoadedAsset && bkeepInMemory)
+		{
+			// 로딩된 에셋을 관리 목록에 등록하여 가비지 컬렉션으로부터 보호
+			Get().AddLoadedAsset(Cast<UObject>(LoadedAsset));
+		}
 	}
 	
 	return LoadedAsset;
