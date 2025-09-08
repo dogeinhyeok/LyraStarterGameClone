@@ -28,16 +28,16 @@ public:
 	 * @param Duration 화면 출력 지속시간 (초)
 	 * @param Key 화면 메시지 식별 키 (같은 키로 메시지 덮어쓰기 가능)
 	 */
-	UFUNCTION(BlueprintCallable, Category = "Lyra|Logging", CallInEditor, meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject"))
+	UFUNCTION(BlueprintCallable, Category = "Logging", CallInEditor, meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject"))
 	static void LyraPrintLog(const UObject* WorldContextObject, const FString& InString, bool bPrintToScreen = true, bool bPrintToLog = true, 
 		FLinearColor TextColor = FLinearColor(0.0f, 0.831f, 1.0f, 1.0f), float Duration = 2.0f, const FName Key = NAME_None
 	);
 
-	UFUNCTION(BlueprintCallable, Category = "Lyra|Logging", CallInEditor, meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject"))
+	UFUNCTION(BlueprintCallable, Category = "Logging", CallInEditor, meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject"))
 	static void LyraPrintWarning(const UObject* WorldContextObject, const FString& InString, bool bPrintToScreen = true, bool bPrintToLog = true, 
 		FLinearColor TextColor = FLinearColor(1.0f, 0.5f, 0.0f, 1.0f), float Duration = 2.0f, const FName Key = NAME_None);
 
-	UFUNCTION(BlueprintCallable, Category = "Lyra|Logging", CallInEditor, meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject"))
+	UFUNCTION(BlueprintCallable, Category = "Logging", CallInEditor, meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject"))
 	static void LyraPrintError(const UObject* WorldContextObject, const FString& InString, bool bPrintToScreen = true, bool bPrintToLog = true, 
 		FLinearColor TextColor = FLinearColor(1.0f, 0.0f, 0.0f, 1.0f), float Duration = 2.0f, const FName Key = NAME_None);
 };

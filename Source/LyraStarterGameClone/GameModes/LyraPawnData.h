@@ -13,5 +13,5 @@ UCLASS()
 class LYRASTARTERGAMECLONE_API ULyraPawnData : public UPrimaryDataAsset
 {
 	GENERATED_BODY()
-	
+
 };
