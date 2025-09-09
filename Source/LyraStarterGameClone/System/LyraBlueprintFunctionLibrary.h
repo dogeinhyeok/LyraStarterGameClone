@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "Logging/LogVerbosity.h"
 #include "LyraBlueprintFunctionLibrary.generated.h"
 
 /**

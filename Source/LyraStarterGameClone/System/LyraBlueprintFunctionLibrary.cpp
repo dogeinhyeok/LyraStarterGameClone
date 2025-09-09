@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LyraBlueprintFunctionLibrary.h"
-#include "LyraStarterGameClone/LogChannels.h"
 #include "HAL/UnrealMemory.h"
 #include "Misc/OutputDevice.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "../LogChannels.h"
 
 /**
  * LyraBlueprintFunctionLibrary.cpp - 블루프린트 유틸리티 함수 구현

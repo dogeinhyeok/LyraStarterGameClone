@@ -13,5 +13,6 @@ UCLASS()
 class LYRASTARTERGAMECLONE_API ALyraGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+public:
+	ALyraGameModeBase();
 };

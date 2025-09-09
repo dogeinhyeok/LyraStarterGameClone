@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LyraAssetManager.h"
-#include "LyraStarterGameClone/LogChannels.h"
 #include "Engine/Engine.h"
 #include "Misc/CommandLine.h"
+#include "../LogChannels.h"
 
 /**
  * AssetManager 싱글톤 인스턴스를 가져오는 함수
