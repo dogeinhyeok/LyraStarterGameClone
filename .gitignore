@@ -60,5 +60,18 @@ ehthumbs.db
 .cursor/mcp.json
 .env
 
-# 기타
-# (필요시 추가 규칙 작성) 
+# Obsidian Trash
+.trash/
+
+# Obsidian 동적 생성 파일
+.obsidian/workspace.json
+
+# Obsidian Smart Connections 동적 생성 파일
+.smart-env/
+
+# Obsidian Smart Composer 동적 생성 파일
+.smtcmp_json_db/
+.smtcmp_vector_db.tar.gz
+
+# Copilot Index 동적 생성 파일
+copilot-index-*.json

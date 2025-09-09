@@ -1,0 +1,14 @@
+{
+  "theme": "obsidian",
+  "cssTheme": "",
+  "accentColor": "",
+  "enabledCssSnippets": [
+    "supercharged-links-gen",
+    "cardlist",
+    "surface-colors",
+    "mermaid-width",
+    "github-markdown",
+    "colored-headings"
+  ],
+  "showRibbon": true
+}

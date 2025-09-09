@@ -1,0 +1,26 @@
+{
+  "spellcheck": false,
+  "showLineNumber": true,
+  "foldHeading": true,
+  "propertiesInDocument": "visible",
+  "strictLineBreaks": true,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "70_파일관리/71_텍스트파일",
+  "attachmentFolderPath": "70_파일관리",
+  "promptDelete": false,
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "absolute",
+  "tabSize": 4,
+  "useTab": false,
+  "smartIndentList": true,
+  "foldIndent": true,
+  "showIndentGuide": true,
+  "rightToLeft": false,
+  "pdfExportSettings": {
+    "includeName": false,
+    "pageSize": "A4",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  }
+}

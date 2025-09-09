@@ -1,0 +1,46 @@
+.cm-header-1,
+.markdown-rendered h1,
+.markdown-preview-view h1 {
+  color: #f37b84;
+}
+
+.cm-header-2,
+.markdown-rendered h2,
+.markdown-preview-view h2 {
+  color: #ffd98c;
+}
+
+.cm-header-3,
+.markdown-rendered h3,
+.markdown-preview-view h3 {
+  color: #9ff369;
+}
+
+.cm-header-4,
+.markdown-rendered h4,
+.markdown-preview-view h4 {
+  color: #59d5c4;
+}
+
+.cm-header-5,
+.markdown-rendered h5,
+.markdown-preview-view h5 {
+  color: #2a8aff;
+}
+
+.cm-header-6,
+.markdown-rendered h6,
+.markdown-preview-view h6 {
+  color: #b99aff;
+}
+
+/* h2 바로 아래에 오는 hr만 스타일 적용 */
+.markdown-rendered h2::after,
+.markdown-preview-view h2::after {
+  content: "";
+  display: block;
+  border: none;
+  border-top: 0.5px solid #ffd98c; /* 헤더2와 같은 색상 */
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
+}
