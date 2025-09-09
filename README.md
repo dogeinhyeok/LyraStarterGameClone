@@ -156,7 +156,7 @@ Cursor에서 PowerShell 명령어를 사용하여 빌드할 수 있습니다.
 
 ##### 필수 명령어들
 
-> **참고**: 아래 명령어들은 현재 디렉토리의 절대 경로를 자동으로 가져와서 사용합니다. 프로젝트 폴더에서 PowerShell을 실행한 후 명령어를 사용하세요.
+> 아래 명령어들은 현재 디렉토리의 절대 경로를 자동으로 가져와서 사용합니다. 프로젝트 폴더에서 PowerShell을 실행한 후 명령어를 사용하세요.
 
 **프로젝트 파일 재생성 (Build.cs 수정 후 필수):**
 
@@ -181,30 +181,6 @@ Cursor에서 PowerShell 명령어를 사용하여 빌드할 수 있습니다.
 ```powershell
 & "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" LyraStarterGameCloneEditor Win64 Development "$PWD\LyraStarterGameClone.uproject" -clean -waitmutex
 ```
-
-3. Cursor를 재시작합니다.
-
-##### tasks.json 사용법
-
-**Command Palette 사용:**
-
-1. `Ctrl+Shift+P` 누르기
-2. `Tasks: Run Task` 입력
-3. 원하는 작업 선택:
-   - `Generate Project Files` - 프로젝트 파일 재생성
-   - `Build Project (Development)` - 개발 빌드
-   - `Run Unreal Editor` - 에디터 실행
-
-**단축키 사용:**
-
-- `Ctrl+Shift+B`: 기본 빌드 작업 실행
-
-##### Build.cs 수정 후 워크플로우
-
-1. **Build.cs 파일 수정** (새로운 모듈 추가/제거)
-2. **프로젝트 파일 재생성** (`Generate Project Files` 태스크 실행)
-3. **빌드** (`Build Project (Development)` 태스크 실행)
-4. **에디터 실행** (`Run Unreal Editor` 태스크 실행)
 
 ## 개발 환경
 
