@@ -31,7 +31,7 @@ LyraStarterGame 클론 코딩은 언리얼 엔진의 공식 샘플 프로젝트�
 2. 프로젝트 폴더에서 `LyraStarterGameClone.uproject` 파일을 우클릭합니다.
 3. `Generate Visual Studio project files`를 실행하여 프로젝트 구조를 업데이트합니다.
 
-#### PowerShell로 전체 빌드 및 실행하기
+### 프로젝트 빌드 및 실행하기(PowerShell)
 
 ```powershell
 Write-Host "1단계: 프로젝트 파일 재생성 중..." -ForegroundColor Green; & "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" -projectfiles -project="$PWD\LyraStarterGameClone.uproject" -game -rocket -progress; Write-Host "2단계: 개발 빌드 중..." -ForegroundColor Yellow; & "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" LyraStarterGameCloneEditor Win64 Development "$PWD\LyraStarterGameClone.uproject" -waitmutex; Write-Host "3단계: 에디터 실행 중..." -ForegroundColor Cyan; Start-Job -ScriptBlock { & "C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\Win64\UnrealEditor.exe" $using:PWD\LyraStarterGameClone.uproject }
