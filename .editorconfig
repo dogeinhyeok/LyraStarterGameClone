@@ -1,0 +1,31 @@
+root = true
+
+[*.cs]
+indent_style = tab
+indent_size = 4
+tab_width = 4
+
+[*.cpp]
+indent_style = tab
+indent_size = 4
+tab_width = 4
+
+[*.c]
+indent_style = tab
+indent_size = 4
+tab_width = 4
+
+[*.h]
+indent_style = tab
+indent_size = 4
+tab_width = 4
+
+[*.hpp]
+indent_style = tab
+indent_size = 4
+tab_width = 4
+
+[*.uproject]
+indent_style = tab
+indent_size = 4
+tab_width = 4

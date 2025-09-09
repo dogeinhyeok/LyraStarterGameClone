@@ -15,4 +15,8 @@ class LYRASTARTERGAMECLONE_API ALyraGameModeBase : public AGameModeBase
 	GENERATED_BODY()
 public:
 	ALyraGameModeBase();
+
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
+
+	void HandleMatchAssignmentIfNotExpectingOne();
 };

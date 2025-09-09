@@ -14,3 +14,14 @@ ALyraGameModeBase::ALyraGameModeBase()
 	PlayerStateClass = ALyraPlayerState::StaticClass();
 	DefaultPawnClass = ALyraCharacter::StaticClass();
 }
+
+void ALyraGameModeBase::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
+{
+	Super::InitGame(MapName, Options, ErrorMessage);
+
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::HandleMatchAssignmentIfNotExpectingOne);
+}
+
+void ALyraGameModeBase::HandleMatchAssignmentIfNotExpectingOne()
+{
+}

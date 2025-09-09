@@ -3,22 +3,35 @@
     "C_Cpp.formatting": "disabled",
     "C_Cpp.errorSquiggles": "disabled",
     "unreal-clangd.creation.overwrite": "partial",
-    "unreal-clangd.utility.createProjectOnStartup": true,
+    "unreal-clangd.utility.createProjectOnStartup": false,
     "C_Cpp.intelliSenseEngine": "disabled",
     "unreal-clangd.creation.compilerPath": "c:\\Program Files\\LLVM\\bin\\clang-cl.exe",
+    "clangd.path": "c:\\Program Files\\LLVM\\bin\\clangd.exe",
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.inlayHints.enabled": "off",
     "unreal-clangd.systemIncludes.showMissingWarning": false,
     "[cpp]": {
+        "editor.tabSize": 4,
         "editor.insertSpaces": false,
     },
     "[c]": {
+        "editor.tabSize": 4,
         "editor.insertSpaces": false,
     },
     "[h]": {
+        "editor.tabSize": 4,
         "editor.insertSpaces": false,
     },
     "[hpp]": {
+        "editor.tabSize": 4,
         "editor.insertSpaces": false,
     },
+    "[csharp]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false
+    },
+    "[uproject]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false
+    }
 }
