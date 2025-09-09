@@ -6,6 +6,8 @@
 #include "GameFramework/GameStateBase.h"
 #include "LyraGameState.generated.h"
 
+class ULyraExperienceManagerComponent;
+
 /**
  * 
  */
@@ -13,5 +15,11 @@ UCLASS()
 class LYRASTARTERGAMECLONE_API ALyraGameState : public AGameStateBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	ALyraGameState();
+
+public:
+	UPROPERTY()
+	TObjectPtr<ULyraExperienceManagerComponent> LyraExperienceManagerComponent;
 };

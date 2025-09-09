@@ -31,11 +31,29 @@ LyraStarterGame 클론 코딩은 언리얼 엔진의 공식 샘플 프로젝트�
 2. 프로젝트 폴더에서 `LyraStarterGameClone.uproject` 파일을 우클릭합니다.
 3. `Generate Visual Studio project files`를 실행하여 프로젝트 구조를 업데이트합니다.
 
-### 프로젝트 빌드 및 실행하기(PowerShell)
+#### 프로젝트 빌드 및 실행하기(PowerShell)
 
 ```powershell
 Write-Host "1단계: 프로젝트 파일 재생성 중..." -ForegroundColor Green; & "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" -projectfiles -project="$PWD\LyraStarterGameClone.uproject" -game -rocket -progress; Write-Host "2단계: 개발 빌드 중..." -ForegroundColor Yellow; & "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" LyraStarterGameCloneEditor Win64 Development "$PWD\LyraStarterGameClone.uproject" -waitmutex; Write-Host "3단계: 에디터 실행 중..." -ForegroundColor Cyan; Start-Job -ScriptBlock { & "C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\Win64\UnrealEditor.exe" $using:PWD\LyraStarterGameClone.uproject }
 ```
+
+#### Unreal-clangd 경고 메시지 해결
+
+Unreal-clangd에서 "Clangd settings not found" 경고가 주기적으로 표시되는 문제. `compile_commands.json` 파일이 누락되어 발생하며, 다음 단계로 해결 가능.
+
+1. 일단 팝업 경고 메시지를 닫습니다.
+2. `Ctrl+Shift+P`로 명령 팔레트 열기
+3. "Unreal-clangd: Update compile commands file" 검색
+4. 명령 실행
+
+#### GENERATED_BODY() 매크로 IntelliSense 오류
+
+IDE(clangd)는 생성된 코드를 실시간으로 인식하지 못해 빨간줄 표시가 발생하는 증상. 해결하려면 다음 단계를 따라하세요.
+
+1. 일단 컴파일을 해봅니다.
+2. `Ctrl+Shift+P`로 명령 팔레트 열기
+3. "Developer: Reload Window" 검색
+4. 명령 실행
 
 ### Visual Studio로 개발하기
 
@@ -51,15 +69,15 @@ Workloads 아래 Game development with C++와 다음 옵션을 선택합니다.
 
 #### Visual Studio 프로젝트 생성하기
 
-1. 프로젝트 폴더에서 `LyraStarterGame.uproject` 파일을 마우스 오른쪽 버튼으로 클릭합니다.
+1. 프로젝트 폴더에서 `LyraStarterGameClone.uproject` 파일을 마우스 오른쪽 버튼으로 클릭합니다.
 2. `Generate Visual Studio project files` 메뉴를 선택합니다.
-3. 새로 생성된 `LyraStarterGame.sln` 솔루션 파일을 엽니다.
+3. 새로 생성된 `LyraStarterGameClone.sln` 솔루션 파일을 엽니다.
 
 #### Visual Studio에서 프로젝트 실행하기
 
 1. 솔루션 구성을 `Development Editor`로 설정합니다.
 2. 솔루션 플랫폼을 `Win64`로 설정합니다.
-3. 솔루션 탐색기에서 LyraStarterGame 프로젝트를 마우스 오른쪽 버튼으로 클릭하고 `디버그 > 새 인스턴스 시작`을 선택합니다.
+3. 솔루션 탐색기에서 LyraStarterGameClone 프로젝트를 마우스 오른쪽 버튼으로 클릭하고 `디버그 > 새 인스턴스 시작`을 선택합니다.
 
 ### VSCode로 개발하기
 
@@ -71,14 +89,14 @@ Workloads 아래 Game development with C++와 다음 옵션을 선택합니다.
 
 #### Visual Studio Code 프로젝트 생성하기
 
-1. 프로젝트 폴더에서 `LyraStarterGame.uproject` 파일을 마우스 오른쪽 버튼으로 클릭합니다.
+1. 프로젝트 폴더에서 `LyraStarterGameClone.uproject` 파일을 마우스 오른쪽 버튼으로 클릭합니다.
 2. `Generate Visual Studio Code project files` 메뉴를 선택합니다. (없을 경우 언리얼 에디터 환경설정에서 기본 소스 코드 에디터를 VSCode로 변경하세요)
-3. VSCode에서 `File > Open Folder`를 선택하고 LyraStarterGame 프로젝트 폴더를 엽니다.
+3. VSCode에서 `File > Open Folder`를 선택하고 LyraStarterGameClone 프로젝트 폴더를 엽니다.
 
 #### Visual Studio Code에서 프로젝트 실행하기
 
 1. VSCode에서 실행 및 디버그 탭을 클릭합니다 (Ctrl+Shift+D).
-2. 실행 및 디버그 드롭다운에서 `Launch LyraStarterGame (Development)`를 선택합니다.
+2. 실행 및 디버그 드롭다운에서 `Launch LyraStarterGameClone (Development)`를 선택합니다.
 3. 실행 버튼을 클릭합니다.
 
 #### Visual Studio Code 또는 Visual Studio로 코드 수정 및 실행하기

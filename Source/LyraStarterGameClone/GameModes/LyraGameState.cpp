@@ -2,4 +2,9 @@
 
 
 #include "LyraGameState.h"
+#include "LyraExperienceManagerComponent.h"
 
+ALyraGameState::ALyraGameState()
+{
+	LyraExperienceManagerComponent = CreateDefaultSubobject<ULyraExperienceManagerComponent>(TEXT("LyraExperienceManagerComponent"));
+}
