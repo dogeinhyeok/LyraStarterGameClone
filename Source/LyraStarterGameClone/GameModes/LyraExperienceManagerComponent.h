@@ -34,6 +34,11 @@ public:
 
 	void CallOrRegister_OnExperienceLoaded(FLyraExperienceLoaded::FDelegate&& Delegate);
 
+	void ServerSetCurrentExperience(FPrimaryAssetId ExperienceId);
+	void StartExperienceLoad();
+	void OnExperienceLoadComplete();
+	void OnExperienceFullLoadCompleted();
+
 public:
 	UPROPERTY()
 	TObjectPtr<const ULyraExperienceDefinition> CurrentExperience;

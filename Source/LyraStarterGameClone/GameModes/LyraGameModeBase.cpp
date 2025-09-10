@@ -10,6 +10,7 @@
 #include "../Character/LyraCharacter.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "UObject/PrimaryAssetId.h"
 
 ALyraGameModeBase::ALyraGameModeBase()
 {
@@ -55,7 +56,27 @@ APawn* ALyraGameModeBase::SpawnDefaultPawnAtTransform_Implementation(
 	return Super::SpawnDefaultPawnAtTransform_Implementation(NewPlayer, SpawnTransform);
 }
 
-void ALyraGameModeBase::HandleMatchAssignmentIfNotExpectingOne() {}
+void ALyraGameModeBase::HandleMatchAssignmentIfNotExpectingOne()
+{
+	FPrimaryAssetId ExperienceId;
+
+	UWorld* World = GetWorld();
+
+	if (!ExperienceId.IsValid())
+	{
+		ExperienceId = FPrimaryAssetId(
+			FPrimaryAssetType("LyraExperienceDefinition"), FName("B_LyraDefaultExperience"));
+	}
+}
+
+void ALyraGameModeBase::OnMatchAssignmentGiven(FPrimaryAssetId ExperienceId)
+{
+	check(ExperienceId.IsValid());
+	ULyraExperienceManagerComponent* ExperienceManagerComponent =
+		GameState->FindComponentByClass<ULyraExperienceManagerComponent>();
+	check(ExperienceManagerComponent);
+	ExperienceManagerComponent->ServerSetCurrentExperience(ExperienceId);
+}
 
 bool ALyraGameModeBase::IsExperienceLoaded() const
 {

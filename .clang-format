@@ -13,7 +13,7 @@ BasedOnStyle: LLVM
 
 AccessModifierOffset: -4
 AlignAfterOpenBracket: DontAlign
-AlignConsecutiveDeclarations: true
+AlignConsecutiveDeclarations: false
 AlignEscapedNewlines: Left
 AlignOperands: DontAlign
 AlignTrailingComments: true
