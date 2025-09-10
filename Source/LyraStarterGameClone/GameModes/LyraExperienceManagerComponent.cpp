@@ -98,3 +98,11 @@ void ULyraExperienceManagerComponent::OnExperienceFullLoadCompleted()
 	OnExperienceLoaded.Broadcast(CurrentExperience);
 	OnExperienceLoaded.Clear();
 }
+
+const ULyraExperienceDefinition*
+ULyraExperienceManagerComponent::GetCurrentExperienceChecked() const
+{
+	check(LoadState == ELyraExperienceLoadState::Loaded);
+	check(CurrentExperience != nullptr);
+	return CurrentExperience;
+}

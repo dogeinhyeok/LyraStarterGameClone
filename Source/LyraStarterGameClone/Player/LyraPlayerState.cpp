@@ -4,6 +4,7 @@
 #include "../GameModes/LyraPawnData.h"
 #include "../GameModes/LyraExperienceDefinition.h"
 #include "../GameModes/LyraExperienceManagerComponent.h"
+#include "../GameModes/LyraGameModeBase.h"
 #include "GameFramework/GameStateBase.h"
 
 void ALyraPlayerState::PostInitializeComponents()
@@ -23,5 +24,20 @@ void ALyraPlayerState::PostInitializeComponents()
 
 void ALyraPlayerState::OnExperienceLoaded(const ULyraExperienceDefinition* CurrentExperience)
 {
-	// TODO: Experience 로드 완료 시 처리 로직 구현
+	if (ALyraGameModeBase* GameMode = GetWorld()->GetAuthGameMode<ALyraGameModeBase>())
+	{
+		const ULyraPawnData* NewPawnData =
+			GameMode->GetPawnDataForController(GetOwningController());
+		check(NewPawnData);
+
+		SetPawnData(NewPawnData);
+	}
+}
+
+void ALyraPlayerState::SetPawnData(const ULyraPawnData* InPawnData)
+{
+	check(InPawnData);
+
+	check(!PawnData);
+	PawnData = InPawnData;
 }

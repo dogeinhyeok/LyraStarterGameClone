@@ -7,6 +7,7 @@
 #include "LyraGameModeBase.generated.h"
 
 class ULyraExperienceDefinition;
+class ULyraPawnData;
 
 /**
  *
@@ -32,4 +33,5 @@ public:
 	void OnMatchAssignmentGiven(FPrimaryAssetId ExperienceId);
 	bool IsExperienceLoaded() const;
 	void OnExperienceLoaded(const ULyraExperienceDefinition* CurrentExperience);
+	const ULyraPawnData* GetPawnDataForController(AController* InController) const;
 };

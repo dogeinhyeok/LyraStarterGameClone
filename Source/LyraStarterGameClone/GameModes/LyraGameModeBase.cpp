@@ -4,6 +4,7 @@
 #include "LyraExperienceManagerComponent.h"
 #include "LyraGameState.h"
 #include "LyraExperienceDefinition.h"
+#include "LyraPawnData.h"
 #include "../LogChannels.h"
 #include "../Player/LyraPlayerController.h"
 #include "../Player/LyraPlayerState.h"
@@ -11,6 +12,7 @@
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "UObject/PrimaryAssetId.h"
+#include <cstddef>
 
 ALyraGameModeBase::ALyraGameModeBase()
 {
@@ -87,4 +89,52 @@ bool ALyraGameModeBase::IsExperienceLoaded() const
 	return ExperienceManagerComponent->IsExperienceLoaded();
 }
 
-void ALyraGameModeBase::OnExperienceLoaded(const ULyraExperienceDefinition* CurrentExperience) {}
+void ALyraGameModeBase::OnExperienceLoaded(const ULyraExperienceDefinition* CurrentExperience)
+{
+	for (FConstPlayerControllerIterator Iterator = GetWorld()->GetPlayerControllerIterator();
+		 Iterator; ++Iterator)
+	{
+		APlayerController* PlayerController = Cast<APlayerController>(*Iterator);
+		check(PlayerController);
+		if (PlayerController && PlayerController->GetPawn() == nullptr)
+		{
+			if (PlayerCanRestart(PlayerController))
+			{
+				RestartPlayer(PlayerController);
+			}
+		}
+	}
+}
+
+const ULyraPawnData* ALyraGameModeBase::GetPawnDataForController(AController* InController) const
+{
+	if (InController)
+	{
+		if (const ALyraPlayerState* LyraPlayerState =
+				InController->GetPlayerState<ALyraPlayerState>())
+		{
+			if (const ULyraPawnData* PlayerPawnData = LyraPlayerState->GetPawnData<ULyraPawnData>())
+			{
+				return PlayerPawnData;
+			}
+		}
+	}
+
+	check(GameState);
+	ULyraExperienceManagerComponent* ExperienceManagerComponent =
+		GameState->FindComponentByClass<ULyraExperienceManagerComponent>();
+	check(ExperienceManagerComponent);
+
+	if (ExperienceManagerComponent->IsExperienceLoaded())
+	{
+		const ULyraExperienceDefinition* Experience =
+			ExperienceManagerComponent->GetCurrentExperienceChecked();
+		check(Experience);
+		if (Experience->DefaultPawnData)
+		{
+			return Experience->DefaultPawnData;
+		}
+	}
+
+	return nullptr;
+}
