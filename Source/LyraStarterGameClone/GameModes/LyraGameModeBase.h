@@ -7,7 +7,7 @@
 #include "LyraGameModeBase.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ALyraGameModeBase : public AGameModeBase
@@ -16,7 +16,10 @@ class LYRASTARTERGAMECLONE_API ALyraGameModeBase : public AGameModeBase
 public:
 	ALyraGameModeBase();
 
-	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
+	virtual void InitGame(
+		const FString& MapName, const FString& Options, FString& ErrorMessage) override;
+
+	virtual void InitGameState() final;
 
 	void HandleMatchAssignmentIfNotExpectingOne();
 };

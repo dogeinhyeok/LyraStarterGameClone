@@ -9,7 +9,7 @@
 class ULyraExperienceManagerComponent;
 
 /**
- * 
+ *
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ALyraGameState : public AGameStateBase

@@ -22,4 +22,5 @@ void FLyraStarterGameCloneModule::ShutdownModule()
 	FDefaultGameModuleImpl::ShutdownModule();
 }
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FLyraStarterGameCloneModule, LyraStarterGameClone, "LyraStarterGameClone" );
+IMPLEMENT_PRIMARY_GAME_MODULE(
+	FLyraStarterGameCloneModule, LyraStarterGameClone, "LyraStarterGameClone");

@@ -9,7 +9,7 @@
 class LyraPawnData;
 
 /**
- * 
+ *
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ULyraExperienceDefinition : public UPrimaryDataAsset

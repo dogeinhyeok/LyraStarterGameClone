@@ -8,7 +8,7 @@
 
 /**
  * Lyra 게임의 블루프린트 유틸리티 함수들을 제공하는 Function Library
- * 
+ *
  * 이 클래스는 블루프린트에서 언리얼 엔진의 다양한 기능을 쉽게 사용할 수 있도록
  * 도와주는 유틸리티 함수들을 제공합니다.
  */
@@ -28,10 +28,14 @@ public:
 	 * @param Duration 화면 출력 지속시간 (초)
 	 * @param Key 화면 메시지 식별 키 (같은 키로 메시지 덮어쓰기 가능)
 	 */
-	UFUNCTION(BlueprintCallable, Category = "Development", CallInEditor, meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject", DevelopmentOnly = "true", AdvancedDisplay = "bPrintToScreen, bPrintToLog, TextColor, Duration, Key"))
-	static void PrintLog(const UObject* WorldContextObject, const FText InText = INVTEXT("Hello"), bool bPrintToScreen = true, bool bPrintToLog = true, 
-		FLinearColor TextColor = FLinearColor(0.0f, 0.831f, 1.0f, 1.0f), float Duration = 2.0f, const FName Key = NAME_None
-	);
+	UFUNCTION(BlueprintCallable, Category = "Development", CallInEditor,
+		meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject",
+			DevelopmentOnly = "true",
+			AdvancedDisplay = "bPrintToScreen, bPrintToLog, TextColor, Duration, Key"))
+	static void PrintLog(const UObject* WorldContextObject, const FText InText = INVTEXT("Hello"),
+		bool bPrintToScreen = true, bool bPrintToLog = true,
+		FLinearColor TextColor = FLinearColor(0.0f, 0.831f, 1.0f, 1.0f), float Duration = 2.0f,
+		const FName Key = NAME_None);
 
 	/**
 	 * 경고 로그 출력 함수 (Warning 레벨) - Development Only
@@ -43,9 +47,14 @@ public:
 	 * @param Duration 화면 출력 지속시간 (초)
 	 * @param Key 화면 메시지 식별 키 (같은 키로 메시지 덮어쓰기 가능)
 	 */
-	UFUNCTION(BlueprintCallable, Category = "Development", CallInEditor, meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject", DevelopmentOnly = "true", AdvancedDisplay = "bPrintToScreen, bPrintToLog, TextColor, Duration, Key"))
-	static void PrintWarning(const UObject* WorldContextObject, const FText InText = INVTEXT("Hello"), bool bPrintToScreen = true, bool bPrintToLog = true, 
-		FLinearColor TextColor = FLinearColor(1.0f, 0.5f, 0.0f, 1.0f), float Duration = 2.0f, const FName Key = NAME_None);
+	UFUNCTION(BlueprintCallable, Category = "Development", CallInEditor,
+		meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject",
+			DevelopmentOnly = "true",
+			AdvancedDisplay = "bPrintToScreen, bPrintToLog, TextColor, Duration, Key"))
+	static void PrintWarning(const UObject* WorldContextObject,
+		const FText InText = INVTEXT("Hello"), bool bPrintToScreen = true, bool bPrintToLog = true,
+		FLinearColor TextColor = FLinearColor(1.0f, 0.5f, 0.0f, 1.0f), float Duration = 2.0f,
+		const FName Key = NAME_None);
 
 	/**
 	 * 에러 로그 출력 함수 (Error 레벨) - Development Only
@@ -57,7 +66,12 @@ public:
 	 * @param Duration 화면 출력 지속시간 (초)
 	 * @param Key 화면 메시지 식별 키 (같은 키로 메시지 덮어쓰기 가능)
 	 */
-	UFUNCTION(BlueprintCallable, Category = "Development", CallInEditor, meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject", DevelopmentOnly = "true", AdvancedDisplay = "bPrintToScreen, bPrintToLog, TextColor, Duration, Key"))
-	static void PrintError(const UObject* WorldContextObject, const FText InText = INVTEXT("Hello"), bool bPrintToScreen = true, bool bPrintToLog = true, 
-		FLinearColor TextColor = FLinearColor(1.0f, 0.0f, 0.0f, 1.0f), float Duration = 2.0f, const FName Key = NAME_None);
+	UFUNCTION(BlueprintCallable, Category = "Development", CallInEditor,
+		meta = (WorldContext = "WorldContextObject", HidePin = "WorldContextObject",
+			DevelopmentOnly = "true",
+			AdvancedDisplay = "bPrintToScreen, bPrintToLog, TextColor, Duration, Key"))
+	static void PrintError(const UObject* WorldContextObject, const FText InText = INVTEXT("Hello"),
+		bool bPrintToScreen = true, bool bPrintToLog = true,
+		FLinearColor TextColor = FLinearColor(1.0f, 0.0f, 0.0f, 1.0f), float Duration = 2.0f,
+		const FName Key = NAME_None);
 };

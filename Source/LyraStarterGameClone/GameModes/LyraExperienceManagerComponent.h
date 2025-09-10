@@ -19,7 +19,7 @@ enum class ELyraExperienceLoadState : uint8
 DECLARE_MULTICAST_DELEGATE_OneParam(FLyraExperienceLoaded, const ULyraExperienceDefinition*);
 
 /**
- * 
+ *
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ULyraExperienceManagerComponent : public UGameStateComponent
@@ -27,7 +27,10 @@ class LYRASTARTERGAMECLONE_API ULyraExperienceManagerComponent : public UGameSta
 	GENERATED_BODY()
 
 public:
-	bool IsExperienceLoaded() { return (LoadState == ELyraExperienceLoadState::Loaded) && (CurrentExperience != nullptr); }
+	bool IsExperienceLoaded()
+	{
+		return (LoadState == ELyraExperienceLoadState::Loaded) && (CurrentExperience != nullptr);
+	}
 
 	void CallOrRegister_OnExperienceLoaded(FLyraExperienceLoaded::FDelegate&& Delegate);
 

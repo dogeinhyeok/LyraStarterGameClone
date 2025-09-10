@@ -7,11 +7,10 @@
 #include "LyraPlayerController.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ALyraPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
 };

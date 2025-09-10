@@ -7,7 +7,7 @@
 #include "LyraUserFacingExperience.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ULyraUserFacingExperience : public UPrimaryDataAsset
@@ -15,9 +15,11 @@ class LYRASTARTERGAMECLONE_API ULyraUserFacingExperience : public UPrimaryDataAs
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Experience", meta = (AllowedTypes = "Map"))
+	UPROPERTY(
+		BlueprintReadWrite, EditAnywhere, Category = "Experience", meta = (AllowedTypes = "Map"))
 	FPrimaryAssetId MapID;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Experience", meta = (AllowedTypes = "LyraExperienceDefinition"))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Experience",
+		meta = (AllowedTypes = "LyraExperienceDefinition"))
 	FPrimaryAssetId ExperienceID;
 };

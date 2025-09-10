@@ -8,7 +8,7 @@
 
 /**
  * Lyra 게임의 에셋 관리를 담당하는 커스텀 AssetManager 클래스
- * 
+ *
  * 주요 기능:
  * - 에셋의 동기/비동기 로딩 관리
  * - 로딩된 에셋의 메모리 추적
@@ -54,7 +54,8 @@ public:
 	 * @return 로딩된 에셋 객체
 	 */
 	template <typename AssetType>
-	static AssetType* GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bkeepInMemory = true);
+	static AssetType* GetAsset(
+		const TSoftObjectPtr<AssetType>& AssetPointer, bool bkeepInMemory = true);
 
 	/**
 	 * 템플릿 함수: 특정 타입의 서브클래스를 가져옵니다
@@ -64,7 +65,8 @@ public:
 	 * @return 로딩된 서브클래스
 	 */
 	template <typename AssetType>
-	static TSubclassOf<AssetType> GetSubclass(const TSoftClassPtr<AssetType>& AssetPointer, bool bkeepInMemory = true);
+	static TSubclassOf<AssetType> GetSubclass(
+		const TSoftClassPtr<AssetType>& AssetPointer, bool bkeepInMemory = true);
 
 	/**
 	 * 로딩된 에셋을 관리 목록에 추가합니다
@@ -93,10 +95,11 @@ public:
  * @return 로딩된 에셋 객체
  */
 template <typename AssetType>
-AssetType* ULyraAssetManager::GetAsset(const TSoftObjectPtr<AssetType>& AssetPointer, bool bkeepInMemory)
+AssetType* ULyraAssetManager::GetAsset(
+	const TSoftObjectPtr<AssetType>& AssetPointer, bool bkeepInMemory)
 {
 	AssetType* LoadedAsset = nullptr;
-	
+
 	// 소프트 포인터에서 실제 에셋 경로를 추출
 	const FSoftObjectPath AssetPath = AssetPointer.ToSoftObjectPath();
 
@@ -111,7 +114,8 @@ AssetType* ULyraAssetManager::GetAsset(const TSoftObjectPtr<AssetType>& AssetPoi
 		{
 			LoadedAsset = Cast<AssetType>(SynchronousLoadAsset(AssetPath));
 			// 로딩 실패 시 상세한 에러 메시지와 함께 어서션 발생
-			ensureAlwaysMsgf(LoadedAsset, TEXT("Failed to load asset: [%s]"), *AssetPath.ToString());
+			ensureAlwaysMsgf(
+				LoadedAsset, TEXT("Failed to load asset: [%s]"), *AssetPath.ToString());
 		}
 
 		// 에셋 로딩 성공 및 메모리 유지 옵션이 활성화된 경우
@@ -121,7 +125,7 @@ AssetType* ULyraAssetManager::GetAsset(const TSoftObjectPtr<AssetType>& AssetPoi
 			Get().AddLoadedAsset(Cast<UObject>(LoadedAsset));
 		}
 	}
-	
+
 	return LoadedAsset;
 }
 
@@ -133,33 +137,35 @@ AssetType* ULyraAssetManager::GetAsset(const TSoftObjectPtr<AssetType>& AssetPoi
  * @return 로딩된 서브클래스
  */
 template <typename AssetType>
-TSubclassOf<AssetType> ULyraAssetManager::GetSubclass(const TSoftClassPtr<AssetType>& AssetPointer, bool bkeepInMemory)
+TSubclassOf<AssetType> ULyraAssetManager::GetSubclass(
+	const TSoftClassPtr<AssetType>& AssetPointer, bool bkeepInMemory)
 {
 	TSubclassOf<AssetType> LoadedSubclass = nullptr;
 	// 소프트 포인터에서 실제 클래스 경로를 가져옴
 	const FSoftObjectPath AssetPath = AssetPointer.ToSoftObjectPath();
-	
+
 	// 클래스 경로가 유효한지 확인
 	if (AssetPath.IsValid())
 	{
 		// 소프트 포인터에서 실제 클래스 객체를 가져옴
 		LoadedSubclass = AssetPointer.Get();
-		
+
 		// 클래스가 아직 로딩되지 않았다면 동기적으로 로딩 시도
 		if (!LoadedSubclass)
 		{
 			LoadedSubclass = Cast<UClass>(SynchronousLoadAsset(AssetPath));
 			// 클래스 로딩 실패 시 에러 메시지 출력
-			ensureAlwaysMsgf(LoadedSubclass, TEXT("Failed to load subclass : [%s]"), *AssetPath.ToString());
+			ensureAlwaysMsgf(
+				LoadedSubclass, TEXT("Failed to load subclass : [%s]"), *AssetPath.ToString());
 		}
 	}
-	
+
 	// 클래스가 성공적으로 로딩되었고 메모리에 유지하도록 설정된 경우
 	if (LoadedSubclass && bkeepInMemory)
 	{
 		// 로딩된 클래스를 목록에 추가하여 메모리에서 해제되지 않도록 함
 		Get().AddLoadedAsset(Cast<UObject>(LoadedSubclass));
 	}
-	
+
 	return LoadedSubclass;
 }

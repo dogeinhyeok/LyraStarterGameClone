@@ -10,29 +10,29 @@ MCP는 인공지능의 기능을 확장하지만, 너무 많은 MCP 사용은 �
 
 ### 검색 프로세스
 
-1. `[perplexity-ask](https:/github.com/ppl-ai/modelcontextprotocol/tree/main)`로 외부 정보 탐색 (예: 웹에서 실시간 정보, 공식 문서, Stack Overflow 등 검색)
-2. `[context7-mcp](https:/smithery.ai/server/@upstash/context7-mcp)`로 의미 기반 검색 시도 (예: 대규모 문서, 데이터베이스에서 키워드가 아닌 의미로 정보 찾기)
-3. `[mcp-youtube](https:/github.com/adhikasp/mcp-youtube)`로 `[perplexity-ask](https:/github.com/ppl-ai/modelcontextprotocol/tree/main)`에서 참고된 유튜브 영상 분석 (예: 영상 자막, 요약, 주요 내용 추출)
+1.  `[perplexity-ask](https:/github.com/ppl-ai/modelcontextprotocol/tree/main)`로 외부 정보 탐색 (예: 웹에서 실시간 정보, 공식 문서, Stack Overflow 등 검색)
+2.  `[context7-mcp](https:/smithery.ai/server/@upstash/context7-mcp)`로 의미 기반 검색 시도 (예: 대규모 문서, 데이터베이스에서 키워드가 아닌 의미로 정보 찾기)
+3.  `[mcp-youtube](https:/github.com/adhikasp/mcp-youtube)`로 `[perplexity-ask](https:/github.com/ppl-ai/modelcontextprotocol/tree/main)`에서 참고된 유튜브 영상 분석 (예: 영상 자막, 요약, 주요 내용 추출)
 
 ### 버그/오류 발생 시
 
-1. `[context7-mcp](mdc:https:/smithery.ai/server/@upstash/context7-mcp)`로 관련 문서 검색 및 진단 (예: 에러 메시지, 로그, 관련 문서에서 해결책 탐색)
-2. `[perplexity-ask](mdc:https:/github.com/ppl-ai/modelcontextprotocol/tree/main)`로 실시간 해결책 탐색 (예: 최신 이슈, 커뮤니티 Q&A, 공식 지원 문서 검색)
+1.  `[context7-mcp](mdc:https:/smithery.ai/server/@upstash/context7-mcp)`로 관련 문서 검색 및 진단 (예: 에러 메시지, 로그, 관련 문서에서 해결책 탐색)
+2.  `[perplexity-ask](mdc:https:/github.com/ppl-ai/modelcontextprotocol/tree/main)`로 실시간 해결책 탐색 (예: 최신 이슈, 커뮤니티 Q&A, 공식 지원 문서 검색)
 
 ### 환경 관리
 
-1. `[smithery](https:/smithery.ai/docs)`로 MCP 관리 (예: 다양한 AI 워크플로우 자동화, 외부 서비스 연동)
-2. `[uv](https:/github.com/astral-sh/uv)`로 MCP 관리 (예: Python 패키지 및 환경 관리)
-3. `[npm](https:/github.com/npm)`으로 MCP 관리 (예: Node.js 패키지 및 환경 관리)
+1.  `[smithery](https:/smithery.ai/docs)`로 MCP 관리 (예: 다양한 AI 워크플로우 자동화, 외부 서비스 연동)
+2.  `[uv](https:/github.com/astral-sh/uv)`로 MCP 관리 (예: Python 패키지 및 환경 관리)
+3.  `[npm](https:/github.com/npm)`으로 MCP 관리 (예: Node.js 패키지 및 환경 관리)
 
 ### 우선순위 규칙
 
-1. 내장 기능 활용 (예: Obsidian 기본 검색, 기본 명령어 등)
-2. 공식 플러그인 우선 (예: Obsidian 공식 플러그인에서 지원하는 기능은 MCP보다 우선 사용)
-3. MCP 도구 사용 (내장/공식 플러그인으로 해결 불가할 때만 MCP 활용)
+1.  내장 기능 활용 (예: Obsidian 기본 검색, 기본 명령어 등)
+2.  공식 플러그인 우선 (예: Obsidian 공식 플러그인에서 지원하는 기능은 MCP보다 우선 사용)
+3.  MCP 도구 사용 (내장/공식 플러그인으로 해결 불가할 때만 MCP 활용)
 
 ### 성능 최적화
 
-1. 필요한 MCP만 활성화
-2. 중복되는 기능의 MCP는 하나만 사용
-3. 실시간 검색은 꼭 필요한 경우만 수행
+1.  필요한 MCP만 활성화
+2.  중복되는 기능의 MCP는 하나만 사용
+3.  실시간 검색은 꼭 필요한 경우만 수행

@@ -7,11 +7,10 @@
 #include "LyraPlayerState.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ALyraPlayerState : public APlayerState
 {
 	GENERATED_BODY()
-	
 };
