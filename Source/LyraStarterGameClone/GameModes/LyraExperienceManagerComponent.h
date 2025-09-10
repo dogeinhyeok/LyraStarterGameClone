@@ -36,7 +36,7 @@ public:
 
 public:
 	UPROPERTY()
-	TObjectPtr<ULyraExperienceDefinition> CurrentExperience;
+	TObjectPtr<const ULyraExperienceDefinition> CurrentExperience;
 
 	ELyraExperienceLoadState LoadState = ELyraExperienceLoadState::Unloaded;
 

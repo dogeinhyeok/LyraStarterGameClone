@@ -6,7 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "LyraExperienceDefinition.generated.h"
 
-class LyraPawnData;
+class ULyraPawnData;
 
 /**
  *
@@ -17,8 +17,8 @@ class LYRASTARTERGAMECLONE_API ULyraExperienceDefinition : public UPrimaryDataAs
 	GENERATED_BODY()
 
 public:
-	// UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
-	TObjectPtr<LyraPawnData> DefaultPawnData;
+	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
+	TObjectPtr<ULyraPawnData> DefaultPawnData;
 
 	/*
 	 * 게임 기능을 활성화할 때 사용되는 문자열 배열

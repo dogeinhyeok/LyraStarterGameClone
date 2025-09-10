@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "LyraGameModeBase.generated.h"
 
+class ULyraExperienceDefinition;
+
 /**
  *
  */
@@ -21,5 +23,12 @@ public:
 
 	virtual void InitGameState() final;
 
+	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) final;
+
+	virtual APawn* SpawnDefaultPawnAtTransform_Implementation(
+		AController* NewPlayer, const FTransform& SpawnTransform) final;
+
 	void HandleMatchAssignmentIfNotExpectingOne();
+	bool IsExperienceLoaded() const;
+	void OnExperienceLoaded(const ULyraExperienceDefinition* CurrentExperience);
 };
