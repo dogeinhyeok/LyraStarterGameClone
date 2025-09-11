@@ -16,7 +16,7 @@ enum class ELyraExperienceLoadState : uint8
 	Deactivated,
 };
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FLyraExperienceLoaded, const ULyraExperienceDefinition*);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnLyraExperienceLoaded, const ULyraExperienceDefinition*);
 
 /**
  *
@@ -32,7 +32,7 @@ public:
 		return (LoadState == ELyraExperienceLoadState::Loaded) && (CurrentExperience != nullptr);
 	}
 
-	void CallOrRegister_OnExperienceLoaded(FLyraExperienceLoaded::FDelegate&& Delegate);
+	void CallOrRegister_OnExperienceLoaded(FOnLyraExperienceLoaded::FDelegate&& Delegate);
 
 	void ServerSetCurrentExperience(FPrimaryAssetId ExperienceId);
 	void StartExperienceLoad();
@@ -46,5 +46,5 @@ public:
 
 	ELyraExperienceLoadState LoadState = ELyraExperienceLoadState::Unloaded;
 
-	FLyraExperienceLoaded OnExperienceLoaded;
+	FOnLyraExperienceLoaded OnExperienceLoaded;
 };

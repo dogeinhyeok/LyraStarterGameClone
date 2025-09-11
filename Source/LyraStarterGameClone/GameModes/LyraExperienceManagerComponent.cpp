@@ -6,7 +6,7 @@
 #include "GameFeaturesSubsystemSettings.h"
 
 void ULyraExperienceManagerComponent::CallOrRegister_OnExperienceLoaded(
-	FLyraExperienceLoaded::FDelegate&& Delegate)
+	FOnLyraExperienceLoaded::FDelegate&& Delegate)
 {
 	if (IsExperienceLoaded())
 	{
@@ -34,6 +34,8 @@ void ULyraExperienceManagerComponent::ServerSetCurrentExperience(FPrimaryAssetId
 	{
 		CurrentExperience = Experience;
 	}
+
+	StartExperienceLoad();
 }
 
 UE_DISABLE_OPTIMIZATION

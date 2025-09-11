@@ -19,7 +19,7 @@ void ALyraPlayerState::PostInitializeComponents()
 	check(ExperienceManagerComponent);
 
 	ExperienceManagerComponent->CallOrRegister_OnExperienceLoaded(
-		FLyraExperienceLoaded::FDelegate::CreateUObject(this, &ThisClass::OnExperienceLoaded));
+		FOnLyraExperienceLoaded::FDelegate::CreateUObject(this, &ThisClass::OnExperienceLoaded));
 }
 
 void ALyraPlayerState::OnExperienceLoaded(const ULyraExperienceDefinition* CurrentExperience)

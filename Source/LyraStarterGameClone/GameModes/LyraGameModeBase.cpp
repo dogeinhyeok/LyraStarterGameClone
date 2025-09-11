@@ -39,7 +39,7 @@ void ALyraGameModeBase::InitGameState()
 	check(ExperienceManagerComponent);
 
 	ExperienceManagerComponent->CallOrRegister_OnExperienceLoaded(
-		FLyraExperienceLoaded::FDelegate::CreateUObject(this, &ThisClass::OnExperienceLoaded));
+		FOnLyraExperienceLoaded::FDelegate::CreateUObject(this, &ThisClass::OnExperienceLoaded));
 }
 
 UClass* ALyraGameModeBase::GetDefaultPawnClassForController_Implementation(
