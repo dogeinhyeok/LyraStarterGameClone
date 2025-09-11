@@ -19,21 +19,19 @@
     "[c]": {
         "editor.tabSize": 4,
         "editor.insertSpaces": false,
-        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
     },
     "[h]": {
         "editor.tabSize": 4,
         "editor.insertSpaces": false,
-        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
     },
     "[hpp]": {
         "editor.tabSize": 4,
         "editor.insertSpaces": false,
-        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
     },
     "[markdown]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "prettier.useTabs": false,
-        "prettier.tabWidth": 4
     }
 }

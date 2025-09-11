@@ -10,11 +10,11 @@
   "promptDelete": false,
   "alwaysUpdateLinks": true,
   "newLinkFormat": "absolute",
-  "tabSize": 4,
+  "tabSize": 2,
   "useTab": false,
   "smartIndentList": true,
   "foldIndent": true,
-  "showIndentGuide": true,
+  "showIndentGuide": false,
   "rightToLeft": false,
   "pdfExportSettings": {
     "includeName": false,
