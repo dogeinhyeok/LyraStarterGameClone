@@ -36,7 +36,7 @@ void ULyraExperienceManagerComponent::ServerSetCurrentExperience(FPrimaryAssetId
 	}
 }
 
-PRAGMA_DISABLE_OPTIMIZATION
+UE_DISABLE_OPTIMIZATION
 void ULyraExperienceManagerComponent::StartExperienceLoad()
 {
 	check(CurrentExperience);
@@ -82,7 +82,7 @@ void ULyraExperienceManagerComponent::StartExperienceLoad()
 			[OnAssetsLoadedDelegate] { OnAssetsLoadedDelegate.ExecuteIfBound(); }));
 	}
 }
-PRAGMA_ENABLE_OPTIMIZATION
+UE_ENABLE_OPTIMIZATION
 
 void ULyraExperienceManagerComponent::OnExperienceLoadComplete()
 {

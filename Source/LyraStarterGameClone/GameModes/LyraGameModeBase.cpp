@@ -1,18 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LyraGameModeBase.h"
+#include "LyraExperienceDefinition.h"
 #include "LyraExperienceManagerComponent.h"
 #include "LyraGameState.h"
-#include "LyraExperienceDefinition.h"
-#include "LyraPawnData.h"
+#include "../Character/LyraPawnData.h"
+#include "../Character/LyraCharacter.h"
 #include "../LogChannels.h"
 #include "../Player/LyraPlayerController.h"
 #include "../Player/LyraPlayerState.h"
-#include "../Character/LyraCharacter.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "UObject/PrimaryAssetId.h"
-#include <cstddef>
 
 ALyraGameModeBase::ALyraGameModeBase()
 {
@@ -43,6 +42,19 @@ void ALyraGameModeBase::InitGameState()
 		FLyraExperienceLoaded::FDelegate::CreateUObject(this, &ThisClass::OnExperienceLoaded));
 }
 
+UClass* ALyraGameModeBase::GetDefaultPawnClassForController_Implementation(
+	AController* InController)
+{
+	if (const ULyraPawnData* PawnData = GetPawnDataForController(InController))
+	{
+		if (PawnData->PawnClass)
+		{
+			return PawnData->PawnClass;
+		}
+	}
+	return Super::GetDefaultPawnClassForController_Implementation(InController);
+}
+
 void ALyraGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
 {
 	if (IsExperienceLoaded())
@@ -69,6 +81,8 @@ void ALyraGameModeBase::HandleMatchAssignmentIfNotExpectingOne()
 		ExperienceId = FPrimaryAssetId(
 			FPrimaryAssetType("LyraExperienceDefinition"), FName("B_LyraDefaultExperience"));
 	}
+
+	OnMatchAssignmentGiven(ExperienceId);
 }
 
 void ALyraGameModeBase::OnMatchAssignmentGiven(FPrimaryAssetId ExperienceId)

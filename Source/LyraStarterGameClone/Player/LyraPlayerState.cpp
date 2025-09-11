@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LyraPlayerState.h"
-#include "../GameModes/LyraPawnData.h"
+#include "../Character/LyraPawnData.h"
 #include "../GameModes/LyraExperienceDefinition.h"
 #include "../GameModes/LyraExperienceManagerComponent.h"
 #include "../GameModes/LyraGameModeBase.h"

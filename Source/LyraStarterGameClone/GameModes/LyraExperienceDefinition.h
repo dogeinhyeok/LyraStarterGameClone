@@ -4,9 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "../Character/LyraPawnData.h"
 #include "LyraExperienceDefinition.generated.h"
-
-class ULyraPawnData;
 
 /**
  *
