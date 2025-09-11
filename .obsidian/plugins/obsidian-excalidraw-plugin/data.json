@@ -1,11 +1,11 @@
 {
   "disableDoubleClickTextEditing": false,
-  "folder": "70_파일관리/71_텍스트파일",
+  "folder": "Docs",
   "cropFolder": "",
   "annotateFolder": "",
   "embedUseExcalidrawFolder": false,
-  "templateFilePath": "80_템플릿관리/88_Excalidraw",
-  "scriptFolderPath": "70_파일관리/75_스크립트파일",
+  "templateFilePath": "",
+  "scriptFolderPath": "Excalidraw/Scripts",
   "fontAssetsPath": "Excalidraw/CJK Fonts",
   "loadChineseFonts": false,
   "loadJapaneseFonts": false,
@@ -457,7 +457,7 @@
   },
   "laserSettings": {
     "DECAY_LENGTH": 50,
-    "DECAY_TIME": 1000,
+    "DECAY_TIME": 10000,
     "COLOR": "#ff0000"
   },
   "embeddableMarkdownDefaults": {
