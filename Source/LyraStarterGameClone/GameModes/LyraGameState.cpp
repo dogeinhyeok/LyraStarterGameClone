@@ -13,6 +13,6 @@
  */
 ALyraGameState::ALyraGameState()
 {
-	LyraExperienceManagerComponent = CreateDefaultSubobject<ULyraExperienceManagerComponent>(
-		TEXT("LyraExperienceManagerComponent"));
+	ExperienceManagerComponent =
+		CreateDefaultSubobject<ULyraExperienceManagerComponent>(TEXT("ExperienceManagerComponent"));
 }

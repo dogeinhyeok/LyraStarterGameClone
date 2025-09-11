@@ -4,6 +4,7 @@
 #include "Engine/Engine.h"
 #include "Misc/CommandLine.h"
 #include "../LogChannels.h"
+#include "../LyraGameplayTags.h"
 
 /**
  * AssetManager 싱글톤 인스턴스를 가져오는 함수
@@ -56,6 +57,8 @@ void ULyraAssetManager::StartInitialLoading()
 	// 부모 클래스(UAssetManager)의 초기 로딩 함수 호출
 	// 이 함수에서 기본적인 에셋들을 먼저 로딩함
 	Super::StartInitialLoading();
+
+	FLyraGameplayTags::InitializeNativeTags();
 }
 UE_ENABLE_OPTIMIZATION
 

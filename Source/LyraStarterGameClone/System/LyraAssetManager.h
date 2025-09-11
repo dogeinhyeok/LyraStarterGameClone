@@ -13,6 +13,7 @@ class LYRASTARTERGAMECLONE_API ULyraAssetManager : public UAssetManager
 
 public:
 	static ULyraAssetManager& Get();
+
 	virtual void StartInitialLoading() final;
 
 	static bool ShouldLogAssetLoads();

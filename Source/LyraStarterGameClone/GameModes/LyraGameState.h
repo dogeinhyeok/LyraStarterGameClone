@@ -21,5 +21,5 @@ public:
 
 public:
 	UPROPERTY()
-	TObjectPtr<ULyraExperienceManagerComponent> LyraExperienceManagerComponent;
+	TObjectPtr<ULyraExperienceManagerComponent> ExperienceManagerComponent;
 };
