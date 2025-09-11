@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "LyraCharacter.generated.h"
 
+class ULyraPawnExtensionComponent;
+
 /**
  * Lyra 캐릭터: 기본 ACharacter를 상속받는 메인 플레이어 캐릭터 클래스
  */
@@ -28,4 +30,8 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Character")
+	TObjectPtr<ULyraPawnExtensionComponent> PawnExtensionComponent;
 };

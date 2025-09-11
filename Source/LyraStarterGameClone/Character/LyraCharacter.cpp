@@ -6,6 +6,7 @@
  */
 
 #include "LyraCharacter.h"
+#include "LyraPawnExtensionComponent.h"
 
 /**
  * ALyraCharacter 생성자 - 캐릭터의 기본 설정을 초기화
@@ -14,7 +15,11 @@ ALyraCharacter::ALyraCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance
 	// if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bStartWithTickEnabled = false;
+	PrimaryActorTick.bCanEverTick = false;
+
+	PawnExtensionComponent =
+		CreateDefaultSubobject<ULyraPawnExtensionComponent>(TEXT("PawnExtensionComponent"));
 }
 
 /**
