@@ -17,6 +17,12 @@ class LYRASTARTERGAMECLONE_API ULyraExperienceDefinition : public UPrimaryDataAs
 	GENERATED_BODY()
 
 public:
+	ULyraExperienceDefinition(
+		const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	/*
+	 * 게임 시작시 사용되는 기본 폰 데이터
+	 */
 	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
 	TObjectPtr<ULyraPawnData> DefaultPawnData;
 

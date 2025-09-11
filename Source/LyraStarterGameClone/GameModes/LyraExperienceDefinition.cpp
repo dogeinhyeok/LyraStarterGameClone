@@ -6,4 +6,8 @@
  */
 
 #include "LyraExperienceDefinition.h"
-#include "../Character/LyraPawnData.h"
+
+ULyraExperienceDefinition::ULyraExperienceDefinition(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+}
