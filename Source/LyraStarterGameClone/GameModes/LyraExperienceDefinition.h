@@ -4,11 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
-#include "../Character/LyraPawnData.h"
 #include "LyraExperienceDefinition.generated.h"
 
+class ULyraPawnData;
+
 /**
- *
+ * Experience 정의: 게임 경험을 정의하는 데이터 에셋 (DefaultPawnData와 GameFeatures 포함)
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ULyraExperienceDefinition : public UPrimaryDataAsset

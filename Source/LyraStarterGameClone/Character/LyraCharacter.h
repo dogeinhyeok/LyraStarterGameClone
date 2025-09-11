@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "LyraCharacter.generated.h"
 
+/**
+ * Lyra 캐릭터: 기본 ACharacter를 상속받는 메인 플레이어 캐릭터 클래스
+ */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ALyraCharacter : public ACharacter
 {

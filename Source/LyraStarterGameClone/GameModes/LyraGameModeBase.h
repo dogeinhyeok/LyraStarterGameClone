@@ -10,7 +10,7 @@ class ULyraExperienceDefinition;
 class ULyraPawnData;
 
 /**
- *
+ * 게임 모드: Experience 로딩을 시작하고 완료 시 플레이어를 스폰하는 메인 게임 모드
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ALyraGameModeBase : public AGameModeBase

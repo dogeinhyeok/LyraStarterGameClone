@@ -7,7 +7,7 @@
 #include "LyraPawnData.generated.h"
 
 /**
- *
+ * Pawn 데이터: 캐릭터 클래스와 설정을 저장하는 데이터 에셋
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ULyraPawnData : public UPrimaryDataAsset

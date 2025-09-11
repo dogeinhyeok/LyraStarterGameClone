@@ -8,8 +8,6 @@
 #include "../LogChannels.h"
 
 /**
- * LyraBlueprintFunctionLibrary.cpp - 블루프린트 유틸리티 함수 구현
- *
  * 이 파일은 블루프린트에서 언리얼 엔진의 다양한 기능을 쉽게 사용할 수 있도록
  * 도와주는 유틸리티 함수들을 구현합니다.
  */

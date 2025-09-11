@@ -19,7 +19,7 @@ enum class ELyraExperienceLoadState : uint8
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnLyraExperienceLoaded, const ULyraExperienceDefinition*);
 
 /**
- *
+ * Experience 관리자: Experience 로딩 상태를 관리하고 완료 시 델리게이트를 브로드캐스트하는 컴포넌트
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ULyraExperienceManagerComponent : public UGameStateComponent

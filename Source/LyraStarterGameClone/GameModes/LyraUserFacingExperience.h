@@ -7,7 +7,7 @@
 #include "LyraUserFacingExperience.generated.h"
 
 /**
- *
+ * 사용자 경험: 맵과 Experience를 연결하는 사용자 친화적인 데이터 에셋
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ULyraUserFacingExperience : public UPrimaryDataAsset

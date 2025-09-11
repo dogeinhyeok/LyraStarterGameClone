@@ -10,7 +10,7 @@ class ULyraPawnData;
 class ULyraExperienceDefinition;
 
 /**
- *
+ * 플레이어 상태: Experience 로딩 시 PawnData를 받아서 저장하고 관리하는 클래스
  */
 UCLASS()
 class LYRASTARTERGAMECLONE_API ALyraPlayerState : public APlayerState
