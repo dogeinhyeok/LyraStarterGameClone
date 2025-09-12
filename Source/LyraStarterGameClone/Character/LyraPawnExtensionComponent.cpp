@@ -3,6 +3,11 @@
 #include "LyraPawnExtensionComponent.h"
 #include "Components/GameFrameworkComponentManager.h"
 #include "../LogChannels.h"
+#include "../LyraGameplayTags.h"
+#include "Components/GameFrameworkInitStateInterface.h"
+#include "Misc/CoreMiscDefines.h"
+
+const FName ULyraPawnExtensionComponent::NAME_ActorFeatureName = TEXT("PawnExtension");
 
 ULyraPawnExtensionComponent::ULyraPawnExtensionComponent(
 	const FObjectInitializer& ObjectInitializer)
@@ -12,6 +17,7 @@ ULyraPawnExtensionComponent::ULyraPawnExtensionComponent(
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
+UE_DISABLE_OPTIMIZATION
 void ULyraPawnExtensionComponent::OnRegister()
 {
 	Super::OnRegister();
@@ -31,13 +37,40 @@ void ULyraPawnExtensionComponent::OnRegister()
 	UGameFrameworkComponentManager* Manager =
 		UGameFrameworkComponentManager::GetForActor(GetOwningActor());
 }
+UE_ENABLE_OPTIMIZATION
 
 void ULyraPawnExtensionComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	BindOnActorInitStateChanged(NAME_None, FGameplayTag(), false);
+
+	ensure(TryToChangeInitState(FLyraGameplayTags::Get().InitState_Spawned));
+
+	CheckDefaultInitialization();
 }
 
 void ULyraPawnExtensionComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	UnregisterInitStateFeature();
+
 	Super::EndPlay(EndPlayReason);
+}
+
+void ULyraPawnExtensionComponent::OnActorInitStateChanged(
+	const FActorInitStateChangedParams& Params)
+{
+	IGameFrameworkInitStateInterface::OnActorInitStateChanged(Params);
+}
+
+bool ULyraPawnExtensionComponent::CanChangeInitState(UGameFrameworkComponentManager* Manager,
+	FGameplayTag CurrentState, FGameplayTag DesiredState) const
+{
+	return IGameFrameworkInitStateInterface::CanChangeInitState(
+		Manager, CurrentState, DesiredState);
+}
+
+void ULyraPawnExtensionComponent::CheckDefaultInitialization()
+{
+	IGameFrameworkInitStateInterface::CheckDefaultInitialization();
 }
