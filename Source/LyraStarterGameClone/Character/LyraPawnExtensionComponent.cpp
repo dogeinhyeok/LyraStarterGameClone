@@ -17,8 +17,28 @@ ULyraPawnExtensionComponent::ULyraPawnExtensionComponent(
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-UE_DISABLE_OPTIMIZATION
-void ULyraPawnExtensionComponent::OnRegister()
+void ULyraPawnExtensionComponent::SetPawnData(const ULyraPawnData* InPawnData)
+{
+	APawn* Pawn = GetPawnChecked<APawn>();
+	if (Pawn->GetLocalRole() == ROLE_Authority)
+	{
+		return;
+	}
+
+	if (PawnData)
+	{
+		return;
+	}
+
+	PawnData = InPawnData;
+}
+
+void ULyraPawnExtensionComponent::SetupPlayerInputComponent()
+{
+	CheckDefaultInitialization();
+}
+
+UE_DISABLE_OPTIMIZATION void ULyraPawnExtensionComponent::OnRegister()
 {
 	Super::OnRegister();
 
@@ -38,22 +58,6 @@ void ULyraPawnExtensionComponent::OnRegister()
 		UGameFrameworkComponentManager::GetForActor(GetOwningActor());
 }
 UE_ENABLE_OPTIMIZATION
-
-void ULyraPawnExtensionComponent::SetPawnData(const ULyraPawnData* InPawnData)
-{
-	APawn* Pawn = GetPawnChecked<APawn>();
-	if (Pawn->GetLocalRole() == ROLE_Authority)
-	{
-		return;
-	}
-
-	if (PawnData)
-	{
-		return;
-	}
-
-	PawnData = InPawnData;
-}
 
 void ULyraPawnExtensionComponent::BeginPlay()
 {

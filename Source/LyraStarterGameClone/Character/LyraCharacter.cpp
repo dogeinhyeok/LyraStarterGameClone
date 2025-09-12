@@ -44,4 +44,6 @@ void ALyraCharacter::Tick(float DeltaTime)
 void ALyraCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	PawnExtensionComponent->SetupPlayerInputComponent();
 }

@@ -31,8 +31,9 @@ public:
 	}
 
 	template <class T> const T* GetPawnData() const { return Cast<T>(PawnData); }
-
 	void SetPawnData(const ULyraPawnData* InPawnData);
+
+	void SetupPlayerInputComponent();
 
 	virtual void OnRegister() override;
 	virtual void BeginPlay() override;

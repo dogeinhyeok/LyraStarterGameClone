@@ -2,6 +2,7 @@
 
 #include "LyraHeroComponent.h"
 #include "LyraPawnExtensionComponent.h"
+#include "LyraPawnData.h"
 #include "../LyraGameplayTags.h"
 #include "../LogChannels.h"
 #include "../Player/LyraPlayerState.h"
@@ -113,7 +114,26 @@ bool ULyraHeroComponent::CanChangeInitState(UGameFrameworkComponentManager* Mana
 void ULyraHeroComponent::HandleChangeInitState(
 	UGameFrameworkComponentManager* Manager, FGameplayTag CurrentState, FGameplayTag DesiredState)
 {
-	IGameFrameworkInitStateInterface::HandleChangeInitState(Manager, CurrentState, DesiredState);
+	const FLyraGameplayTags& InitTags = FLyraGameplayTags::Get();
+
+	if (CurrentState == InitTags.InitState_DataAvailable
+		&& DesiredState == InitTags.InitState_DataInitialized)
+	{
+		APawn* Pawn = GetPawn<APawn>();
+		ALyraPlayerState* LyraPlayerState = GetPlayerState<ALyraPlayerState>();
+		if (!ensure(Pawn && LyraPlayerState))
+		{
+			return;
+		}
+
+		const bool bIsLocallyControlled = Pawn->IsLocallyControlled();
+		const ULyraPawnData* PawnData = nullptr;
+		if (ULyraPawnExtensionComponent* PawnExtensionComponent =
+				ULyraPawnExtensionComponent::FindPawnExtensionComponent(Pawn))
+		{
+			PawnData = PawnExtensionComponent->GetPawnData<ULyraPawnData>();
+		}
+	}
 }
 
 void ULyraHeroComponent::CheckDefaultInitialization()
