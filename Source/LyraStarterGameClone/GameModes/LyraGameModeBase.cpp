@@ -15,6 +15,8 @@
 #include "../Player/LyraPlayerController.h"
 #include "../Player/LyraPlayerState.h"
 #include "Engine/World.h"
+#include "LyraStarterGameClone/Character/LyraPawnExtensionComponent.h"
+#include "Misc/CoreMiscDefines.h"
 #include "TimerManager.h"
 #include "UObject/PrimaryAssetId.h"
 
@@ -75,6 +77,7 @@ UClass* ALyraGameModeBase::GetDefaultPawnClassForController_Implementation(
 /**
  * HandleStartingNewPlayer_Implementation - 새 플레이어 시작 처리
  */
+UE_DISABLE_OPTIMIZATION
 void ALyraGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
 {
 	if (IsExperienceLoaded())
@@ -82,6 +85,7 @@ void ALyraGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController
 		Super::HandleStartingNewPlayer_Implementation(NewPlayer);
 	}
 }
+UE_ENABLE_OPTIMIZATION
 
 /**
  * SpawnDefaultPawnAtTransform_Implementation - 지정된 위치에 기본 Pawn 스폰
@@ -89,8 +93,30 @@ void ALyraGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController
 APawn* ALyraGameModeBase::SpawnDefaultPawnAtTransform_Implementation(
 	AController* NewPlayer, const FTransform& SpawnTransform)
 {
-	UE_LOG(LogLyra, Log, TEXT("HandleStartingNewPlayer_Implementation is called"));
-	return Super::SpawnDefaultPawnAtTransform_Implementation(NewPlayer, SpawnTransform);
+	FActorSpawnParameters SpawnInfo;
+	SpawnInfo.Instigator = GetInstigator();
+	SpawnInfo.ObjectFlags |= RF_Transient;
+	SpawnInfo.bDeferConstruction = true;
+
+	if (UClass* PawnClass = GetDefaultPawnClassForController(NewPlayer))
+	{
+		if (APawn* SpawnedPawn =
+				GetWorld()->SpawnActor<APawn>(PawnClass, SpawnTransform, SpawnInfo))
+		{
+			if (ULyraPawnExtensionComponent* PawnExtensionComponent =
+					ULyraPawnExtensionComponent::FindPawnExtensionComponent(SpawnedPawn))
+			{
+				if (const ULyraPawnData* PawnData = GetPawnDataForController(NewPlayer))
+				{
+					PawnExtensionComponent->SetPawnData(PawnData);
+				}
+			}
+			SpawnedPawn->FinishSpawning(SpawnTransform);
+			return SpawnedPawn;
+		}
+	}
+
+	return nullptr;
 }
 
 /**

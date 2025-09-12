@@ -7,6 +7,8 @@
 #include "Components/GameFrameworkInitStateInterface.h"
 #include "LyraPawnExtensionComponent.generated.h"
 
+class ULyraPawnData;
+
 /**
  *
  */
@@ -23,6 +25,15 @@ public:
 
 	static const FName NAME_ActorFeatureName;
 
+	static ULyraPawnExtensionComponent* FindPawnExtensionComponent(const AActor* Actor)
+	{
+		return Actor ? Actor->FindComponentByClass<ULyraPawnExtensionComponent>() : nullptr;
+	}
+
+	template <class T> const T* GetPawnData() const { return Cast<T>(PawnData); }
+
+	void SetPawnData(const ULyraPawnData* InPawnData);
+
 	virtual void OnRegister() override;
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) final;
@@ -32,4 +43,7 @@ public:
 	virtual bool CanChangeInitState(UGameFrameworkComponentManager* Manager,
 		FGameplayTag CurrentState, FGameplayTag DesiredState) const final;
 	virtual void CheckDefaultInitialization() final;
+
+	UPROPERTY(EditInstanceOnly, Category = "Lyra|Pawn")
+	TObjectPtr<const ULyraPawnData> PawnData;
 };

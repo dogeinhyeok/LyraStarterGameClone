@@ -5,7 +5,7 @@
 #include "../LogChannels.h"
 #include "../LyraGameplayTags.h"
 #include "Components/GameFrameworkInitStateInterface.h"
-#include "Misc/CoreMiscDefines.h"
+#include "LyraPawnData.h"
 
 const FName ULyraPawnExtensionComponent::NAME_ActorFeatureName = TEXT("PawnExtension");
 
@@ -39,6 +39,22 @@ void ULyraPawnExtensionComponent::OnRegister()
 }
 UE_ENABLE_OPTIMIZATION
 
+void ULyraPawnExtensionComponent::SetPawnData(const ULyraPawnData* InPawnData)
+{
+	APawn* Pawn = GetPawnChecked<APawn>();
+	if (Pawn->GetLocalRole() == ROLE_Authority)
+	{
+		return;
+	}
+
+	if (PawnData)
+	{
+		return;
+	}
+
+	PawnData = InPawnData;
+}
+
 void ULyraPawnExtensionComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -60,17 +76,76 @@ void ULyraPawnExtensionComponent::EndPlay(const EEndPlayReason::Type EndPlayReas
 void ULyraPawnExtensionComponent::OnActorInitStateChanged(
 	const FActorInitStateChangedParams& Params)
 {
-	IGameFrameworkInitStateInterface::OnActorInitStateChanged(Params);
+	if (Params.FeatureName != NAME_ActorFeatureName)
+	{
+		const FLyraGameplayTags& InitTags = FLyraGameplayTags::Get();
+		if (Params.FeatureState == InitTags.InitState_GameplayReady)
+		{
+			CheckDefaultInitialization();
+		}
+	}
 }
 
 bool ULyraPawnExtensionComponent::CanChangeInitState(UGameFrameworkComponentManager* Manager,
 	FGameplayTag CurrentState, FGameplayTag DesiredState) const
 {
-	return IGameFrameworkInitStateInterface::CanChangeInitState(
-		Manager, CurrentState, DesiredState);
+	check(Manager);
+
+	APawn* Pawn = GetPawn<APawn>();
+	const FLyraGameplayTags& InitTags = FLyraGameplayTags::Get();
+
+	if (!CurrentState.IsValid() && DesiredState == InitTags.InitState_Spawned)
+	{
+		if (Pawn)
+		{
+			return true;
+		}
+	}
+
+	if (CurrentState == InitTags.InitState_Spawned
+		&& DesiredState == InitTags.InitState_DataAvailable)
+	{
+		if (Pawn)
+		{
+			return false;
+		}
+
+		const bool bIsLocallyControlled = Pawn->IsLocallyControlled();
+		if (bIsLocallyControlled)
+		{
+			if (!GetController<AController>())
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	if (CurrentState == InitTags.InitState_DataAvailable
+		&& DesiredState == InitTags.InitState_DataInitialized)
+	{
+		return Manager->HaveAllFeaturesReachedInitState(Pawn, InitTags.InitState_DataAvailable);
+	}
+
+	if (CurrentState == InitTags.InitState_DataInitialized
+		&& DesiredState == InitTags.InitState_GameplayReady)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void ULyraPawnExtensionComponent::CheckDefaultInitialization()
 {
-	IGameFrameworkInitStateInterface::CheckDefaultInitialization();
+	CheckDefaultInitializationForImplementers();
+
+	const FLyraGameplayTags& InitTags = FLyraGameplayTags::Get();
+
+	static const TArray<FGameplayTag> StateChain = { InitTags.InitState_Spawned,
+		InitTags.InitState_DataAvailable, InitTags.InitState_DataInitialized,
+		InitTags.InitState_GameplayReady };
+
+	ContinueInitStateChain(StateChain);
 }
