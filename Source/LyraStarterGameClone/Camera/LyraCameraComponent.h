@@ -29,6 +29,7 @@ public:
 		return (Actor) ? Actor->FindComponentByClass<ULyraCameraComponent>() : nullptr;
 	};
 
+	AActor* GetTargetActor() const { return GetOwner(); }
 	void UpdateCameraModes();
 
 	virtual void OnRegister() final;

@@ -22,16 +22,22 @@ void ULyraCameraComponent::GetCameraView(float DeltaTime, FMinimalViewInfo& Desi
 	check(CameraModeStack);
 
 	UpdateCameraModes();
+
+	FLyraCameraModeView CameraModeView;
+	CameraModeStack->EvaluateStack(DeltaTime, CameraModeView);
 }
 
+UE_DISABLE_OPTIMIZATION
 void ULyraCameraComponent::UpdateCameraModes()
 {
 	check(CameraModeStack);
 
 	if (DetermineCameraModeDelegate.IsBound())
 	{
-		if (const TSubclassOf<ULyraCameraMode> CameraMode = DetermineCameraModeDelegate.Execute())
+		if (TSubclassOf<ULyraCameraMode> CameraMode = DetermineCameraModeDelegate.Execute())
 		{
+			CameraModeStack->PushCameraMode(CameraMode);
 		}
 	}
 }
+UE_ENABLE_OPTIMIZATION
