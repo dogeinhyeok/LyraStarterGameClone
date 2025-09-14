@@ -7,6 +7,7 @@
 
 #include "LyraCharacter.h"
 #include "LyraPawnExtensionComponent.h"
+#include "../Camera/LyraCameraComponent.h"
 
 /**
  * ALyraCharacter 생성자 - 캐릭터의 기본 설정을 초기화
@@ -20,6 +21,11 @@ ALyraCharacter::ALyraCharacter()
 
 	PawnExtensionComponent =
 		CreateDefaultSubobject<ULyraPawnExtensionComponent>(TEXT("PawnExtensionComponent"));
+
+	{
+		CameraComponent = CreateDefaultSubobject<ULyraCameraComponent>(TEXT("CameraComponent"));
+		CameraComponent->SetRelativeLocation(FVector(-300.0f, 0.0f, 75.0f));
+	}
 }
 
 /**

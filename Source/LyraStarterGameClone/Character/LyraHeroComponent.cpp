@@ -3,8 +3,11 @@
 #include "LyraHeroComponent.h"
 #include "LyraPawnExtensionComponent.h"
 #include "LyraPawnData.h"
+#include "Components/GameFrameworkComponentManager.h"
 #include "../LyraGameplayTags.h"
 #include "../LogChannels.h"
+#include "../Camera/LyraCameraComponent.h"
+#include "../Player/LyraPlayerController.h"
 #include "../Player/LyraPlayerState.h"
 
 const FName ULyraHeroComponent::NAME_ActorFeatureName = TEXT("Hero");
@@ -133,6 +136,16 @@ void ULyraHeroComponent::HandleChangeInitState(
 		{
 			PawnData = PawnExtensionComponent->GetPawnData<ULyraPawnData>();
 		}
+
+		if (bIsLocallyControlled && PawnData)
+		{
+			if (ULyraCameraComponent* CameraComponent =
+					ULyraCameraComponent::FindCameraComponent(Pawn))
+			{
+				CameraComponent->DetermineCameraModeDelegate.BindUObject(
+					this, &ThisClass::DetermineCameraMode);
+			}
+		}
 	}
 }
 
@@ -144,3 +157,25 @@ void ULyraHeroComponent::CheckDefaultInitialization()
 		InitTags.InitState_GameplayReady };
 	ContinueInitStateChain(StateChain);
 }
+
+UE_DISABLE_OPTIMIZATION
+TSubclassOf<ULyraCameraMode> ULyraHeroComponent::DetermineCameraMode() const
+{
+	const APawn* Pawn = GetPawn<APawn>();
+	if (!Pawn)
+	{
+		return nullptr;
+	}
+
+	if (ULyraPawnExtensionComponent* PawnExtensionComponent =
+			ULyraPawnExtensionComponent::FindPawnExtensionComponent(Pawn))
+	{
+		if (const ULyraPawnData* PawnData = PawnExtensionComponent->GetPawnData<ULyraPawnData>())
+		{
+			return PawnData->DefaultCameraMode;
+		}
+	}
+
+	return nullptr;
+}
+UE_ENABLE_OPTIMIZATION

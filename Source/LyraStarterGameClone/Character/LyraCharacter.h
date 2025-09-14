@@ -7,6 +7,7 @@
 #include "LyraCharacter.generated.h"
 
 class ULyraPawnExtensionComponent;
+class ULyraCameraComponent;
 
 /**
  * Lyra 캐릭터: 기본 ACharacter를 상속받는 메인 플레이어 캐릭터 클래스
@@ -32,6 +33,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Character")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lyra|Character")
 	TObjectPtr<ULyraPawnExtensionComponent> PawnExtensionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lyra|Character")
+	TObjectPtr<ULyraCameraComponent> CameraComponent;
 };

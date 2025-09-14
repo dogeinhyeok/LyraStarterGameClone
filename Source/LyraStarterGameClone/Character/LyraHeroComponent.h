@@ -3,10 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/PawnComponent.h"
 #include "Components/GameFrameworkInitStateInterface.h"
-#include "Components/GameFrameworkComponentManager.h"
+#include "Components/PawnComponent.h"
 #include "LyraHeroComponent.generated.h"
+
+class ULyraCameraMode;
 
 /**
  *
@@ -34,4 +35,6 @@ public:
 	virtual void HandleChangeInitState(UGameFrameworkComponentManager* Manager,
 		FGameplayTag CurrentState, FGameplayTag DesiredState) final;
 	virtual void CheckDefaultInitialization() final;
+
+	TSubclassOf<ULyraCameraMode> DetermineCameraMode() const;
 };

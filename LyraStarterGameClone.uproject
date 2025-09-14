@@ -10,7 +10,8 @@
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
 				"Engine",
-				"ModularGameplay"
+				"ModularGameplay",
+				"CoreUObject"
 			]
 		}
 	],
@@ -33,6 +34,6 @@
 		{
 			"Name": "GameplayAbilities",
 			"Enabled": true
-        }
+		}
 	]
 }
