@@ -21,6 +21,16 @@ struct FLyraCameraModeView
 	float FieldOfView;
 };
 
+UENUM(BlueprintType)
+enum class ELyraCameraModeBlendFunction : uint8
+{
+	Linear,
+	EaseIn,
+	EaseOut,
+	EaseInOut,
+	COUNT
+};
+
 /**
  *
  */
@@ -33,7 +43,7 @@ public:
 	ULyraCameraMode(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	void UpdateCameraMode(float DeltaTime);
-	void UpdateView(float DeltaTime);
+	virtual void UpdateView(float DeltaTime);
 	void UpdateBlending(float DeltaTime);
 
 	ULyraCameraComponent* GetLyraCameraComponent() const;
@@ -60,6 +70,11 @@ public:
 
 	float BlendAlpha;
 	float BlendWeight;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Blending")
+	float BlendExponent;
+
+	ELyraCameraModeBlendFunction BlendFunction;
 };
 
 UCLASS()

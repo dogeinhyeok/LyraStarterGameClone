@@ -2,6 +2,7 @@
 
 #include "LyraCameraComponent.h"
 #include "LyraCameraMode.h"
+#include "GameFramework/Pawn.h"
 
 ULyraCameraComponent::ULyraCameraComponent(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -25,6 +26,34 @@ void ULyraCameraComponent::GetCameraView(float DeltaTime, FMinimalViewInfo& Desi
 
 	FLyraCameraModeView CameraModeView;
 	CameraModeStack->EvaluateStack(DeltaTime, CameraModeView);
+
+	if (APawn* TargetPawn = Cast<APawn>(GetTargetActor()))
+	{
+		if (APlayerController* PlayerController = TargetPawn->GetController<APlayerController>())
+		{
+			PlayerController->SetControlRotation(CameraModeView.ControlRotation);
+		}
+	}
+
+	SetWorldLocationAndRotation(CameraModeView.Location, CameraModeView.Rotation);
+
+	FieldOfView = CameraModeView.FieldOfView;
+
+	DesiredView.Location = CameraModeView.Location;
+	DesiredView.Rotation = CameraModeView.Rotation;
+	DesiredView.FOV = CameraModeView.FieldOfView;
+	DesiredView.OrthoWidth = OrthoWidth;
+	DesiredView.OrthoNearClipPlane = OrthoNearClipPlane;
+	DesiredView.OrthoFarClipPlane = OrthoFarClipPlane;
+	DesiredView.AspectRatio = AspectRatio;
+	DesiredView.bConstrainAspectRatio = bConstrainAspectRatio;
+	DesiredView.bUseFieldOfViewForLOD = bUseFieldOfViewForLOD;
+	DesiredView.ProjectionMode = ProjectionMode;
+	DesiredView.PostProcessBlendWeight = PostProcessBlendWeight;
+	if (PostProcessBlendWeight > 0.0f)
+	{
+		DesiredView.PostProcessSettings = PostProcessSettings;
+	}
 }
 
 UE_DISABLE_OPTIMIZATION

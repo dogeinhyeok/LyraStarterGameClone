@@ -16,6 +16,29 @@ FLyraCameraModeView::FLyraCameraModeView()
 {
 }
 
+void FLyraCameraModeView::Blend(const FLyraCameraModeView& Other, float OtherWeight)
+{
+	if (OtherWeight <= 0.0f)
+	{
+		return;
+	}
+	else if (OtherWeight >= 1.0f)
+	{
+		*this = Other;
+		return;
+	}
+
+	Location = FMath::Lerp(Location, Other.Location, OtherWeight);
+
+	const FRotator DeltaRotation = (Other.Rotation - Rotation).GetNormalized();
+	Rotation = Rotation + (DeltaRotation * OtherWeight);
+
+	const FRotator DeltaControlRotation = (Other.ControlRotation - ControlRotation).GetNormalized();
+	ControlRotation = ControlRotation + (DeltaControlRotation * OtherWeight);
+
+	FieldOfView = FMath::Lerp(FieldOfView, Other.FieldOfView, OtherWeight);
+}
+
 ULyraCameraMode::ULyraCameraMode(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
@@ -26,6 +49,9 @@ ULyraCameraMode::ULyraCameraMode(const FObjectInitializer& ObjectInitializer)
 	BlendTime = 0.0f;
 	BlendAlpha = 1.0f;
 	BlendWeight = 1.0f;
+
+	BlendFunction = ELyraCameraModeBlendFunction::EaseOut;
+	BlendExponent = 4.0f;
 }
 
 void ULyraCameraMode::UpdateCameraMode(float DeltaTime)
@@ -74,7 +100,38 @@ FRotator ULyraCameraMode::GetPivotRotation() const
 	return TargetActor->GetActorRotation();
 }
 
-void ULyraCameraMode::UpdateBlending(float DeltaTime) {}
+void ULyraCameraMode::UpdateBlending(float DeltaTime)
+{
+	if (BlendTime > 0.f)
+	{
+		BlendAlpha += (DeltaTime / BlendTime);
+	}
+	else
+	{
+		BlendAlpha = 1.0f;
+	}
+
+	const float Exponent = (BlendExponent > 0.f) ? BlendExponent : 1.0f;
+	switch (BlendFunction)
+	{
+		case ELyraCameraModeBlendFunction::Linear:
+			BlendWeight = BlendAlpha;
+			break;
+		case ELyraCameraModeBlendFunction::EaseIn:
+			BlendWeight = FMath::InterpEaseIn(0.0f, 1.0f, BlendAlpha, Exponent);
+			break;
+		case ELyraCameraModeBlendFunction::EaseOut:
+			BlendWeight = FMath::InterpEaseOut(0.0f, 1.0f, BlendAlpha, Exponent);
+			break;
+		case ELyraCameraModeBlendFunction::EaseInOut:
+			BlendWeight = FMath::InterpEaseInOut(0.0f, 1.0f, BlendAlpha, Exponent);
+			break;
+		default:
+			checkf(
+				false, TEXT("UpdateBlending: Invalid BlendFunction: %d\n"), (uint8)BlendFunction);
+			break;
+	}
+}
 
 ULyraCameraComponent* ULyraCameraMode::GetLyraCameraComponent() const
 {
@@ -202,4 +259,24 @@ void ULyraCameraModeStack::UpdateStack(float DeltaTime)
 	}
 }
 
-void ULyraCameraModeStack::BlendStack(FLyraCameraModeView& OutCameraModeView) const {}
+void ULyraCameraModeStack::BlendStack(FLyraCameraModeView& OutCameraModeView) const
+{
+	const int32 StackSize = CameraModeStack.Num();
+	if (StackSize <= 0)
+	{
+		return;
+	}
+
+	const ULyraCameraMode* CameraMode = CameraModeStack[StackSize - 1];
+	check(CameraMode);
+
+	OutCameraModeView = CameraMode->View;
+
+	for (int32 StackIndex = StackSize - 2; StackIndex >= 0; --StackIndex)
+	{
+		CameraMode = CameraModeStack[StackIndex];
+		check(CameraMode);
+
+		OutCameraModeView.Blend(CameraMode->View, CameraMode->BlendWeight);
+	}
+}
