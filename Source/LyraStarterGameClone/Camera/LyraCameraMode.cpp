@@ -4,6 +4,7 @@
 
 #include "LyraCameraComponent.h"
 #include "LyraPlayerCameraManager.h"
+#include "GameFramework/Pawn.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(LyraCameraMode)
 
@@ -62,7 +63,15 @@ FVector ULyraCameraMode::GetPivotLocation() const
 
 FRotator ULyraCameraMode::GetPivotRotation() const
 {
-	return View.Rotation;
+	const AActor* TargetActor = GetTargetActor();
+	check(TargetActor);
+
+	if (const APawn* TargetPawn = Cast<APawn>(TargetActor))
+	{
+		return TargetPawn->GetViewRotation();
+	}
+
+	return TargetActor->GetActorRotation();
 }
 
 void ULyraCameraMode::UpdateBlending(float DeltaTime) {}
