@@ -6,7 +6,7 @@
 #include "../LyraGameplayTags.h"
 #include "LyraPawnData.h"
 
-const FName ULyraPawnExtensionComponent::NAME_ActorFeatureName = TEXT("PawnExtension");
+const FName ULyraPawnExtensionComponent::NAME_ActorFeatureName("PawnExtension");
 
 ULyraPawnExtensionComponent::ULyraPawnExtensionComponent(
 	const FObjectInitializer& ObjectInitializer)
@@ -19,7 +19,8 @@ ULyraPawnExtensionComponent::ULyraPawnExtensionComponent(
 void ULyraPawnExtensionComponent::SetPawnData(const ULyraPawnData* InPawnData)
 {
 	APawn* Pawn = GetPawnChecked<APawn>();
-	if (Pawn->GetLocalRole() == ROLE_Authority)
+
+	if (Pawn->GetLocalRole() != ROLE_Authority)
 	{
 		return;
 	}

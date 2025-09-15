@@ -27,16 +27,15 @@ public:
 
 	static ULyraPawnExtensionComponent* FindPawnExtensionComponent(const AActor* Actor)
 	{
-		return Actor ? Actor->FindComponentByClass<ULyraPawnExtensionComponent>() : nullptr;
+		return (Actor ? Actor->FindComponentByClass<ULyraPawnExtensionComponent>() : nullptr);
 	}
 
 	template <class T> const T* GetPawnData() const { return Cast<T>(PawnData); }
 	void SetPawnData(const ULyraPawnData* InPawnData);
-
 	void SetupPlayerInputComponent();
 
-	virtual void OnRegister() override;
-	virtual void BeginPlay() override;
+	virtual void OnRegister() final;
+	virtual void BeginPlay() final;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) final;
 
 	virtual FName GetFeatureName() const final { return NAME_ActorFeatureName; };

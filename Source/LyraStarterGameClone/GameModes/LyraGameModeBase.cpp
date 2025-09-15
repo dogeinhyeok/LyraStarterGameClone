@@ -9,16 +9,12 @@
 #include "LyraExperienceDefinition.h"
 #include "LyraExperienceManagerComponent.h"
 #include "LyraGameState.h"
-#include "../Character/LyraPawnData.h"
-#include "../Character/LyraCharacter.h"
 #include "../LogChannels.h"
+#include "../Character/LyraCharacter.h"
 #include "../Player/LyraPlayerController.h"
 #include "../Player/LyraPlayerState.h"
-#include "Engine/World.h"
-#include "LyraStarterGameClone/Character/LyraPawnExtensionComponent.h"
-#include "Misc/CoreMiscDefines.h"
-#include "TimerManager.h"
-#include "UObject/PrimaryAssetId.h"
+#include "../Character/LyraPawnData.h"
+#include "../Character/LyraPawnExtensionComponent.h"
 
 /**
  * ALyraGameModeBase 생성자 - 게임 모드의 기본 클래스들을 설정
@@ -146,8 +142,6 @@ void ALyraGameModeBase::OnMatchAssignmentGiven(FPrimaryAssetId ExperienceId)
 	ULyraExperienceManagerComponent* ExperienceManagerComponent =
 		GameState->FindComponentByClass<ULyraExperienceManagerComponent>();
 	check(ExperienceManagerComponent);
-
-	UE_LOG(LogLyra, Log, TEXT("HandleStartingNewPlayer_Implementation is called"));
 	ExperienceManagerComponent->ServerSetCurrentExperience(ExperienceId);
 }
 

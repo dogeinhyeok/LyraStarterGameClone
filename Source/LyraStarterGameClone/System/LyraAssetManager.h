@@ -81,7 +81,7 @@ template <typename AssetType>
 TSubclassOf<AssetType> ULyraAssetManager::GetSubclass(
 	const TSoftClassPtr<AssetType>& AssetPointer, bool bkeepInMemory)
 {
-	TSubclassOf<AssetType> LoadedSubclass = nullptr;
+	TSubclassOf<AssetType> LoadedSubclass;
 	// 소프트 포인터에서 실제 클래스 경로를 가져옴
 	const FSoftObjectPath AssetPath = AssetPointer.ToSoftObjectPath();
 

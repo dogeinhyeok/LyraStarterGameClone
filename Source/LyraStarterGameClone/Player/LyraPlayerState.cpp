@@ -48,7 +48,6 @@ void ALyraPlayerState::OnExperienceLoaded(const ULyraExperienceDefinition* Curre
 void ALyraPlayerState::SetPawnData(const ULyraPawnData* InPawnData)
 {
 	check(InPawnData);
-
 	check(!PawnData);
 	PawnData = InPawnData;
 }

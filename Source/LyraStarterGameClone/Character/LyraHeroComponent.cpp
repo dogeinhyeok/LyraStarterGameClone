@@ -10,7 +10,7 @@
 #include "../Player/LyraPlayerController.h"
 #include "../Player/LyraPlayerState.h"
 
-const FName ULyraHeroComponent::NAME_ActorFeatureName = TEXT("Hero");
+const FName ULyraHeroComponent::NAME_ActorFeatureName("Hero");
 
 ULyraHeroComponent::ULyraHeroComponent(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)

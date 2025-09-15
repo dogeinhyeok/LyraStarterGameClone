@@ -1,10 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LyraAssetManager.h"
-#include "Engine/Engine.h"
-#include "Misc/CommandLine.h"
-#include "../LogChannels.h"
 #include "../LyraGameplayTags.h"
+#include "../LogChannels.h"
 
 /**
  * AssetManager 싱글톤 인스턴스를 가져오는 함수
@@ -13,10 +11,10 @@
 ULyraAssetManager& ULyraAssetManager::Get()
 {
 	// GEngine이 존재하는지 확인 (게임이 제대로 초기화되었는지 체크)
-	check(GEngine)
+	check(GEngine);
 
-		// GEngine의 AssetManager가 우리가 만든 LyraAssetManager 타입인지 확인
-		if (ULyraAssetManager* Singleton = Cast<ULyraAssetManager>(GEngine->AssetManager))
+	// GEngine의 AssetManager가 우리가 만든 LyraAssetManager 타입인지 확인
+	if (ULyraAssetManager* Singleton = Cast<ULyraAssetManager>(GEngine->AssetManager))
 	{
 		// 맞다면 해당 인스턴스를 반환
 		return *Singleton;
@@ -31,27 +29,9 @@ ULyraAssetManager& ULyraAssetManager::Get()
 }
 
 /**
- * 에셋 로딩 로그를 출력할지 결정하는 함수
- * 명령줄에 -LogAssetLoads 파라미터가 있으면 로그를 출력
- */
-bool ULyraAssetManager::ShouldLogAssetLoads()
-{
-	// 현재 실행 중인 프로그램의 명령줄 인수들을 가져옴
-	const TCHAR* CommandLineContent = FCommandLine::Get();
-
-	// 명령줄에서 "LogAssetLoads" 파라미터가 있는지 확인
-	// static으로 한 번만 계산하고 결과를 캐시
-	static bool bLogAssetLoads = FParse::Param(CommandLineContent, TEXT("LogAssetLoads"));
-
-	// 현재는 항상 true를 반환 (디버깅용)
-	return true;
-}
-
-/**
  * 게임 시작 시 초기 에셋들을 로딩하는 함수
  * UE_DISABLE_OPTIMIZATION: 컴파일러 최적화를 비활성화 (디버깅이나 성능 측정 시 유용)
  */
-UE_DISABLE_OPTIMIZATION
 void ULyraAssetManager::StartInitialLoading()
 {
 	// 부모 클래스(UAssetManager)의 초기 로딩 함수 호출
@@ -60,12 +40,20 @@ void ULyraAssetManager::StartInitialLoading()
 
 	FLyraGameplayTags::InitializeNativeTags();
 }
-UE_ENABLE_OPTIMIZATION
+
+/**
+ * 에셋 로딩 로그를 출력할지 결정하는 함수
+ * 명령줄에 -LogAssetLoads 파라미터가 있으면 로그를 출력
+ */
+bool ULyraAssetManager::ShouldLogAssetLoads()
+{
+	const TCHAR* CommandLineContent = FCommandLine::Get();
+	static bool bLogAssetLoads = FParse::Param(CommandLineContent, TEXT("LogAssetLoads"));
+	return bLogAssetLoads;
+}
 
 /**
  * 에셋을 동기적으로 로딩하는 함수 (로딩이 완료될 때까지 기다림)
- * @param AssetPath 로딩할 에셋의 경로
- * @return 로딩된 에셋 객체, 실패 시 nullptr
  */
 UObject* ULyraAssetManager::SynchronousLoadAsset(const FSoftObjectPath& AssetPath)
 {
@@ -84,7 +72,7 @@ UObject* ULyraAssetManager::SynchronousLoadAsset(const FSoftObjectPath& AssetPat
 		}
 
 		// AssetManager가 초기화되었는지 확인
-		if (UAssetManager::IsInitialized())
+		if (UAssetManager::IsValid())
 		{
 			// StreamableManager를 통해 동기적으로 에셋 로딩
 			return UAssetManager::GetStreamableManager().LoadSynchronous(AssetPath);
@@ -105,13 +93,9 @@ UObject* ULyraAssetManager::SynchronousLoadAsset(const FSoftObjectPath& AssetPat
  */
 void ULyraAssetManager::AddLoadedAsset(const UObject* Asset)
 {
-	// 에셋이 유효한지 확인 (nullptr이면 에러 발생)
 	if (ensureAlways(Asset))
 	{
-		// 멀티스레드 환경에서 안전하게 접근하기 위한 락
 		FScopeLock Lock(&SyncObject);
-
-		// 로딩된 에셋 목록에 추가 (const_cast로 const 제거)
 		LoadedAssets.Add(const_cast<UObject*>(Asset));
 	}
 }

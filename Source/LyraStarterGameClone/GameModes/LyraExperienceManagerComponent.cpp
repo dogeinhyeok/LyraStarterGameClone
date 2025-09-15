@@ -12,7 +12,7 @@ void ULyraExperienceManagerComponent::CallOrRegister_OnExperienceLoaded(
 {
 	if (IsExperienceLoaded())
 	{
-		Delegate.ExecuteIfBound(CurrentExperience);
+		Delegate.Execute(CurrentExperience);
 	}
 	else
 	{
@@ -82,7 +82,7 @@ void ULyraExperienceManagerComponent::StartExperienceLoad()
 	{
 		Handle->BindCompleteDelegate(OnAssetsLoadedDelegate);
 		Handle->BindCancelDelegate(FStreamableDelegate::CreateLambda(
-			[OnAssetsLoadedDelegate]() { OnAssetsLoadedDelegate.ExecuteIfBound(); }));
+			[OnAssetsLoadedDelegate] { OnAssetsLoadedDelegate.ExecuteIfBound(); }));
 	}
 
 	static int32 StartExperienceLoad_FrameNumber = GFrameNumber;
