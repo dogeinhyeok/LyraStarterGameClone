@@ -7,6 +7,7 @@
 #include "LyraPawnData.generated.h"
 
 class ULyraCameraMode;
+class ULyraInputConfig;
 
 /**
  * Pawn 데이터: 캐릭터 클래스와 설정을 저장하는 데이터 에셋
@@ -24,4 +25,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Lyra|Pawn")
 	TSubclassOf<ULyraCameraMode> DefaultCameraMode;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Lyra|InputConfig")
+	TObjectPtr<ULyraInputConfig> InputConfig;
 };

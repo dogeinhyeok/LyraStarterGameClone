@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "Components/GameFrameworkInitStateInterface.h"
 #include "Components/PawnComponent.h"
+#include "../Input/LyraMappableConfigPair.h"
 #include "LyraHeroComponent.generated.h"
 
+struct FInputActionValue;
 class ULyraCameraMode;
 
 /**
@@ -37,4 +39,10 @@ public:
 	virtual void CheckDefaultInitialization() final;
 
 	TSubclassOf<ULyraCameraMode> DetermineCameraMode() const;
+	void InitializePlayerInput(UInputComponent* PlayerInputComponent);
+	void Input_Move(const FInputActionValue& InputActionValue);
+	void Input_LookMouse(const FInputActionValue& InputActionValue);
+
+	UPROPERTY(EditAnywhere)
+	TArray<FLyraMappableConfigPair> DefaultInputConfigs;
 };

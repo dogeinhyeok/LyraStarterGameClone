@@ -3,6 +3,10 @@
 #include "LyraHeroComponent.h"
 #include "LyraPawnData.h"
 #include "LyraPawnExtensionComponent.h"
+#include "PlayerMappableInputConfig.h"
+#include "../Input/LyraMappableConfigPair.h"
+#include "../Input/LyraInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 #include "Components/GameFrameworkComponentManager.h"
 #include "../LyraGameplayTags.h"
 #include "../LogChannels.h"
@@ -146,6 +150,14 @@ void ULyraHeroComponent::HandleChangeInitState(
 					this, &ThisClass::DetermineCameraMode);
 			}
 		}
+
+		if (ALyraPlayerController* LyraPlayerController = GetController<ALyraPlayerController>())
+		{
+			if (Pawn->InputComponent != nullptr)
+			{
+				InitializePlayerInput(Pawn->InputComponent);
+			}
+		}
 	}
 }
 
@@ -179,3 +191,106 @@ TSubclassOf<ULyraCameraMode> ULyraHeroComponent::DetermineCameraMode() const
 	return nullptr;
 }
 UE_ENABLE_OPTIMIZATION
+
+void ULyraHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputComponent)
+{
+	check(PlayerInputComponent);
+
+	const APawn* Pawn = GetPawn<APawn>();
+
+	if (!Pawn)
+	{
+		return;
+	}
+
+	const APlayerController* PlayerController = Pawn->GetController<APlayerController>();
+	check(PlayerController);
+
+	const ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer();
+	check(LocalPlayer);
+
+	UEnhancedInputLocalPlayerSubsystem* Subsystem =
+		LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
+	check(Subsystem);
+
+	Subsystem->ClearAllMappings();
+
+	if (const ULyraPawnExtensionComponent* PawnExtComp =
+			ULyraPawnExtensionComponent::FindPawnExtensionComponent(Pawn))
+	{
+		if (const ULyraPawnData* PawnData = PawnExtComp->GetPawnData<ULyraPawnData>())
+		{
+			if (const ULyraInputConfig* InputConfig = PawnData->InputConfig)
+			{
+				const FLyraGameplayTags& GameplayTags = FLyraGameplayTags::Get();
+
+				for (const FLyraMappableConfigPair& Pair : DefaultInputConfigs)
+				{
+					if (Pair.bShouldActivateAutomatically)
+					{
+						FModifyContextOptions Options = {};
+						Options.bIgnoreAllPressedKeysUntilRelease = false;
+
+						// Subsystem->AddPlayerMappableConfig(Pair.Config.LoadSynchronous(),
+						// Options);
+					}
+				}
+
+				ULyraInputComponent* LyraInputComponent =
+					CastChecked<ULyraInputComponent>(PlayerInputComponent);
+				{
+					LyraInputComponent->BindNativeAction(InputConfig, GameplayTags.InputTag_Move,
+						ETriggerEvent::Triggered, this, &ThisClass::Input_Move, false);
+					LyraInputComponent->BindNativeAction(InputConfig,
+						GameplayTags.InputTag_Look_Mouse, ETriggerEvent::Triggered, this,
+						&ThisClass::Input_LookMouse, false);
+				}
+			}
+		}
+	}
+}
+
+void ULyraHeroComponent::Input_Move(const FInputActionValue& InputActionValue)
+{
+	APawn* Pawn = GetPawn<APawn>();
+	AController* Controller = Pawn ? Pawn->GetController() : nullptr;
+
+	if (Controller)
+	{
+		const FVector2D Value = InputActionValue.Get<FVector2D>();
+		const FRotator MovementRotation(0.0f, Controller->GetControlRotation().Yaw, 0.0f);
+
+		if (Value.X != 0.0f)
+		{
+			const FVector MovementDirection = MovementRotation.RotateVector(FVector::RightVector);
+			Pawn->AddMovementInput(MovementDirection, Value.X);
+		}
+
+		if (Value.Y != 0.0f)
+		{
+			const FVector MovementDirection = MovementRotation.RotateVector(FVector::ForwardVector);
+			Pawn->AddMovementInput(MovementDirection, Value.Y);
+		}
+	}
+}
+
+void ULyraHeroComponent::Input_LookMouse(const FInputActionValue& InputActionValue)
+{
+	APawn* Pawn = GetPawn<APawn>();
+	if (!Pawn)
+	{
+		return;
+	}
+
+	const FVector2D Value = InputActionValue.Get<FVector2D>();
+	if (Value.X != 0.0f)
+	{
+		Pawn->AddControllerYawInput(Value.X);
+	}
+
+	if (Value.Y != 0.0f)
+	{
+		double AimInversionValue = -Value.Y;
+		Pawn->AddControllerPitchInput(AimInversionValue);
+	}
+}

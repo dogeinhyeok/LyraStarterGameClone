@@ -44,4 +44,7 @@ void FLyraGameplayTags::AddAllTags(UGameplayTagsManager* Manager)
 		"3: The available data has been initialized for this actor/component, but it is not ready for full gameplay");
 	AddTag(InitState_GameplayReady, "InitState.GameplayReady",
 		"4: The actor/component is fully ready for active gameplay");
+
+	AddTag(InputTag_Move, "InputTag.Move", "1: Actor/Component is moving");
+	AddTag(InputTag_Look_Mouse, "InputTag.Look.Mouse", "2: Actor/Component is looking with mouse");
 }
