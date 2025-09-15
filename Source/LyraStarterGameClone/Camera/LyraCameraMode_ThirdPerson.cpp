@@ -16,6 +16,11 @@ void ULyraCameraMode_ThirdPerson::UpdateView(float DeltaTime)
 
 	PivotRotation.Pitch = FMath::ClampAngle(PivotRotation.Pitch, ViewPitchMin, ViewPitchMax);
 
+	// View.Rotation = PivotRotation;
+	// View.Location = PivotLocation;
+	// View.ControlRotation = View.Rotation;
+	// View.FieldOfView = FieldOfView;
+
 	if (TargetOffsetCurve)
 	{
 		const FVector TargetOffset = TargetOffsetCurve->GetVectorValue(PivotRotation.Pitch);

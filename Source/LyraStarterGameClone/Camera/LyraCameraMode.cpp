@@ -195,7 +195,7 @@ void ULyraCameraModeStack::PushCameraMode(TSubclassOf<ULyraCameraMode>& CameraMo
 		if (CameraModeStack[StackIndex] == CameraMode)
 		{
 			ExistingStackIndex = StackIndex;
-			ExistingStackContribution = 1.0f - CameraModeStack[StackIndex]->BlendWeight;
+			ExistingStackContribution *= CameraMode->BlendWeight;
 			break;
 		}
 		else
@@ -272,7 +272,7 @@ void ULyraCameraModeStack::BlendStack(FLyraCameraModeView& OutCameraModeView) co
 
 	OutCameraModeView = CameraMode->View;
 
-	for (int32 StackIndex = StackSize - 2; StackIndex >= 0; --StackIndex)
+	for (int32 StackIndex = (StackSize - 2); StackIndex >= 0; --StackIndex)
 	{
 		CameraMode = CameraModeStack[StackIndex];
 		check(CameraMode);

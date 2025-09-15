@@ -4,7 +4,6 @@
 #include "Components/GameFrameworkComponentManager.h"
 #include "../LogChannels.h"
 #include "../LyraGameplayTags.h"
-#include "Components/GameFrameworkInitStateInterface.h"
 #include "LyraPawnData.h"
 
 const FName ULyraPawnExtensionComponent::NAME_ActorFeatureName = TEXT("PawnExtension");
@@ -38,7 +37,7 @@ void ULyraPawnExtensionComponent::SetupPlayerInputComponent()
 	CheckDefaultInitialization();
 }
 
-UE_DISABLE_OPTIMIZATION void ULyraPawnExtensionComponent::OnRegister()
+void ULyraPawnExtensionComponent::OnRegister()
 {
 	Super::OnRegister();
 
@@ -57,7 +56,6 @@ UE_DISABLE_OPTIMIZATION void ULyraPawnExtensionComponent::OnRegister()
 	UGameFrameworkComponentManager* Manager =
 		UGameFrameworkComponentManager::GetForActor(GetOwningActor());
 }
-UE_ENABLE_OPTIMIZATION
 
 void ULyraPawnExtensionComponent::BeginPlay()
 {
@@ -83,7 +81,7 @@ void ULyraPawnExtensionComponent::OnActorInitStateChanged(
 	if (Params.FeatureName != NAME_ActorFeatureName)
 	{
 		const FLyraGameplayTags& InitTags = FLyraGameplayTags::Get();
-		if (Params.FeatureState == InitTags.InitState_GameplayReady)
+		if (Params.FeatureState == InitTags.InitState_DataAvailable)
 		{
 			CheckDefaultInitialization();
 		}
@@ -109,7 +107,7 @@ bool ULyraPawnExtensionComponent::CanChangeInitState(UGameFrameworkComponentMana
 	if (CurrentState == InitTags.InitState_Spawned
 		&& DesiredState == InitTags.InitState_DataAvailable)
 	{
-		if (Pawn)
+		if (!PawnData)
 		{
 			return false;
 		}

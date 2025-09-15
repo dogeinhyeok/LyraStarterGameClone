@@ -172,7 +172,7 @@ void ALyraGameModeBase::OnExperienceLoaded(const ULyraExperienceDefinition* Curr
 		 Iterator; ++Iterator)
 	{
 		APlayerController* PlayerController = Cast<APlayerController>(*Iterator);
-		check(PlayerController);
+
 		if (PlayerController && PlayerController->GetPawn() == nullptr)
 		{
 			if (PlayerCanRestart(PlayerController))
@@ -209,7 +209,6 @@ const ULyraPawnData* ALyraGameModeBase::GetPawnDataForController(AController* In
 	{
 		const ULyraExperienceDefinition* Experience =
 			ExperienceManagerComponent->GetCurrentExperienceChecked();
-		check(Experience);
 		if (Experience->DefaultPawnData)
 		{
 			return Experience->DefaultPawnData;

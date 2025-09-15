@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LyraHeroComponent.h"
-#include "LyraPawnExtensionComponent.h"
 #include "LyraPawnData.h"
+#include "LyraPawnExtensionComponent.h"
 #include "Components/GameFrameworkComponentManager.h"
 #include "../LyraGameplayTags.h"
 #include "../LogChannels.h"

@@ -3,9 +3,9 @@
 // Experience 관리자: Experience 로딩을 관리하고 완료 시 델리게이트를 브로드캐스트하는 컴포넌트
 
 #include "LyraExperienceManagerComponent.h"
+#include "GameFeaturesSubsystemSettings.h"
 #include "LyraExperienceDefinition.h"
 #include "../System/LyraAssetManager.h"
-#include "GameFeaturesSubsystemSettings.h"
 
 void ULyraExperienceManagerComponent::CallOrRegister_OnExperienceLoaded(
 	FOnLyraExperienceLoaded::FDelegate&& Delegate)
@@ -40,7 +40,6 @@ void ULyraExperienceManagerComponent::ServerSetCurrentExperience(FPrimaryAssetId
 	StartExperienceLoad();
 }
 
-UE_DISABLE_OPTIMIZATION
 void ULyraExperienceManagerComponent::StartExperienceLoad()
 {
 	check(CurrentExperience);
@@ -83,12 +82,11 @@ void ULyraExperienceManagerComponent::StartExperienceLoad()
 	{
 		Handle->BindCompleteDelegate(OnAssetsLoadedDelegate);
 		Handle->BindCancelDelegate(FStreamableDelegate::CreateLambda(
-			[OnAssetsLoadedDelegate] { OnAssetsLoadedDelegate.ExecuteIfBound(); }));
+			[OnAssetsLoadedDelegate]() { OnAssetsLoadedDelegate.ExecuteIfBound(); }));
 	}
 
 	static int32 StartExperienceLoad_FrameNumber = GFrameNumber;
 }
-UE_ENABLE_OPTIMIZATION
 
 void ULyraExperienceManagerComponent::OnExperienceLoadComplete()
 {
