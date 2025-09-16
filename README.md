@@ -79,19 +79,38 @@ PrivateDependencyModuleNames.AddRange(new string[] {
 });
 ```
 
-2. 프로젝트 파일 재생성: `.Build.cs` 파일 변경사항을 반영하여 Visual Studio 프로젝트 파일을 다시 생성합니다.
+2. 플러그인 등록 (필요한 경우): 플러그인의 `.uplugin` 파일에 `"ExplicitlyLoaded": true`가 설정된 경우에만 `LyraStarterGameClone.uproject` 파일의 `Plugins` 배열에 플러그인을 추가합니다.
+
+```json
+"Plugins": [
+    {
+        "Name": "플러그인이름",  // 예: "ShooterCore"
+        "Enabled": true
+    }
+]
+```
+
+> **참고**: `"ExplicitlyLoaded": true`가 없는 플러그인(예: `CommonUser`)은 이 단계를 건너뛸 수 있습니다.
+
+3. 프로젝트 파일 재생성: `.Build.cs` 파일과 `.uproject` 파일 변경사항을 반영하여 Visual Studio 프로젝트 파일을 다시 생성합니다.
 
 ```powershell
 & "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" -projectfiles -project="$PWD\LyraStarterGameClone.uproject" -game -rocket -progress
 ```
 
-3. 컴파일 데이터베이스 재생성: VSCode 또는 Cursor의 clangd가 헤더 파일을 찾을 수 있도록 `compile_commands.json` 파일을 다시 생성합니다.
+4. 컴파일 데이터베이스 재생성: VSCode 또는 Cursor의 clangd가 헤더 파일을 찾을 수 있도록 `compile_commands.json` 파일을 다시 생성합니다.
 
 ```powershell
 & "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" -mode=GenerateClangDatabase -project="$PWD\LyraStarterGameClone.uproject" -game -engine LyraStarterGameCloneEditor Win64 Development
 ```
 
-4. clangd 재시작: Cursor에서 `Ctrl + Shift + P` → "clangd: Restart language server"를 실행합니다.
+5. 컴파일 데이터베이스 복사: 생성된 `compile_commands.json` 파일을 clangd가 읽을 수 있는 위치로 복사합니다. 터미널에서 "ClangDatabase written to" 메시지를 확인하여 실제 생성 위치를 파악한 후 복사합니다.
+
+```powershell
+Copy-Item "C:\Program Files\Epic Games\UE_5.6\compile_commands.json" ".vscode\unreal-clangd\compile_commands.json" -Force
+```
+
+6. clangd 재시작: Cursor에서 `Ctrl + Shift + P` → "clangd: Restart language server"를 실행합니다.
 
 ### Visual Studio로 개발하기
 

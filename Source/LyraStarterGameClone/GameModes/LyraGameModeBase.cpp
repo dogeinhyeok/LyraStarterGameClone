@@ -15,6 +15,7 @@
 #include "../Player/LyraPlayerState.h"
 #include "../Character/LyraPawnData.h"
 #include "../Character/LyraPawnExtensionComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 /**
  * ALyraGameModeBase 생성자 - 게임 모드의 기본 클래스들을 설정
@@ -123,6 +124,15 @@ void ALyraGameModeBase::HandleMatchAssignmentIfNotExpectingOne()
 	FPrimaryAssetId ExperienceId;
 
 	UWorld* World = GetWorld();
+
+	if (!ExperienceId.IsValid() && UGameplayStatics::HasOption(OptionsString, TEXT("Experience")))
+	{
+		const FString ExperienceFromOptions =
+			UGameplayStatics::ParseOption(OptionsString, TEXT("Experience"));
+		ExperienceId =
+			FPrimaryAssetId(FPrimaryAssetType(ULyraExperienceDefinition::StaticClass()->GetFName()),
+				FName(*ExperienceFromOptions));
+	}
 
 	if (!ExperienceId.IsValid())
 	{

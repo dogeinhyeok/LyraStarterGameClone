@@ -21,8 +21,9 @@ public class LyraStarterGameClone : ModuleRules
             "EnhancedInput",
 		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] { 
-			"CommonUser"
+		PrivateDependencyModuleNames.AddRange(new string[] {
+            "CommonUser",
+            "ShooterCoreRuntime",
 		});
 
 		// Uncomment if you are using Slate UI
