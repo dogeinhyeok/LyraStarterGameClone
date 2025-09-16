@@ -13,6 +13,7 @@
 #include "../Camera/LyraCameraComponent.h"
 #include "../Player/LyraPlayerController.h"
 #include "../Player/LyraPlayerState.h"
+#include "Engine/LocalPlayer.h"
 
 const FName ULyraHeroComponent::NAME_ActorFeatureName("Hero");
 
@@ -231,6 +232,7 @@ void ULyraHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputCompo
 						FModifyContextOptions Options = {};
 						Options.bIgnoreAllPressedKeysUntilRelease = false;
 
+						// Deprecated: UPlayerMappableInputConfig가 더 이상 사용되지 않음
 						// Subsystem->AddPlayerMappableConfig(Pair.Config.LoadSynchronous(),
 						// Options);
 					}

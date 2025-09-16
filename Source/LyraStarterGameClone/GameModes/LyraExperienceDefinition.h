@@ -6,6 +6,8 @@
 #include "Engine/DataAsset.h"
 #include "LyraExperienceDefinition.generated.h"
 
+class ULyraExperienceActionSet;
+class UGameFeatureAction;
 class ULyraPawnData;
 
 /**
@@ -31,4 +33,10 @@ public:
 	 */
 	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
 	TArray<FString> GameFeaturesToEnable;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Gameplay")
+	TArray<TObjectPtr<ULyraExperienceActionSet>> ActionSets;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
+	TArray<TObjectPtr<UGameFeatureAction>> Actions;
 };

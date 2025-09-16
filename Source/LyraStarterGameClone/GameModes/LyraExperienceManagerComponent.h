@@ -14,6 +14,7 @@ enum class ELyraExperienceLoadState : uint8
 	Unloaded,
 	Loading,
 	LoadingGameFeatures,
+	ExecutingActions,
 	Loaded,
 	Deactivated,
 };

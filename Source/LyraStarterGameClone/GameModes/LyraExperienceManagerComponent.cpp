@@ -7,6 +7,8 @@
 #include "LyraExperienceDefinition.h"
 #include "GameFeaturesSubsystem.h"
 #include "GameFeaturesSubsystemSettings.h"
+#include "GameFeatureAction.h"
+#include "LyraExperienceActionSet.h"
 #include "../System/LyraAssetManager.h"
 
 void ULyraExperienceManagerComponent::CallOrRegister_OnExperienceLoaded(
@@ -143,6 +145,39 @@ void ULyraExperienceManagerComponent::OnGameFeaturePluginLoadComplete(
 void ULyraExperienceManagerComponent::OnExperienceFullLoadCompleted()
 {
 	check(LoadState != ELyraExperienceLoadState::Loaded);
+
+	{
+		LoadState = ELyraExperienceLoadState::ExecutingActions;
+
+		FGameFeatureActivatingContext Context;
+		{
+			const FWorldContext* ExistWorldContext = GEngine->GetWorldContextFromWorld(GetWorld());
+			if (ExistWorldContext)
+			{
+				Context.SetRequiredWorldContextHandle(ExistWorldContext->ContextHandle);
+			}
+		}
+
+		auto ActivateListOfActions = [&Context](const TArray<UGameFeatureAction*>& ActionList) {
+			for (UGameFeatureAction* Action : ActionList)
+			{
+				if (Action)
+				{
+					Action->OnGameFeatureRegistering();
+					Action->OnGameFeatureLoading();
+					Action->OnGameFeatureActivating(Context);
+				}
+			}
+		};
+
+		ActivateListOfActions(CurrentExperience->Actions);
+
+		for (const TObjectPtr<ULyraExperienceActionSet>& ActionSet : CurrentExperience->ActionSets)
+		{
+			ActivateListOfActions(ActionSet->Actions);
+		}
+	}
+
 	LoadState = ELyraExperienceLoadState::Loaded;
 	OnExperienceLoaded.Broadcast(CurrentExperience);
 	OnExperienceLoaded.Clear();
