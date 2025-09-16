@@ -3,6 +3,7 @@ If:
   PathMatch:
     - .vscode/unreal-clangd/completionHelper.cpp
     - Source/.*\.(cpp|h)
+    - Plugins/.*\.(cpp|h)
 CompileFlags:
   CompilationDatabase: .vscode/unreal-clangd
   Compiler: c:/Program Files/LLVM/bin/clang-cl.exe
@@ -10,6 +11,9 @@ CompileFlags:
     - /std:c++20
     - /FIC:\project\LyraStarterGameClone\.vscode\unreal-clangd\macroCompletionHelper.h
     - /TP
+    - -I./Plugins/*/Source/*/Public
+    - -I./Plugins/*/Source/*/Private
+    - -I./Plugins/*/Source/*
     - -mwaitpkg
     - /we4668
     - /wd4244
@@ -75,7 +79,7 @@ CompileFlags:
     - -Wno-unused-value
     - -Wno-bitfield-enum-conversion
 InlayHints:
-  Enabled: Yes
+  Enabled: No
   DeducedTypes: Yes
   ParameterNames: Yes
   Designators: Yes
