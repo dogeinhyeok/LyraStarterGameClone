@@ -5,6 +5,8 @@
 #include "LyraExperienceManagerComponent.h"
 #include "GameFeaturesSubsystemSettings.h"
 #include "LyraExperienceDefinition.h"
+#include "GameFeaturesSubsystem.h"
+#include "GameFeaturesSubsystemSettings.h"
 #include "../System/LyraAssetManager.h"
 
 void ULyraExperienceManagerComponent::CallOrRegister_OnExperienceLoaded(
@@ -92,7 +94,50 @@ void ULyraExperienceManagerComponent::OnExperienceLoadComplete()
 {
 	static int32 OnExperienceLoadComplete_FrameNumber = GFrameNumber;
 
-	OnExperienceFullLoadCompleted();
+	check(LoadState == ELyraExperienceLoadState::Loading);
+	check(CurrentExperience);
+
+	GameFeaturePluginURLs.Reset();
+
+	auto CollectGameFeaturePluginURLs = [This = this](const UPrimaryDataAsset* Context,
+											const TArray<FString>& FeaturePlugiList) {
+		for (const auto& Plugin : FeaturePlugiList)
+		{
+			FString PluginURL;
+			if (UGameFeaturesSubsystem::Get().GetPluginURLByName(Plugin, PluginURL))
+			{
+				This->GameFeaturePluginURLs.AddUnique(PluginURL);
+			}
+		}
+	};
+
+	CollectGameFeaturePluginURLs(CurrentExperience, CurrentExperience->GameFeaturesToEnable);
+
+	NumGameFeaturePluginsLoading = GameFeaturePluginURLs.Num();
+	if (NumGameFeaturePluginsLoading)
+	{
+		LoadState = ELyraExperienceLoadState::LoadingGameFeatures;
+		for (const FString& PluginURL : GameFeaturePluginURLs)
+		{
+			UGameFeaturesSubsystem::Get().LoadAndActivateGameFeaturePlugin(PluginURL,
+				FGameFeaturePluginLoadComplete::CreateUObject(
+					this, &ThisClass::OnGameFeaturePluginLoadComplete));
+		}
+	}
+	else
+	{
+		OnExperienceFullLoadCompleted();
+	}
+}
+
+void ULyraExperienceManagerComponent::OnGameFeaturePluginLoadComplete(
+	const UE::GameFeatures::FResult& Result)
+{
+	NumGameFeaturePluginsLoading--;
+	if (NumGameFeaturePluginsLoading == 0)
+	{
+		OnExperienceFullLoadCompleted();
+	}
 }
 
 void ULyraExperienceManagerComponent::OnExperienceFullLoadCompleted()

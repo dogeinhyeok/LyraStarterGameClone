@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/GameStateComponent.h"
+#include "GameFeaturePluginOperationResult.h"
 #include "LyraExperienceManagerComponent.generated.h"
 
 class ULyraExperienceDefinition;
@@ -12,6 +13,7 @@ enum class ELyraExperienceLoadState : uint8
 {
 	Unloaded,
 	Loading,
+	LoadingGameFeatures,
 	Loaded,
 	Deactivated,
 };
@@ -37,6 +39,7 @@ public:
 	void ServerSetCurrentExperience(FPrimaryAssetId ExperienceId);
 	void StartExperienceLoad();
 	void OnExperienceLoadComplete();
+	void OnGameFeaturePluginLoadComplete(const UE::GameFeatures::FResult& Result);
 	void OnExperienceFullLoadCompleted();
 	const ULyraExperienceDefinition* GetCurrentExperienceChecked() const;
 
@@ -47,4 +50,7 @@ public:
 	ELyraExperienceLoadState LoadState = ELyraExperienceLoadState::Unloaded;
 
 	FOnLyraExperienceLoaded OnExperienceLoaded;
+
+	int32 NumGameFeaturePluginsLoading = 0;
+	TArray<FString> GameFeaturePluginURLs;
 };

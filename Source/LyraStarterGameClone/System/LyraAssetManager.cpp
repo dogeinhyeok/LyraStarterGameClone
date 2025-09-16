@@ -3,6 +3,8 @@
 #include "LyraAssetManager.h"
 #include "../LyraGameplayTags.h"
 #include "../LogChannels.h"
+#include "Misc/CommandLine.h"
+#include "Engine/Engine.h"
 
 /**
  * AssetManager 싱글톤 인스턴스를 가져오는 함수
@@ -72,7 +74,7 @@ UObject* ULyraAssetManager::SynchronousLoadAsset(const FSoftObjectPath& AssetPat
 		}
 
 		// AssetManager가 초기화되었는지 확인
-		if (UAssetManager::IsValid())
+		if (UAssetManager::IsInitialized())
 		{
 			// StreamableManager를 통해 동기적으로 에셋 로딩
 			return UAssetManager::GetStreamableManager().LoadSynchronous(AssetPath);
