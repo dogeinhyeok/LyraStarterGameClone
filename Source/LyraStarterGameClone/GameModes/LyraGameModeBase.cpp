@@ -15,6 +15,7 @@
 #include "../Player/LyraPlayerState.h"
 #include "../Character/LyraPawnData.h"
 #include "../Character/LyraPawnExtensionComponent.h"
+#include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
 
 /**
