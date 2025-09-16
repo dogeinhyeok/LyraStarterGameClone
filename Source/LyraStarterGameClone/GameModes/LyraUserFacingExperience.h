@@ -6,6 +6,8 @@
 #include "Engine/DataAsset.h"
 #include "LyraUserFacingExperience.generated.h"
 
+class UCommonSession_HostSessionRequest;
+
 /**
  * 사용자 경험: 맵과 Experience를 연결하는 사용자 친화적인 데이터 에셋
  */
@@ -15,6 +17,9 @@ class LYRASTARTERGAMECLONE_API ULyraUserFacingExperience : public UPrimaryDataAs
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure = false)
+	UCommonSession_HostSessionRequest* CreateHostingRequest() const;
+
 	UPROPERTY(
 		BlueprintReadWrite, EditAnywhere, Category = "Experience", meta = (AllowedTypes = "Map"))
 	FPrimaryAssetId MapID;

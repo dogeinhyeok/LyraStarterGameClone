@@ -14,6 +14,12 @@ CompileFlags:
     - -I./Plugins/*/Source/*/Public
     - -I./Plugins/*/Source/*/Private
     - -I./Plugins/*/Source/*
+    - -I./Source/*/Public
+    - -I./Source/*/Private
+    - -I./Source/*
+    - -I"C:/Program Files/Epic Games/UE_5.6/Engine/Plugins/*/Source/*/Public"
+    - -I"C:/Program Files/Epic Games/UE_5.6/Engine/Plugins/*/Source/*/Private"
+    - -I"C:/Program Files/Epic Games/UE_5.6/Engine/Source"
     - -mwaitpkg
     - /we4668
     - /wd4244

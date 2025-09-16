@@ -31,6 +31,18 @@ LyraStarterGame 클론 코딩은 언리얼 엔진의 공식 샘플 프로젝트�
 2. 프로젝트 폴더에서 `LyraStarterGameClone.uproject` 파일을 우클릭합니다.
 3. `Generate Visual Studio project files`를 실행하여 프로젝트 구조를 업데이트합니다.
 
+#### 개발 빌드:
+
+```powershell
+& "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" LyraStarterGameCloneEditor Win64 Development "$PWD\LyraStarterGameClone.uproject" -waitmutex
+```
+
+#### 클린 빌드:
+
+```powershell
+& "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" LyraStarterGameCloneEditor Win64 Development "$PWD\LyraStarterGameClone.uproject" -clean -waitmutex
+```
+
 #### 프로젝트 빌드 및 실행하기(PowerShell)
 
 ```powershell
@@ -48,12 +60,38 @@ Unreal-clangd에서 "Clangd settings not found" 경고가 주기적으로 표시
 
 #### GENERATED_BODY() 매크로 IntelliSense 오류
 
-IDE(clangd)는 생성된 코드를 실시간으로 인식하지 못해 빨간줄 표시가 발생하는 증상. 해결하려면 다음 단계를 따라하세요.
+IDE(clangd)는 생성된 코드를 실시간으로 인식하지 못해 빨간줄 표시가 발생하는 증상. 언리얼 엔진에서는 `.Build.cs` 파일이 모듈 간 연결을 정의하므로, 플러그인을 사용하려면 반드시 의존성을 추가해야 합니다. 해결하려면 다음 단계를 따라하세요.
 
 1. 일단 컴파일을 해봅니다.
-2. `Ctrl+Shift+P`로 명령 팔레트 열기
-3. "Developer: Reload Window" 검색
-4. 명령 실행
+2. `Ctrl+Shift+P`로 명령 팔레트를 엽니다.
+3. "Developer: Reload Window"를 검색합니다.
+4. 명령을 실행합니다.
+
+#### 플러그인과 프로젝트 간 헤더 참조 문제 해결하기
+
+Source 폴더에서 플러그인 헤더를 찾지 못하는 문제가 발생할 때 해결 방법입니다. 언리얼 엔진의 모듈 시스템에서 모듈 의존성이 설정되지 않았기 때문입니다.
+
+1. 모듈 의존성 추가: `Source/LyraStarterGameClone/LyraStarterGameClone.Build.cs` 파일을 열어 다음 내용을 추가합니다.
+
+```csharp
+PrivateDependencyModuleNames.AddRange(new string[] {
+    "플러그인이름"  // 예: "CommonUser"
+});
+```
+
+2. 프로젝트 파일 재생성: `.Build.cs` 파일 변경사항을 반영하여 Visual Studio 프로젝트 파일을 다시 생성합니다.
+
+```powershell
+& "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" -projectfiles -project="$PWD\LyraStarterGameClone.uproject" -game -rocket -progress
+```
+
+3. 컴파일 데이터베이스 재생성: VSCode 또는 Cursor의 clangd가 헤더 파일을 찾을 수 있도록 `compile_commands.json` 파일을 다시 생성합니다.
+
+```powershell
+& "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" -mode=GenerateClangDatabase -project="$PWD\LyraStarterGameClone.uproject" -game -engine LyraStarterGameCloneEditor Win64 Development
+```
+
+4. clangd 재시작: Cursor에서 `Ctrl + Shift + P` → "clangd: Restart language server"를 실행합니다.
 
 ### Visual Studio로 개발하기
 
