@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerController.h"
+#include "ModularPlayerController.h"
 #include "LyraPlayerController.generated.h"
 
 /**
  * 플레이어 컨트롤러: 기본 APlayerController를 상속받는 클래스 (현재는 빈 클래스)
  */
 UCLASS()
-class LYRASTARTERGAMECLONE_API ALyraPlayerController : public APlayerController
+class LYRASTARTERGAMECLONE_API ALyraPlayerController : public AModularPlayerController
 {
 	GENERATED_BODY()
 

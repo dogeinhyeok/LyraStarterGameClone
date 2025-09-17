@@ -24,6 +24,7 @@ public class LyraStarterGameClone : ModuleRules
 		PrivateDependencyModuleNames.AddRange(new string[] {
             "CommonUser",
             "ShooterCoreRuntime",
+            "ModularGameplayActors",
 		});
 
 		// Uncomment if you are using Slate UI

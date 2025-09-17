@@ -1,6 +1,8 @@
 #include "GameFeatureAction_AddInputConfig.h"
 #include "EnhancedInputSubsystems.h"
 #include "PlayerMappableInputConfig.h"
+#include "Engine/LocalPlayer.h"
+#include "Engine/GameInstance.h"
 #include "Components/GameFrameworkComponentManager.h"
 #include "LyraStarterGameClone/Character/LyraHeroComponent.h"
 #include UE_INLINE_GENERATED_CPP_BY_NAME(GameFeatureAction_AddInputConfig)
