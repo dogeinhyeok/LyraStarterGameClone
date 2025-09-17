@@ -23,24 +23,19 @@ const FLyraGameplayTags& FLyraGameplayTags::Get()
 
 void FLyraGameplayTags::InitializeNativeTags()
 {
-	UE_LOG(LogLyra, Warning, TEXT("InitializeNativeTags called"));
 	UGameplayTagsManager& Manager = UGameplayTagsManager::Get();
 	GameplayTags.AddAllTags(Manager);
-	UE_LOG(LogLyra, Warning, TEXT("InitializeNativeTags completed"));
 }
 
 void FLyraGameplayTags::AddTag(
 	FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment)
 {
-	UE_LOG(LogLyra, Warning, TEXT("AddTag called for: %s"), ANSI_TO_TCHAR(TagName));
 	OutTag = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName(TagName), FString(TEXT("(Native) ")) + FString(TagComment));
-	UE_LOG(LogLyra, Warning, TEXT("AddTag result: %s"), *OutTag.ToString());
 }
 
 void FLyraGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 {
-	UE_LOG(LogLyra, Warning, TEXT("AddAllTags called"));
 	AddTag(GameplayTags.InitState_Spawned, "InitState.Spawned",
 		"1: Actor/Component has initially spawned and can be extended");
 	AddTag(GameplayTags.InitState_DataAvailable, "InitState.DataAvailable",
@@ -53,9 +48,4 @@ void FLyraGameplayTags::AddAllTags(UGameplayTagsManager& Manager)
 	AddTag(GameplayTags.InputTag_Move, "InputTag.Move", "1: Actor/Component is moving");
 	AddTag(GameplayTags.InputTag_Look_Mouse, "InputTag.Look.Mouse",
 		"2: Actor/Component is looking with mouse");
-
-	UE_LOG(LogLyra, Warning, TEXT("InputTag_Move after AddTag: %s"),
-		*GameplayTags.InputTag_Move.ToString());
-	UE_LOG(LogLyra, Warning, TEXT("InputTag_Look_Mouse after AddTag: %s"),
-		*GameplayTags.InputTag_Look_Mouse.ToString());
 }

@@ -215,7 +215,6 @@ void ULyraHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputCompo
 	check(Subsystem);
 
 	Subsystem->ClearAllMappings();
-	UE_LOG(LogLyra, Warning, TEXT("DefaultInputConfigs array size: %d"), DefaultInputConfigs.Num());
 
 	if (const ULyraPawnExtensionComponent* PawnExtComp =
 			ULyraPawnExtensionComponent::FindPawnExtensionComponent(Pawn))
@@ -224,7 +223,6 @@ void ULyraHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputCompo
 		{
 			if (const ULyraInputConfig* InputConfig = PawnData->InputConfig)
 			{
-				UE_LOG(LogLyra, Warning, TEXT("InputConfig found: %s"), *InputConfig->GetName());
 				const FLyraGameplayTags& GameplayTags = FLyraGameplayTags::Get();
 
 				for (const FLyraMappableConfigPair& Pair : DefaultInputConfigs)
@@ -236,8 +234,6 @@ void ULyraHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputCompo
 
 						if (const auto ConfigObject = Pair.Config.LoadSynchronous())
 						{
-							UE_LOG(LogLyra, Warning, TEXT("Loading PlayerMappableInputConfig: %s"),
-								*ConfigObject->GetName());
 							for (const auto& MappingContextPair :
 								ConfigObject->GetMappingContexts())
 							{
@@ -245,21 +241,9 @@ void ULyraHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputCompo
 								const int32 Priority = MappingContextPair.Value;
 								if (MappingContext)
 								{
-									UE_LOG(LogLyra, Warning,
-										TEXT("Adding MappingContext: %s with Priority: %d"),
-										*MappingContext->GetName(), Priority);
 									Subsystem->AddMappingContext(MappingContext, Priority, Options);
 								}
-								else
-								{
-									UE_LOG(LogTemp, Error, TEXT("MappingContext is null!"));
-								}
 							}
-						}
-						else
-						{
-							UE_LOG(
-								LogTemp, Error, TEXT("Failed to load PlayerMappableInputConfig"));
 						}
 					}
 				}
@@ -267,18 +251,11 @@ void ULyraHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputCompo
 				ULyraInputComponent* LyraInputComponent =
 					CastChecked<ULyraInputComponent>(PlayerInputComponent);
 				{
-					UE_LOG(LogLyra, Warning, TEXT("Binding native actions..."));
-					UE_LOG(LogLyra, Warning, TEXT("InputTag_Move: %s"),
-						*GameplayTags.InputTag_Move.ToString());
-					UE_LOG(LogLyra, Warning, TEXT("InputTag_Look_Mouse: %s"),
-						*GameplayTags.InputTag_Look_Mouse.ToString());
-
 					LyraInputComponent->BindNativeAction(InputConfig, GameplayTags.InputTag_Move,
 						ETriggerEvent::Triggered, this, &ThisClass::Input_Move, false);
 					LyraInputComponent->BindNativeAction(InputConfig,
 						GameplayTags.InputTag_Look_Mouse, ETriggerEvent::Triggered, this,
 						&ThisClass::Input_LookMouse, false);
-					UE_LOG(LogLyra, Warning, TEXT("Native actions bound successfully"));
 				}
 			}
 		}
@@ -293,8 +270,6 @@ void ULyraHeroComponent::Input_Move(const FInputActionValue& InputActionValue)
 	if (Controller)
 	{
 		const FVector2D Value = InputActionValue.Get<FVector2D>();
-		UE_LOG(
-			LogLyra, Warning, TEXT("Input_Move called with value: X=%f, Y=%f"), Value.X, Value.Y);
 		const FRotator MovementRotation(0.0f, Controller->GetControlRotation().Yaw, 0.0f);
 
 		if (Value.X != 0.0f)
