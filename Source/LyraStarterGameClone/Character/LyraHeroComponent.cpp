@@ -198,17 +198,7 @@ void ULyraHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputCompo
 {
 	check(PlayerInputComponent);
 
-	static bool bInputInitialized = false;
-	if (bInputInitialized)
-	{
-		UE_LOG(LogLyra, Warning, TEXT("InitializePlayerInput already called, skipping..."));
-		return;
-	}
-	bInputInitialized = true;
-	UE_LOG(LogLyra, Warning, TEXT("InitializePlayerInput called for the first time"));
-
 	const APawn* Pawn = GetPawn<APawn>();
-
 	if (!Pawn)
 	{
 		return;

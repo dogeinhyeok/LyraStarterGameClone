@@ -13,11 +13,11 @@ const FLyraGameplayTags& FLyraGameplayTags::Get()
 	 *   Pawn 스폰 시 TryToChangeInitState()가 호출되어 태그가 유효하지 않은 상태로 실패
 	 * 두 번째 실행: 태그가 이미 메모리에 캐시되어 정상 작동
 	 */
-	if (!GameplayTags.InitState_Spawned.IsValid())
-	{
-		// Get() 호출 시 태그가 유효하지 않으면 자동으로 초기화하여 일관된 동작 보장
-		InitializeNativeTags();
-	}
+	// if (!GameplayTags.InitState_Spawned.IsValid())
+	// {
+	// 	// Get() 호출 시 태그가 유효하지 않으면 자동으로 초기화하여 일관된 동작 보장
+	// 	InitializeNativeTags();
+	// }
 	return GameplayTags;
 }
 
