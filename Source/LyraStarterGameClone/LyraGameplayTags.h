@@ -14,7 +14,7 @@ struct FLyraGameplayTags
 	static void InitializeNativeTags();
 
 	void AddTag(FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment);
-	void AddAllTags(UGameplayTagsManager* Manager);
+	void AddAllTags(UGameplayTagsManager& Manager);
 
 	FGameplayTag InitState_Spawned;
 	FGameplayTag InitState_DataAvailable;
