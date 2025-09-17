@@ -131,4 +131,16 @@ void UGameFeatureAction_AddInputConfig::RemoveInputConfig(APawn* Pawn, FPerConte
 void UGameFeatureAction_AddInputConfig::HandlePawnExtension(
 	AActor* Actor, FName EventName, FGameFeatureStateChangeContext ChangeContext)
 {
+	APawn* AsPawn = CastChecked<APawn>(Actor);
+	FPerContextData& ActiveData = ContextData.FindOrAdd(ChangeContext);
+
+	if (EventName == UGameFrameworkComponentManager::NAME_ExtensionAdded
+		|| EventName == ULyraHeroComponent::NAME_BindInputsNow)
+	{
+		AddInputConfig(AsPawn, ActiveData);
+	}
+	else if (EventName == UGameFrameworkComponentManager::NAME_ExtensionRemoved)
+	{
+		RemoveInputConfig(AsPawn, ActiveData);
+	}
 }

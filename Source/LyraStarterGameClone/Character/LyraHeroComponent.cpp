@@ -17,6 +17,7 @@
 #include "Engine/LocalPlayer.h"
 
 const FName ULyraHeroComponent::NAME_ActorFeatureName("Hero");
+const FName ULyraHeroComponent::NAME_BindInputsNow("BindInputsNow");
 
 ULyraHeroComponent::ULyraHeroComponent(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -172,7 +173,6 @@ void ULyraHeroComponent::CheckDefaultInitialization()
 	ContinueInitStateChain(StateChain);
 }
 
-UE_DISABLE_OPTIMIZATION
 TSubclassOf<ULyraCameraMode> ULyraHeroComponent::DetermineCameraMode() const
 {
 	const APawn* Pawn = GetPawn<APawn>();
@@ -192,7 +192,6 @@ TSubclassOf<ULyraCameraMode> ULyraHeroComponent::DetermineCameraMode() const
 
 	return nullptr;
 }
-UE_ENABLE_OPTIMIZATION
 
 void ULyraHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputComponent)
 {
@@ -260,6 +259,9 @@ void ULyraHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputCompo
 			}
 		}
 	}
+
+	UGameFrameworkComponentManager::SendGameFrameworkComponentExtensionEvent(
+		const_cast<APawn*>(Pawn), NAME_BindInputsNow);
 }
 
 void ULyraHeroComponent::Input_Move(const FInputActionValue& InputActionValue)

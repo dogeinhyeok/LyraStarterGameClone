@@ -25,6 +25,7 @@ public:
 	ULyraHeroComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	static const FName NAME_ActorFeatureName;
+	static const FName NAME_BindInputsNow;
 
 	virtual void OnRegister() final;
 	virtual void BeginPlay() final;
