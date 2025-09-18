@@ -25,8 +25,8 @@ struct FLyraCharacterPart
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<UObject> PartClass;
+	TSubclassOf<AActor> PartClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString SocketName;
+	FName SocketName;
 };

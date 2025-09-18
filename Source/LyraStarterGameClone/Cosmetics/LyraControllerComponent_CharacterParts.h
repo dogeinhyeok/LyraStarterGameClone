@@ -29,6 +29,12 @@ public:
 	ULyraControllerComponent_CharacterParts(
 		const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
+	ULyraPawnComponent_CharacterParts* GetPawnCustomizer() const;
+
+	UFUNCTION(BlueprintCallable, Category = Cosmetics)
+	void AddCharacterPart(const FLyraCharacterPart& NewPart);
+	void AddCharacterPartInternal(const FLyraCharacterPart& NewPart);
+
 	UPROPERTY(EditAnywhere, Category = Cosmetics)
 	TArray<FLyraControllerCharacterPartEntry> CharacterParts;
 };

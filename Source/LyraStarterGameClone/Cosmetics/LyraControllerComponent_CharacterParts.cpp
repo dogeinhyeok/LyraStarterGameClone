@@ -8,3 +8,30 @@ ULyraControllerComponent_CharacterParts::ULyraControllerComponent_CharacterParts
 	: Super(ObjectInitializer)
 {
 }
+
+ULyraPawnComponent_CharacterParts*
+ULyraControllerComponent_CharacterParts::GetPawnCustomizer() const
+{
+	if (APawn* ControlledPawn = GetPawn<APawn>())
+	{
+		return ControlledPawn->FindComponentByClass<ULyraPawnComponent_CharacterParts>();
+	}
+	return nullptr;
+}
+
+void ULyraControllerComponent_CharacterParts::AddCharacterPart(const FLyraCharacterPart& NewPart)
+{
+	AddCharacterPartInternal(NewPart);
+}
+
+void ULyraControllerComponent_CharacterParts::AddCharacterPartInternal(
+	const FLyraCharacterPart& NewPart)
+{
+	FLyraControllerCharacterPartEntry& NewEntry = CharacterParts.AddDefaulted_GetRef();
+	NewEntry.Part = NewPart;
+
+	if (ULyraPawnComponent_CharacterParts* PawnCustomizer = GetPawnCustomizer())
+	{
+		NewEntry.Handle = PawnCustomizer->AddCharacterPart(NewPart);
+	}
+}

@@ -75,7 +75,6 @@ UClass* ALyraGameModeBase::GetDefaultPawnClassForController_Implementation(
 /**
  * HandleStartingNewPlayer_Implementation - 새 플레이어 시작 처리
  */
-UE_DISABLE_OPTIMIZATION
 void ALyraGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
 {
 	if (IsExperienceLoaded())
@@ -83,7 +82,6 @@ void ALyraGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController
 		Super::HandleStartingNewPlayer_Implementation(NewPlayer);
 	}
 }
-UE_ENABLE_OPTIMIZATION
 
 /**
  * SpawnDefaultPawnAtTransform_Implementation - 지정된 위치에 기본 Pawn 스폰
