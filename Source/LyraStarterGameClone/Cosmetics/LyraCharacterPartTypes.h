@@ -3,13 +3,30 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "LyraCharacterPartTypes.generated.h"
 
-/**
- *
- */
-class LYRASTARTERGAMECLONE_API LyraCharacterPartTypes
+USTRUCT(BlueprintType)
+struct FLyraCharacterPartHandle
 {
-public:
-	LyraCharacterPartTypes();
-	~LyraCharacterPartTypes();
+	GENERATED_BODY()
+
+	void Reset() { PartHandle = INDEX_NONE; }
+
+	bool IsValid() const { return PartHandle != INDEX_NONE; }
+
+	UPROPERTY()
+	int32 PartHandle = INDEX_NONE;
+};
+
+USTRUCT(BlueprintType)
+struct FLyraCharacterPart
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UObject> PartClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString SocketName;
 };

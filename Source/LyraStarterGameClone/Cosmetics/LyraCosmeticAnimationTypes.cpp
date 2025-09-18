@@ -2,6 +2,8 @@
 
 #include "LyraCosmeticAnimationTypes.h"
 
-LyraCosmeticAnimationTypes::LyraCosmeticAnimationTypes() {}
-
-LyraCosmeticAnimationTypes::~LyraCosmeticAnimationTypes() {}
+USkeletalMesh* FLyraAnimBodyStyleSelectionSet::SelectBestBodyStyle(
+	const FGameplayTagContainer& CosmeticTags) const
+{
+	return DefaultMesh;
+}
