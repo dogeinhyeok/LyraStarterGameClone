@@ -3,6 +3,87 @@
 #include "LyraPawnComponent_CharacterParts.h"
 #include "GameplayTagAssetInterface.h"
 #include "GameFramework/Character.h"
+#include "Components/SkeletalMeshComponent.h"
+
+ULyraPawnComponent_CharacterParts::ULyraPawnComponent_CharacterParts(
+	const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer), CharacterPartList(this)
+{
+}
+
+USkeletalMeshComponent* ULyraPawnComponent_CharacterParts::GetParentMeshComponent() const
+{
+	if (AActor* OwnerActor = GetOwner())
+	{
+		if (ACharacter* OwningCharacter = Cast<ACharacter>(OwnerActor))
+		{
+			if (USkeletalMeshComponent* MeshComponent = OwningCharacter->GetMesh())
+			{
+				return MeshComponent;
+			}
+		}
+	}
+
+	return nullptr;
+}
+
+USceneComponent* ULyraPawnComponent_CharacterParts::GetSceneComponentToAttachTo() const
+{
+	if (USkeletalMeshComponent* MeshComponent = GetParentMeshComponent())
+	{
+		return Cast<USceneComponent>(MeshComponent);
+	}
+
+	if (AActor* OwnerActor = GetOwner())
+	{
+		return OwnerActor->GetRootComponent();
+	}
+
+	return nullptr;
+}
+
+FGameplayTagContainer ULyraPawnComponent_CharacterParts::GetCombinedTags(
+	FGameplayTag RequiredPrefix) const
+{
+	FGameplayTagContainer Result = CharacterPartList.CollectCombinedTags();
+	if (RequiredPrefix.IsValid())
+	{
+		return Result.Filter(FGameplayTagContainer(RequiredPrefix));
+	}
+	else
+	{
+		return Result;
+	}
+}
+
+void ULyraPawnComponent_CharacterParts::BroadcastChanged()
+{
+	const bool bReinitPose = true;
+
+	if (USkeletalMeshComponent* MeshComponent = GetParentMeshComponent())
+	{
+		const FGameplayTagContainer MergedTags = GetCombinedTags(FGameplayTag());
+		USkeletalMesh* DesiredMesh = BodyMeshes.SelectBestBodyStyle(MergedTags);
+
+		MeshComponent->SetSkeletalMesh(DesiredMesh, bReinitPose);
+
+		if (UPhysicsAsset* PhysicsAsset = BodyMeshes.ForcedPhysicsAsset)
+		{
+			MeshComponent->SetPhysicsAsset(PhysicsAsset, bReinitPose);
+		}
+	}
+}
+
+FLyraCharacterPartHandle ULyraPawnComponent_CharacterParts::AddCharacterPart(
+	const FLyraCharacterPart& NewPart)
+{
+	return CharacterPartList.AddEntry(NewPart);
+}
+
+void ULyraPawnComponent_CharacterParts::RemoveCharacterPart(FLyraCharacterPartHandle Handle)
+{
+	CharacterPartList.RemoveEntry(Handle);
+}
 
 bool FLyraCharacterPartList::SpawnActorForEntry(FLyraAppliedCharacterPartEntry& Entry)
 {
@@ -58,23 +139,43 @@ FLyraCharacterPartHandle FLyraCharacterPartList::AddEntry(FLyraCharacterPart New
 	return Result;
 }
 
-ULyraPawnComponent_CharacterParts::ULyraPawnComponent_CharacterParts(
-	const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
+void FLyraCharacterPartList::DestroyActorForEntry(FLyraAppliedCharacterPartEntry& Entry)
 {
-}
-FLyraCharacterPartHandle ULyraPawnComponent_CharacterParts::AddCharacterPart(
-	const FLyraCharacterPart& NewPart)
-{
-	return CharacterPartList.AddEntry(NewPart);
+	if (Entry.SpawnedComponent)
+	{
+		Entry.SpawnedComponent->DestroyComponent();
+		Entry.SpawnedComponent = nullptr;
+	}
 }
 
-USceneComponent* ULyraPawnComponent_CharacterParts::GetSceneComponentToAttachTo() const
+FGameplayTagContainer FLyraCharacterPartList::CollectCombinedTags() const
 {
-	return nullptr;
+	FGameplayTagContainer Result;
+
+	for (const FLyraAppliedCharacterPartEntry& Entry : Entries)
+	{
+		if (Entry.SpawnedComponent)
+		{
+			if (IGameplayTagAssetInterface* TagInterface =
+					Cast<IGameplayTagAssetInterface>(Entry.SpawnedComponent->GetChildActor()))
+			{
+				TagInterface->GetOwnedGameplayTags(Result);
+			}
+		}
+	}
+
+	return Result;
 }
 
-void ULyraPawnComponent_CharacterParts::BroadcastChanged()
+void FLyraCharacterPartList::RemoveEntry(FLyraCharacterPartHandle Handle)
 {
-	// 캐릭터 파트 변경 알림 (현재는 빈 구현)
+	for (auto EntryIt = Entries.CreateIterator(); EntryIt; ++EntryIt)
+	{
+		FLyraAppliedCharacterPartEntry& Entry = *EntryIt;
+
+		if (Entry.PartHandle == Handle.PartHandle)
+		{
+			DestroyActorForEntry(Entry);
+		}
+	}
 }

@@ -5,5 +5,12 @@
 USkeletalMesh* FLyraAnimBodyStyleSelectionSet::SelectBestBodyStyle(
 	const FGameplayTagContainer& CosmeticTags) const
 {
+	for (const FLyraAnimBodyStyleSelectionEntry& Rule : MeshRules)
+	{
+		if ((Rule.Mesh) && CosmeticTags.HasAll(Rule.RequiredTags))
+		{
+			return Rule.Mesh;
+		}
+	}
 	return DefaultMesh;
 }
