@@ -19,7 +19,6 @@ struct FLyraAnimLayerSelectionEntry
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FGameplayTagContainer RequiredTags;
 };
-
 USTRUCT(BlueprintType)
 struct FLyraAnimLayerSelectionSet
 {
