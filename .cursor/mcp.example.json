@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "perplexity-ask": {
+      "command": "npx",
+      "args": ["-y", "server-perplexity-ask"],
+      "env": {
+        "PERPLEXITY_API_KEY": "your-key-here"
+      }
+    },
+    "context7-mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@upstash/context7-mcp",
+        "--key",
+        "your-key-here"
+      ]
+    }
+  }
+}
