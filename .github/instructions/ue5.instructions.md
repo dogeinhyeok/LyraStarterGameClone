@@ -1,7 +1,6 @@
 ---
-description: Write maintainable code by adhering to established standards and best practices.
-globs: *.cpp,*.hpp
-alwaysApply: false
+description: Epic C++ Coding Standard for Unreal Engine Unreal Engine 5.6 Documentation Epic Developer Community
+applyTo: "**/*.c,**/*.cpp,**/*.h,**/*.hpp"
 ---
 
 # Epic C++ Coding Standard for Unreal Engine Unreal Engine 5.6 Documentation Epic Developer Community
