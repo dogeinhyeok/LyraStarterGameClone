@@ -41,5 +41,43 @@
     },
     "[mdc]": {
         "editor.defaultFormatter": "unifiedjs.vscode-mdx"
-    }
+    },
+    "files.exclude": {
+        "**/Binaries": true,
+        "**/Intermediate": true,
+        "**/DerivedDataCache": true,
+        "**/Saved": true,
+        "**/.vs": true,
+        "**/Packages": true,
+        "Plugins/**/Intermediate": true,
+        "Plugins/**/Binaries": true,
+        "Plugins/**/Saved": true,
+        "Plugins/**/DerivedDataCache": true
+    },
+    "search.exclude": {
+        "**/Binaries": true,
+        "**/Intermediate": true,
+        "**/DerivedDataCache": true,
+        "**/Saved": true,
+        "**/.vs": true,
+        "**/Packages": true,
+        "**/ThirdParty": true,
+        "Plugins/**/Intermediate": true,
+        "Plugins/**/Binaries": true,
+        "Plugins/**/Saved": true,
+        "Plugins/**/DerivedDataCache": true
+    },
+    "C_Cpp.files.exclude": {
+        "**/Binaries/**": true,
+        "**/Intermediate/**": true,
+        "**/DerivedDataCache/**": true,
+        "**/Saved/**": true,
+        "**/.vs/**": true,
+        "**/*.generated.h": true,
+        "**/*.gen.cpp": true,
+        "Plugins/**/Intermediate/**": true,
+        "Plugins/**/Binaries/**": true,
+        "Plugins/**/Saved/**": true,
+        "Plugins/**/DerivedDataCache/**": true
+    },
 }
