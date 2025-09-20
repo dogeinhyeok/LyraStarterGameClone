@@ -2,10 +2,7 @@
   "mcpServers": {
     "perplexity-ask": {
       "command": "npx",
-      "args": [
-        "-y",
-        "server-perplexity-ask"
-      ],
+      "args": ["-y", "server-perplexity-ask"],
       "env": {
         "PERPLEXITY_API_KEY": "your-key-here"
       }
@@ -22,11 +19,6 @@
         "--key",
         "your-key-here"
       ]
-    },
-    "YouTube Toolbox": {
-      "type": "http",
-      "url": "https://server.smithery.ai/@jikime/py-mcp-youtube-toolbox/mcp?api_key=your-api-key-here&profile=your-profile-here",
-      "headers": {}
     }
   }
 }
