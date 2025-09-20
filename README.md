@@ -234,8 +234,16 @@ Cursor에서 PowerShell 명령어를 사용하여 빌드할 수 있습니다.
 
 **프로젝트 파일 재생성 (Build.cs 수정 후 필수):**
 
+VS Code용 프로젝트 파일 생성:
+
 ```powershell
-& "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" -projectfiles -project="$PWD\LyraStarterGameClone.uproject" -game -rocket -progress
+& "C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.exe" -projectfiles -project="$PWD\LyraStarterGameClone.uproject" -game -rocket -progress
+```
+
+Visual Studio 2022용 솔루션 파일(.sln) 생성:
+
+```powershell
+& "C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.exe" -projectfiles -project="$PWD\LyraStarterGameClone.uproject" -game -rocket -progress -2022
 ```
 
 **개발 빌드:**
