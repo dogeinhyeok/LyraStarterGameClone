@@ -1,40 +1,54 @@
-# Project Overview
+# LyraStarterGameClone - Gemini 프로젝트 가이드
 
-This project is a clone of the Lyra Starter Game, an official sample project from Epic Games for Unreal Engine. It's intended as a learning exercise to understand the advanced features and best practices of Unreal Engine 5.6. The project is being developed using C++ and Blueprints.
+## 프로젝트 개요
 
-## Building and Running
+언리얼 엔진 5.6 기반의 Lyra Starter Game 클론 프로젝트입니다. C++과 블루프린트를 활용한 모던 게임 개발 학습을 목적으로 합니다.
 
-The following commands are used to build and run the project. These commands should be executed from the project's root directory using PowerShell.
+## 코딩 스타일 및 규칙 참조
 
-### Generate Visual Studio Project Files
+작업 시 반드시 다음 문서들을 참고해주세요:
 
-This command should be run whenever the folder structure is changed.
+### 핵심 가이드라인
 
-```powershell
-& "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" -projectfiles -project="$PWD\LyraStarterGameClone.uproject" -game -rocket -progress
+- `@.cursor/rules/instructions/cpp-instructions.mdc` - C++ 코딩 스타일
+- `@.cursor/rules/instructions/ue5-instructions.mdc` - 언리얼 엔진 5 개발 규칙
+- `@.cursor/rules/instructions/markdown-instructions.mdc` - 마크다운 문서 작성 규칙
+- `@.cursor/rules/project-instructions.mdc` - 프로젝트 전반 지침
+
+### 프롬프트 템플릿
+
+- `@.cursor/rules/prompts/git-prompt.mdc` - Git 커밋 메시지 가이드라인
+- `@.cursor/rules/prompts/translation-prompt.mdc` - 번역 작업 가이드라인
+- `@.cursor/rules/prompts/obsidian-external-link-conversion-prompt.mdc` - 링크 변환 규칙
+
+## 작업 템플릿
+
+### C++ 클래스 생성 시
+
+```
+@.cursor/rules/instructions/cpp-instructions.mdc @.cursor/rules/instructions/ue5-instructions.mdc
+위 가이드라인을 준수해서 새로운 [클래스명] 클래스를 생성해줘.
+- 언리얼 엔진 네이밍 규칙 (A*, U*, F* 접두사)
+- 탭 문자 사용
+- 적절한 주석 및 문서화
 ```
 
-### Development Build
+### 문서 작성 시
 
-```powershell
-& "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" LyraStarterGameCloneEditor Win64 Development "$PWD\LyraStarterGameClone.uproject" -waitmutex
+```
+@.cursor/rules/instructions/markdown-instructions.mdc
+이 가이드라인에 따라 [문서명] 문서를 작성해줘.
+- 일관된 마크다운 스타일
+- 적절한 제목 구조
+- 명확한 설명
 ```
 
-### Clean Build
+### Git 커밋 시
 
-```powershell
-& "C:\Program Files\Epic Games\UE_5.6\Engine\Build\BatchFiles\Build.bat" LyraStarterGameCloneEditor Win64 Development "$PWD\LyraStarterGameClone.uproject" -clean -waitmutex
 ```
-
-### Run the Editor
-
-```powershell
-& "C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\Win64\UnrealEditor.exe" "$PWD\LyraStarterGameClone.uproject"
+@.cursor/rules/prompts/git-prompt.mdc
+이 가이드라인에 따라 커밋 메시지를 작성해줘.
+- Conventional Commits 규칙
+- 한국어 설명
+- 적절한 유형 분류
 ```
-
-## Development Conventions
-
-- The project uses a combination of C++ and Blueprints.
-- Detailed instructions for setting up different development environments (Visual Studio, VSCode, Cursor) are available in the `README.md` file.
-- The project uses a number of plugins, including `ModularGameplay`, `GameFeatures`, and `GameplayAbilities`.
-- Code documentation and style guidelines are located in the `.cursor/rules/` directory.
