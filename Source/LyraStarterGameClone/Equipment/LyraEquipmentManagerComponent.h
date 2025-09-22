@@ -32,6 +32,9 @@ struct FLyraEquipmentList
 	{
 	}
 
+	ULyraEquipmentInstance* AddEntry(TSubclassOf<ULyraEquipmentDefinition> EquipmentDefinition);
+	void RemoveEntry(ULyraEquipmentInstance* ItemInstance);
+
 	UPROPERTY()
 	TArray<FLyraAppliedEquipmentEntry> Entries;
 
@@ -50,6 +53,9 @@ class LYRASTARTERGAMECLONE_API ULyraEquipmentManagerComponent : public UPawnComp
 public:
 	ULyraEquipmentManagerComponent(
 		const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	ULyraEquipmentInstance* EquipItem(TSubclassOf<ULyraEquipmentDefinition> EquipmentDefinition);
+	void UnequipItem(ULyraEquipmentInstance* ItemInstance);
 
 	UPROPERTY()
 	FLyraEquipmentList EquipmentList;

@@ -28,6 +28,9 @@ public:
 	ULyraInventoryItemDefinition(
 		const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
+	const ULyraInventoryItemFragment* FindFragmentByClass(
+		TSubclassOf<ULyraInventoryItemFragment> FragmentClass) const;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Display")
 	FText DisplayName;
 

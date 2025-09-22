@@ -6,6 +6,8 @@
 #include "UObject/NoExportTypes.h"
 #include "LyraEquipmentInstance.generated.h"
 
+struct FLyraEquipmentActorToSpawn;
+
 /**
  *
  */
@@ -15,6 +17,25 @@ class LYRASTARTERGAMECLONE_API ULyraEquipmentInstance : public UObject
 	GENERATED_BODY()
 
 public:
+	ULyraEquipmentInstance(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	UFUNCTION(
+		BlueprintImplementableEvent, Category = "Equipment", meta = (DisplayName = "OnEquipped"))
+	void K2_OnEquipped();
+
+	UFUNCTION(
+		BlueprintImplementableEvent, Category = "Equipment", meta = (DisplayName = "OnUnequipped"))
+	void K2_OnUnequipped();
+
+	UFUNCTION(BlueprintPure, Category = "Equipment")
+	APawn* GetPawn() const;
+
+	void SpawnEquipmentActors(const TArray<FLyraEquipmentActorToSpawn>& ActorsToSpawn);
+	void DestroyEquipmentActors();
+
+	virtual void OnEquipped();
+	virtual void OnUnequipped();
+
 	UPROPERTY()
 	TObjectPtr<UObject> Instigator;
 

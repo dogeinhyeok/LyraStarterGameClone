@@ -8,6 +8,9 @@
 #include "UObject/NoExportTypes.h"
 #include "LyraInventoryItemInstance.generated.h"
 
+class ULyraInventoryItemFragment;
+class ULyraInventoryItemDefinition;
+
 /**
  *
  */
@@ -19,6 +22,14 @@ class LYRASTARTERGAMECLONE_API ULyraInventoryItemInstance : public UObject
 public:
 	ULyraInventoryItemInstance(
 		const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	const ULyraInventoryItemFragment* FindFragmentByClass(
+		TSubclassOf<ULyraInventoryItemFragment> FragmentClass) const;
+
+	template <typename ResultClass> const ResultClass* FindFragmentByClass() const
+	{
+		return (ResultClass*)FindFragmentByClass(ResultClass::StaticClass());
+	}
 
 	UPROPERTY()
 	TSubclassOf<ULyraInventoryItemDefinition> ItemDef;

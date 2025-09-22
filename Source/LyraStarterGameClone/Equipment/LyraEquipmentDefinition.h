@@ -39,5 +39,5 @@ public:
 	TSubclassOf<ULyraEquipmentInstance> InstanceType;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Equipment")
-	TArray<FLyraEquipmentActorToSpawn> ActorToSpawn;
+	TArray<FLyraEquipmentActorToSpawn> ActorsToSpawn;
 };

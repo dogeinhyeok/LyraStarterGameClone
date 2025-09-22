@@ -8,6 +8,7 @@
 
 class ULyraInventoryItemInstance;
 class ULyraEquipmentInstance;
+class ULyraEquipmentManagerComponent;
 
 /**
  *
@@ -22,8 +23,15 @@ public:
 
 	virtual void BeginPlay() override;
 
+	ULyraEquipmentManagerComponent* FindEquipmentManager() const;
+	void UnequipItemInSlot();
+	void EquipItemInSlot();
+
 	UFUNCTION(BlueprintCallable)
 	void AddItemToSlot(int32 SlotIndex, ULyraInventoryItemInstance* Item);
+
+	UFUNCTION(BlueprintCallable)
+	void SetActiveSlotIndex(int32 NewIndex);
 
 	UPROPERTY()
 	int32 NumSlots = 3;
