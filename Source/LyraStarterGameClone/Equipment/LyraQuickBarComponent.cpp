@@ -55,6 +55,18 @@ ULyraEquipmentManagerComponent* ULyraQuickBarComponent::FindEquipmentManager() c
 	return nullptr;
 }
 
+void ULyraQuickBarComponent::UnequipItemInSlot()
+{
+	if (ULyraEquipmentManagerComponent* EquipmentManager = FindEquipmentManager())
+	{
+		if (EquippedItem)
+		{
+			EquipmentManager->UnequipItem(EquippedItem);
+			EquippedItem = nullptr;
+		}
+	}
+}
+
 void ULyraQuickBarComponent::EquipItemInSlot()
 {
 	check(Slots.IsValidIndex(ActiveSlotIndex));
@@ -78,18 +90,6 @@ void ULyraQuickBarComponent::EquipItemInSlot()
 					}
 				}
 			}
-		}
-	}
-}
-
-void ULyraQuickBarComponent::UnequipItemInSlot()
-{
-	if (ULyraEquipmentManagerComponent* EquipmentManager = FindEquipmentManager())
-	{
-		if (EquippedItem)
-		{
-			EquipmentManager->UnequipItem(EquippedItem);
-			EquippedItem = nullptr;
 		}
 	}
 }

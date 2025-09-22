@@ -3,6 +3,8 @@
 #include "LyraEquipmentInstance.h"
 #include "LyraEquipmentDefinition.h"
 #include "GameFramework/Character.h"
+#include "../LogChannels.h"
+#include "Engine/World.h"
 
 ULyraEquipmentInstance::ULyraEquipmentInstance(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -22,21 +24,24 @@ void ULyraEquipmentInstance::SpawnEquipmentActors(
 		USceneComponent* AttachTarget = OwningPawn->GetRootComponent();
 		if (ACharacter* Character = Cast<ACharacter>(OwningPawn))
 		{
-			AttachTarget = Character->GetMesh();
+			AttachTarget = Cast<USceneComponent>(Character->GetMesh());
 		}
 
 		for (const FLyraEquipmentActorToSpawn& SpawnInfo : ActorsToSpawn)
 		{
-			AActor* NewActor = GetWorld()->SpawnActorDeferred<AActor>(
-				SpawnInfo.ActorToSpawn, FTransform::Identity, OwningPawn, OwningPawn);
-			NewActor->FinishSpawning(FTransform::Identity, true);
+			if (SpawnInfo.ActorToSpawn)
+			{
+				AActor* NewActor = GetWorld()->SpawnActorDeferred<AActor>(
+					SpawnInfo.ActorToSpawn, FTransform::Identity, OwningPawn);
+				NewActor->FinishSpawning(FTransform::Identity, true);
 
-			NewActor->SetActorRelativeTransform(SpawnInfo.AttachTransform);
+				NewActor->SetActorRelativeTransform(SpawnInfo.AttachTransform);
 
-			NewActor->AttachToComponent(AttachTarget,
-				FAttachmentTransformRules::KeepRelativeTransform, SpawnInfo.AttachSocket);
+				NewActor->AttachToComponent(AttachTarget,
+					FAttachmentTransformRules::KeepRelativeTransform, SpawnInfo.AttachSocket);
 
-			SpawnedActors.Add(NewActor);
+				SpawnedActors.Add(NewActor);
+			}
 		}
 	}
 }

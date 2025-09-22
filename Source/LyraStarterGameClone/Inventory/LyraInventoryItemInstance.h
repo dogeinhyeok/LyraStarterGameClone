@@ -32,5 +32,5 @@ public:
 	}
 
 	UPROPERTY()
-	TSubclassOf<ULyraInventoryItemDefinition> ItemDef;
+	TSubclassOf<ULyraInventoryItemDefinition> ItemDefinition;
 };

@@ -1,9 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AsyncAction_ExperienceReady.h"
-#include "Engine/World.h"
 #include "LyraExperienceManagerComponent.h"
 #include "TimerManager.h"
+#include "Engine/World.h"
+#include "Engine/Engine.h"
 
 UAsyncAction_ExperienceReady::UAsyncAction_ExperienceReady(
 	const FObjectInitializer& ObjectInitializer)
@@ -11,6 +12,19 @@ UAsyncAction_ExperienceReady::UAsyncAction_ExperienceReady(
 {
 }
 
+UAsyncAction_ExperienceReady* UAsyncAction_ExperienceReady::WaitForExperienceReady(
+	UObject* WorldContextObject)
+{
+	UAsyncAction_ExperienceReady* Action = nullptr;
+	if (UWorld* World = GEngine->GetWorldFromContextObject(
+			WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+	{
+		Action = NewObject<UAsyncAction_ExperienceReady>();
+		Action->WorldPtr = World;
+		Action->RegisterWithGameInstance(World);
+	}
+	return Action;
+}
 void UAsyncAction_ExperienceReady::Activate()
 {
 	if (UWorld* World = WorldPtr.Get())
@@ -73,10 +87,4 @@ void UAsyncAction_ExperienceReady::Step4_BroadcastReady()
 {
 	OnReady.Broadcast();
 	SetReadyToDestroy();
-}
-
-UAsyncAction_ExperienceReady* UAsyncAction_ExperienceReady::WaitForExperienceReady(
-	UObject* WorldContextObject)
-{
-	return nullptr;
 }

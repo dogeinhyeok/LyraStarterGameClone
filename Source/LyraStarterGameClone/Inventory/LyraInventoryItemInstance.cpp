@@ -11,10 +11,10 @@ ULyraInventoryItemInstance::ULyraInventoryItemInstance(const FObjectInitializer&
 const ULyraInventoryItemFragment* ULyraInventoryItemInstance::FindFragmentByClass(
 	TSubclassOf<ULyraInventoryItemFragment> FragmentClass) const
 {
-	if ((ItemDef != nullptr) && (FragmentClass != nullptr))
+	if ((ItemDefinition != nullptr) && (FragmentClass != nullptr))
 	{
-		return GetDefault<ULyraInventoryItemDefinition>(ItemDef)->FindFragmentByClass(
-			FragmentClass);
+		return GetDefault<ULyraInventoryItemDefinition>(ItemDefinition)
+			->FindFragmentByClass(FragmentClass);
 	}
 	return nullptr;
 }

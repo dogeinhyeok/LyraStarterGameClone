@@ -57,6 +57,7 @@ ULyraEquipmentInstance* ULyraEquipmentManagerComponent::EquipItem(
 	if (EquipmentDefinition)
 	{
 		Result = EquipmentList.AddEntry(EquipmentDefinition);
+
 		if (Result)
 		{
 			Result->OnEquipped();
