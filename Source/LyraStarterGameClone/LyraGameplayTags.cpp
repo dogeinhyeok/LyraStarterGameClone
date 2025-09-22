@@ -15,8 +15,15 @@ void FLyraGameplayTags::InitializeNativeTags()
 void FLyraGameplayTags::AddTag(
 	FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment)
 {
-	OutTag = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName(TagName), FString(TEXT("(Native) ")) + FString(TagComment));
+	// 먼저 기존 태그가 있는지 확인
+	OutTag = UGameplayTagsManager::Get().RequestGameplayTag(FName(TagName), false);
+
+	// 태그가 없으면 Native Tag로 추가 시도
+	if (!OutTag.IsValid())
+	{
+		OutTag = UGameplayTagsManager::Get().AddNativeGameplayTag(
+			FName(TagName), FString(TEXT("(Native) ")) + FString(TagComment));
+	}
 }
 
 void FLyraGameplayTags::AddAllTags(UGameplayTagsManager& Manager)

@@ -10,7 +10,15 @@ class UGameplayTagsManager;
 
 struct FLyraGameplayTags
 {
-	static const FLyraGameplayTags& Get() { return GameplayTags; }
+	static const FLyraGameplayTags& Get()
+	{
+		// 태그가 초기화되지 않았다면 자동 초기화
+		if (!GameplayTags.InitState_Spawned.IsValid())
+		{
+			InitializeNativeTags();
+		}
+		return GameplayTags;
+	}
 	static void InitializeNativeTags();
 
 	void AddTag(FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment);
