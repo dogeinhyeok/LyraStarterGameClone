@@ -20,11 +20,16 @@ class LYRASTARTERGAMECLONE_API ULyraQuickBarComponent : public UControllerCompon
 public:
 	ULyraQuickBarComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
+	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintCallable)
+	void AddItemToSlot(int32 SlotIndex, ULyraInventoryItemInstance* Item);
+
 	UPROPERTY()
 	int32 NumSlots = 3;
 
 	UPROPERTY()
-	TArray<TSubclassOf<ULyraInventoryItemInstance>> Slots;
+	TArray<TObjectPtr<ULyraInventoryItemInstance>> Slots;
 
 	UPROPERTY()
 	int32 ActiveSlotIndex = -1;

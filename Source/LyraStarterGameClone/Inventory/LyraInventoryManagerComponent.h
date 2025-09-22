@@ -29,6 +29,8 @@ struct FLyraInventoryList
 	{
 	}
 
+	ULyraInventoryItemInstance* AddEntry(TSubclassOf<ULyraInventoryItemDefinition> ItemDefinition);
+
 	UPROPERTY()
 	TArray<FLyraInventoryEntry> Entries;
 
@@ -43,6 +45,10 @@ class LYRASTARTERGAMECLONE_API ULyraInventoryManagerComponent : public UActorCom
 public:
 	ULyraInventoryManagerComponent(
 		const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	UFUNCTION(BlueprintCallable, Category = Inventory)
+	ULyraInventoryItemInstance* AddItemDefinition(
+		TSubclassOf<ULyraInventoryItemDefinition> ItemDefinition);
 
 	UPROPERTY()
 	FLyraInventoryList InventoryList;

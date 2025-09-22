@@ -13,7 +13,32 @@ LyraStarterGame 클론 코딩은 언리얼 엔진의 공식 샘플 프로젝트�
 - 실전 게임 개발 패턴과 베스트 프랙티스 학습
 - C++와 블루프린트의 효율적인 조합 방법 익히기
 
-### 프로젝트 편집하기
+### 언리얼 엔진 에디터 환경 설정
+
+#### Blueprint Nodes 스타일 설정
+
+Blueprint Nodes 정렬에 [Graph Formatter](https://www.fab.com/ko/listings/45218c70-1d87-4d34-ae71-4f575395af64) 플러그인을 사용합니다. 가독성을 위해 `Straight Lines`, `FAS Top` 옵션을 선택합니다.
+
+1. `Shift + F`로 노드 전체를 자동으로 정렬합니다.
+2. 전체 자동 정렬이 이상하면 수동으로 정렬합니다.
+   - 선택된 노드만 `Shift + F`로 자동 정렬합니다.
+   - 선택된 노드만 `Shift + A`로 왼쪽으로 정렬합니다.
+   - 선택된 노드만 `Shift + S`로 오른쪽으로 정렬합니다.
+
+#### Blueprint Comments 스타일 설정
+
+Blueprint Comments 정렬에 [Auto Size Comments](https://www.fab.com/ko/listings/fdb7e77d-be37-4feb-a6c9-60e317c10adf) 플러그인을 사용합니다. 통일성을 위해 `Show Bubble When Zoomed` 옵션을 해제합니다. 기존 Comments와 달리 리사이즈 핸들을 통해 크기를 조절할 수 없습니다.
+
+1. 그룹화할 노드를 선택한 후 `C`로 Comments 노드를 생성합니다.
+2. 노드 그룹을 수정해야 할 경우 Comments를 삭제하고 재그룹화합니다.
+
+#### 언리얼 엔진 에디터 재시작
+
+편의를 위해 [Restart Unreal Editor](https://www.fab.com/ko/listings/2e260da0-4a02-4f7b-8b97-3f783dc025f1) 플러그인을 사용합니다.
+
+1. `Ctrl + Shift + R`로 언리얼 엔진 에디터를 재시작합니다.
+
+### 프로젝트 소스코드 편집 및 빌드하기
 
 폴더 구조가 변경된 경우 반드시 `Generate Visual Studio project files`를 실행해야 합니다.
 

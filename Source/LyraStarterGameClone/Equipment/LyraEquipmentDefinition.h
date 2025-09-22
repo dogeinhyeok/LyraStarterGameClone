@@ -26,7 +26,7 @@ struct FLyraEquipmentActorToSpawn
 /**
  *
  */
-UCLASS()
+UCLASS(Blueprintable)
 class LYRASTARTERGAMECLONE_API ULyraEquipmentDefinition : public UObject
 {
 	GENERATED_BODY()

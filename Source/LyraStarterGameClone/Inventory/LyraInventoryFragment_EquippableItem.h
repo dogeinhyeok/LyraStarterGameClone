@@ -4,7 +4,7 @@
 
 #include "LyraInventoryItemDefinition.h"
 #include "Templates/SubclassOf.h"
-#include "LyraInventoryItemFragment_EquippableItem.generated.h"
+#include "LyraInventoryFragment_EquippableItem.generated.h"
 
 /** forward declaration */
 class ULyraEquipmentDefinition;
@@ -13,12 +13,12 @@ class ULyraEquipmentDefinition;
  *
  */
 UCLASS()
-class LYRASTARTERGAMECLONE_API ULyraInventoryItemFragment_EquippableItem :
+class LYRASTARTERGAMECLONE_API ULyraInventoryFragment_EquippableItem :
 	public ULyraInventoryItemFragment
 {
 	GENERATED_BODY()
 
 public:
-	// UPROPERTY(EditAnywhere, Category = "Lyra")
-	// TSubclassOf<ULyraEquipmentDefinition> EquipmentDefinition;
+	UPROPERTY(EditAnywhere, Category = "Lyra")
+	TSubclassOf<ULyraEquipmentDefinition> EquipmentDefinition;
 };

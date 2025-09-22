@@ -19,13 +19,14 @@ public:
 /**
  *
  */
-UCLASS()
+UCLASS(Blueprintable)
 class LYRASTARTERGAMECLONE_API ULyraInventoryItemDefinition : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	ULyraInventoryItemDefinition(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	ULyraInventoryItemDefinition(
+		const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Display")
 	FText DisplayName;
