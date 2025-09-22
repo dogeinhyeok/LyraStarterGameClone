@@ -13,4 +13,11 @@ UCLASS()
 class LYRASTARTERGAMECLONE_API ULyraEquipmentInstance : public UObject
 {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+	TObjectPtr<UObject> Instigator;
+
+	UPROPERTY()
+	TArray<TObjectPtr<AActor>> SpawnedActors;
 };
