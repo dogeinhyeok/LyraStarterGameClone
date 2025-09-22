@@ -10,7 +10,7 @@ class UGameplayTagsManager;
 
 struct FLyraGameplayTags
 {
-	static const FLyraGameplayTags& Get();
+	static const FLyraGameplayTags& Get() { return GameplayTags; }
 	static void InitializeNativeTags();
 
 	void AddTag(FGameplayTag& OutTag, const ANSICHAR* TagName, const ANSICHAR* TagComment);

@@ -1,3 +1,82 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AsyncAction_ExperienceReady.h"
+#include "Engine/World.h"
+#include "LyraExperienceManagerComponent.h"
+#include "TimerManager.h"
+
+UAsyncAction_ExperienceReady::UAsyncAction_ExperienceReady(
+	const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+}
+
+void UAsyncAction_ExperienceReady::Activate()
+{
+	if (UWorld* World = WorldPtr.Get())
+	{
+		if (AGameStateBase* GameState = World->GetGameState())
+		{
+			Step2_ListenToExperienceLoading(GameState);
+		}
+		else
+		{
+			World->GameStateSetEvent.AddUObject(this, &ThisClass::Step1_HandleGameStateSet);
+		}
+	}
+	else
+	{
+		SetReadyToDestroy();
+	}
+}
+
+void UAsyncAction_ExperienceReady::Step1_HandleGameStateSet(AGameStateBase* GameState)
+{
+	if (UWorld* World = WorldPtr.Get())
+	{
+		World->GameStateSetEvent.RemoveAll(this);
+	}
+
+	Step2_ListenToExperienceLoading(GameState);
+}
+
+void UAsyncAction_ExperienceReady::Step2_ListenToExperienceLoading(AGameStateBase* GameState)
+{
+	check(GameState);
+
+	ULyraExperienceManagerComponent* ExperienceManagerComponent =
+		GameState->FindComponentByClass<ULyraExperienceManagerComponent>();
+	check(ExperienceManagerComponent);
+
+	if (ExperienceManagerComponent->IsExperienceLoaded())
+	{
+		UWorld* World = GameState->GetWorld();
+		check(World);
+		World->GetTimerManager().SetTimerForNextTick(
+			FTimerDelegate::CreateUObject(this, &ThisClass::Step4_BroadcastReady));
+	}
+	else
+	{
+		ExperienceManagerComponent->CallOrRegister_OnExperienceLoaded(
+			FOnLyraExperienceLoaded::FDelegate::CreateUObject(
+				this, &ThisClass::Step3_ListenToExperienceLoaded));
+	}
+}
+
+void UAsyncAction_ExperienceReady::Step3_ListenToExperienceLoaded(
+	const ULyraExperienceDefinition* CurrentExperience)
+{
+	Step4_BroadcastReady();
+}
+
+void UAsyncAction_ExperienceReady::Step4_BroadcastReady()
+{
+	OnReady.Broadcast();
+	SetReadyToDestroy();
+}
+
+UAsyncAction_ExperienceReady* UAsyncAction_ExperienceReady::WaitForExperienceReady(
+	UObject* WorldContextObject)
+{
+	return nullptr;
+}
