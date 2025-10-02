@@ -46,6 +46,19 @@ void ULyraEquipmentInstance::SpawnEquipmentActors(
 	}
 }
 
+APawn* ULyraEquipmentInstance::GetTypedPawn(TSubclassOf<APawn> PawnType) const
+{
+	APawn* Result = nullptr;
+	if (UClass* ActualPawnType = PawnType)
+	{
+		if (GetOuter()->IsA(ActualPawnType))
+		{
+			Result = Cast<APawn>(GetOuter());
+		}
+	}
+	return Result;
+}
+
 void ULyraEquipmentInstance::DestroyEquipmentActors()
 {
 	for (AActor* Actor : SpawnedActors)

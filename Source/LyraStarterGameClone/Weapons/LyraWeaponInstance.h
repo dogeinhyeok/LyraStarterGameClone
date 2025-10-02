@@ -18,6 +18,10 @@ class LYRASTARTERGAMECLONE_API ULyraWeaponInstance : public ULyraEquipmentInstan
 public:
 	ULyraWeaponInstance(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
+	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "Animation")
+	TSubclassOf<UAnimInstance> PickBestAnimLayer(
+		bool bEquipped, const FGameplayTagContainer& CosmeticTags) const;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
 	FLyraAnimLayerSelectionSet EquippedAnimSet;
 
