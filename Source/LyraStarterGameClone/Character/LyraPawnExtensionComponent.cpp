@@ -4,6 +4,7 @@
 #include "Components/GameFrameworkComponentManager.h"
 #include "../LogChannels.h"
 #include "../LyraGameplayTags.h"
+#include "../AbilitySystem/LyraAbilitySystemComponent.h"
 #include "LyraPawnData.h"
 
 const FName ULyraPawnExtensionComponent::NAME_ActorFeatureName("PawnExtension");
@@ -36,6 +37,37 @@ void ULyraPawnExtensionComponent::SetPawnData(const ULyraPawnData* InPawnData)
 void ULyraPawnExtensionComponent::SetupPlayerInputComponent()
 {
 	CheckDefaultInitialization();
+}
+
+void ULyraPawnExtensionComponent::InitializeAbilitySystem(
+	ULyraAbilitySystemComponent* InAbilitySystemComponent, AActor* InOwnerActor)
+{
+	check(InAbilitySystemComponent && InOwnerActor);
+
+	if (AbilitySystemComponent == InAbilitySystemComponent)
+	{
+		return;
+	}
+	if (AbilitySystemComponent)
+	{
+		UninitializeAbilitySystem();
+	}
+
+	APawn* Pawn = GetPawnChecked<APawn>();
+	AActor* ExistingAvatar = InAbilitySystemComponent->GetAvatarActor();
+	check(!ExistingAvatar);
+
+	AbilitySystemComponent = InAbilitySystemComponent;
+	AbilitySystemComponent->InitAbilityActorInfo(InOwnerActor, Pawn);
+}
+
+void ULyraPawnExtensionComponent::UninitializeAbilitySystem()
+{
+	if (!AbilitySystemComponent)
+	{
+		return;
+	}
+	AbilitySystemComponent = nullptr;
 }
 
 void ULyraPawnExtensionComponent::OnRegister()

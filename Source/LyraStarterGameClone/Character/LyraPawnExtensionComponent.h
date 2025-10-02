@@ -8,6 +8,7 @@
 #include "LyraPawnExtensionComponent.generated.h"
 
 class ULyraPawnData;
+class ULyraAbilitySystemComponent;
 
 /**
  *
@@ -34,6 +35,10 @@ public:
 	void SetPawnData(const ULyraPawnData* InPawnData);
 	void SetupPlayerInputComponent();
 
+	void InitializeAbilitySystem(
+		ULyraAbilitySystemComponent* InAbilitySystemComponent, AActor* InOwnerActor);
+	void UninitializeAbilitySystem();
+
 	virtual void OnRegister() final;
 	virtual void BeginPlay() final;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) final;
@@ -46,4 +51,7 @@ public:
 
 	UPROPERTY(EditInstanceOnly, Category = "Lyra|Pawn")
 	TObjectPtr<const ULyraPawnData> PawnData;
+
+	UPROPERTY()
+	TObjectPtr<ULyraAbilitySystemComponent> AbilitySystemComponent;
 };

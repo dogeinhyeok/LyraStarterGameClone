@@ -4,32 +4,41 @@ using UnrealBuildTool;
 
 public class LyraStarterGameClone : ModuleRules
 {
-	public LyraStarterGameClone(ReadOnlyTargetRules Target) : base(Target)
+	public LyraStarterGameClone(ReadOnlyTargetRules Target)
+		: base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] {
-            "Core",
-            "CoreUObject",
-            "Engine",
-            "InputCore",
-            "EnhancedInput",
-            "GameplayTags",
-            "ModularGameplay",
-            "GameFeatures",
-            "InputCore",
-            "EnhancedInput",
-		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] {
-            "CommonUser",
-            "ShooterCoreRuntime",
-            "ModularGameplayActors",
-		});
+		PublicDependencyModuleNames.AddRange(
+			new string[]
+			{
+				"Core",
+				"CoreUObject",
+				"Engine",
+				"InputCore",
+				"EnhancedInput",
+				// Gameplay Abilities System
+				"GameplayTags",
+				"GameplayTasks",
+				"GameplayAbilities",
+				// Game Features
+				"ModularGameplay",
+				"GameFeatures",
+				// Input
+				"InputCore",
+				"EnhancedInput",
+				// CommonUser
+				"CommonUser",
+			}
+		);
+
+		PrivateDependencyModuleNames.AddRange(
+			new string[] { "ShooterCoreRuntime", "ModularGameplayActors" }
+		);
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
-		
+
 		// Uncomment if you are using online features
 		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
 

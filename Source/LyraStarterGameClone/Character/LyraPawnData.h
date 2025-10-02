@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "LyraPawnData.generated.h"
 
+class ULyraAbilitySet;
 class ULyraCameraMode;
 class ULyraInputConfig;
 
@@ -28,4 +29,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Lyra|InputConfig")
 	TObjectPtr<ULyraInputConfig> InputConfig;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Lyra|Abilities")
+	TArray<TObjectPtr<ULyraAbilitySet>> AbilitySets;
 };

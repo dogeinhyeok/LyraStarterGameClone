@@ -6,8 +6,19 @@
  */
 
 #include "LyraPlayerState.h"
+#include "Abilities/GameplayAbilityTypes.h"
+#include "../AbilitySystem/LyraAbilitySystemComponent.h"
 #include "../GameModes/LyraExperienceManagerComponent.h"
 #include "../GameModes/LyraGameModeBase.h"
+#include "../Character/LyraPawnData.h"
+#include "../AbilitySystem/LyraAbilitySet.h"
+
+ALyraPlayerState::ALyraPlayerState(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	AbilitySystemComponent = ObjectInitializer.CreateDefaultSubobject<ULyraAbilitySystemComponent>(
+		this, TEXT("AbilitySystemComponent"));
+}
 
 /**
  * PostInitializeComponents - 컴포넌트 초기화 후 Experience 델리게이트 등록
@@ -15,6 +26,14 @@
 void ALyraPlayerState::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
+	check(AbilitySystemComponent);
+	{
+		FGameplayAbilityActorInfo* ActorInfo = AbilitySystemComponent->AbilityActorInfo.Get();
+		check(ActorInfo->OwnerActor == this);
+		check(ActorInfo->OwnerActor == ActorInfo->AvatarActor);
+	}
+	AbilitySystemComponent->InitAbilityActorInfo(this, GetPawn());
 
 	const AGameStateBase* GameState = GetWorld()->GetGameState();
 	check(GameState);
@@ -48,6 +67,16 @@ void ALyraPlayerState::OnExperienceLoaded(const ULyraExperienceDefinition* Curre
 void ALyraPlayerState::SetPawnData(const ULyraPawnData* InPawnData)
 {
 	check(InPawnData);
+
 	check(!PawnData);
+
 	PawnData = InPawnData;
+
+	for (ULyraAbilitySet* AbilitySet : PawnData->AbilitySets)
+	{
+		if (!AbilitySet)
+		{
+			AbilitySet->GiveToAbilitySystem(AbilitySystemComponent, nullptr);
+		}
+	}
 }

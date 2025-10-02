@@ -142,6 +142,8 @@ void ULyraHeroComponent::HandleChangeInitState(
 				ULyraPawnExtensionComponent::FindPawnExtensionComponent(Pawn))
 		{
 			PawnData = PawnExtensionComponent->GetPawnData<ULyraPawnData>();
+			PawnExtensionComponent->InitializeAbilitySystem(
+				LyraPlayerState->GetLyraAbilitySystemComponent(), LyraPlayerState);
 		}
 
 		if (bIsLocallyControlled && PawnData)
