@@ -1,8 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LyraEquipmentManagerComponent.h"
+#include "AbilitySystemComponent.h"
 #include "LyraEquipmentDefinition.h"
 #include "LyraEquipmentInstance.h"
+#include "../AbilitySystem/LyraAbilitySystemComponent.h"
+#include "LyraStarterGameClone/AbilitySystem/LyraAbilitySystemComponent.h"
+#include "AbilitySystemGlobals.h"
 
 ULyraEquipmentInstance* FLyraEquipmentList::AddEntry(
 	TSubclassOf<ULyraEquipmentDefinition> EquipmentDefinition)
@@ -26,6 +30,16 @@ ULyraEquipmentInstance* FLyraEquipmentList::AddEntry(
 	NewEntry.Instance = NewObject<ULyraEquipmentInstance>(OwnerComponent->GetOwner(), InstanceType);
 	Result = NewEntry.Instance;
 
+	ULyraAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
+	check(AbilitySystemComponent);
+	{
+		for (TObjectPtr<ULyraAbilitySet> AbilitySet : EquipmentCDO->AbilitySetsToGrant)
+		{
+			AbilitySet->GiveToAbilitySystem(
+				AbilitySystemComponent, &NewEntry.GrantedHandles, Result);
+		}
+	}
+
 	Result->SpawnEquipmentActors(EquipmentCDO->ActorsToSpawn);
 
 	return Result;
@@ -38,10 +52,24 @@ void FLyraEquipmentList::RemoveEntry(ULyraEquipmentInstance* Instance)
 		FLyraAppliedEquipmentEntry& Entry = *EntryIt;
 		if (Entry.Instance == Instance)
 		{
+			ULyraAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponent();
+			check(AbilitySystemComponent);
+			{
+				Entry.GrantedHandles.TakeFromAbilitySystem(AbilitySystemComponent);
+			}
 			Instance->DestroyEquipmentActors();
 			EntryIt.RemoveCurrent();
 		}
 	}
+}
+
+ULyraAbilitySystemComponent* FLyraEquipmentList::GetAbilitySystemComponent() const
+{
+	check(OwnerComponent);
+	AActor* OwningActor = OwnerComponent->GetOwner();
+
+	return Cast<ULyraAbilitySystemComponent>(
+		UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(OwningActor));
 }
 
 ULyraEquipmentManagerComponent::ULyraEquipmentManagerComponent(

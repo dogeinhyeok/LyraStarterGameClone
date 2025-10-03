@@ -25,7 +25,7 @@ public:
 		ETriggerEvent TriggerEvent, UserClass* Object, FuncType Func, bool bLogIfNotFound);
 
 	template <class UserClass, typename PressedFuncType, typename ReleasedFuncType>
-	void BindAbilityAction(const ULyraInputConfig* InputConfig, UserClass* Object,
+	void BindAbilityActions(const ULyraInputConfig* InputConfig, UserClass* Object,
 		PressedFuncType PressedFunc, ReleasedFuncType ReleasedFunc, TArray<uint32>& BindHandles);
 };
 
@@ -44,7 +44,7 @@ void ULyraInputComponent::BindNativeAction(const ULyraInputConfig* InputConfig,
 }
 
 template <class UserClass, typename PressedFuncType, typename ReleasedFuncType>
-void ULyraInputComponent::BindAbilityAction(const ULyraInputConfig* InputConfig, UserClass* Object,
+void ULyraInputComponent::BindAbilityActions(const ULyraInputConfig* InputConfig, UserClass* Object,
 	PressedFuncType PressedFunc, ReleasedFuncType ReleasedFunc, TArray<uint32>& BindHandles)
 {
 	check(InputConfig);

@@ -6,10 +6,33 @@
  */
 
 #include "LyraPlayerController.h"
+#include "../AbilitySystem/LyraAbilitySystemComponent.h"
 #include "../Camera/LyraPlayerCameraManager.h"
+#include "../Player/LyraPlayerState.h"
 
 ALyraPlayerController::ALyraPlayerController(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	PlayerCameraManagerClass = ALyraPlayerCameraManager::StaticClass();
+}
+
+void ALyraPlayerController::PostProcessInput(const float DeltaTime, const bool bGamePaused)
+{
+	if (ULyraAbilitySystemComponent* LyraAbilitySystemComponent = GetLyraAbilitySystemComponent())
+	{
+		LyraAbilitySystemComponent->ProcessAbilityInput(DeltaTime, bGamePaused);
+	}
+
+	Super::PostProcessInput(DeltaTime, bGamePaused);
+}
+
+ALyraPlayerState* ALyraPlayerController::GetLyraPlayerState() const
+{
+	return CastChecked<ALyraPlayerState>(PlayerState, ECastCheckedType::NullAllowed);
+}
+
+ULyraAbilitySystemComponent* ALyraPlayerController::GetLyraAbilitySystemComponent() const
+{
+	const ALyraPlayerState* LyraPlayerState = GetLyraPlayerState();
+	return (LyraPlayerState ? LyraPlayerState->GetLyraAbilitySystemComponent() : nullptr);
 }

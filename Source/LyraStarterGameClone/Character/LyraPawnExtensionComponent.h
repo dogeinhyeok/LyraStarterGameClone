@@ -34,6 +34,10 @@ public:
 	template <class T> const T* GetPawnData() const { return Cast<T>(PawnData); }
 	void SetPawnData(const ULyraPawnData* InPawnData);
 	void SetupPlayerInputComponent();
+	ULyraAbilitySystemComponent* GetLyraAbilitySystemComponent() const
+	{
+		return AbilitySystemComponent;
+	}
 
 	void InitializeAbilitySystem(
 		ULyraAbilitySystemComponent* InAbilitySystemComponent, AActor* InOwnerActor);

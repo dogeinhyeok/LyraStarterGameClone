@@ -6,6 +6,9 @@
 #include "ModularPlayerController.h"
 #include "LyraPlayerController.generated.h"
 
+class ULyraAbilitySystemComponent;
+class ALyraPlayerState;
+
 /**
  * 플레이어 컨트롤러: 기본 APlayerController를 상속받는 클래스 (현재는 빈 클래스)
  */
@@ -16,4 +19,9 @@ class LYRASTARTERGAMECLONE_API ALyraPlayerController : public AModularPlayerCont
 
 public:
 	ALyraPlayerController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	virtual void PostProcessInput(const float DeltaTime, const bool bGamePaused) override;
+
+	ALyraPlayerState* GetLyraPlayerState() const;
+	ULyraAbilitySystemComponent* GetLyraAbilitySystemComponent() const;
 };

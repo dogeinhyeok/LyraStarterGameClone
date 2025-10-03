@@ -7,6 +7,7 @@
 #include "LyraEquipmentDefinition.generated.h"
 
 class ULyraEquipmentInstance;
+class ULyraAbilitySet;
 
 USTRUCT(BlueprintType)
 struct FLyraEquipmentActorToSpawn
@@ -40,4 +41,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Equipment")
 	TArray<FLyraEquipmentActorToSpawn> ActorsToSpawn;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Equipment")
+	TArray<TObjectPtr<ULyraAbilitySet>> AbilitySetsToGrant;
 };

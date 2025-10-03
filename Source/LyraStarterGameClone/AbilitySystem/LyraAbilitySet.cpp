@@ -15,6 +15,18 @@ void FLyraAbilitySet_GrantedHandles::AddAbilitySpecHandle(const FGameplayAbility
 void FLyraAbilitySet_GrantedHandles::TakeFromAbilitySystem(
 	ULyraAbilitySystemComponent* LyraAbilitySystemComponent)
 {
+	if (!LyraAbilitySystemComponent->IsOwnerActorAuthoritative())
+	{
+		return;
+	}
+
+	for (const FGameplayAbilitySpecHandle& Handle : AbilitySpecHandles)
+	{
+		if (Handle.IsValid())
+		{
+			LyraAbilitySystemComponent->ClearAbility(Handle);
+		}
+	}
 }
 
 ULyraAbilitySet::ULyraAbilitySet(const FObjectInitializer& ObjectInitializer)

@@ -6,7 +6,9 @@
  */
 
 #include "LyraCharacter.h"
+#include "AbilitySystemComponent.h"
 #include "LyraPawnExtensionComponent.h"
+#include "../AbilitySystem/LyraAbilitySystemComponent.h"
 #include "../Camera/LyraCameraComponent.h"
 
 /**
@@ -26,6 +28,11 @@ ALyraCharacter::ALyraCharacter()
 		CameraComponent = CreateDefaultSubobject<ULyraCameraComponent>(TEXT("CameraComponent"));
 		CameraComponent->SetRelativeLocation(FVector(-300.0f, 0.0f, 75.0f));
 	}
+}
+
+UAbilitySystemComponent* ALyraCharacter::GetAbilitySystemComponent() const
+{
+	return PawnExtensionComponent->GetLyraAbilitySystemComponent();
 }
 
 /**

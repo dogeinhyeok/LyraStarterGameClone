@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ModularCharacter.h"
+#include "AbilitySystemInterface.h"
 #include "LyraCharacter.generated.h"
 
 class ULyraPawnExtensionComponent;
@@ -13,13 +14,17 @@ class ULyraCameraComponent;
  * Lyra 캐릭터: 기본 ACharacter를 상속받는 메인 플레이어 캐릭터 클래스
  */
 UCLASS()
-class LYRASTARTERGAMECLONE_API ALyraCharacter : public AModularCharacter
+class LYRASTARTERGAMECLONE_API ALyraCharacter :
+	public AModularCharacter,
+	public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
 	ALyraCharacter();
+
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 protected:
 	// Called when the game starts or when spawned

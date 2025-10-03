@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/PawnComponent.h"
+#include "LyraStarterGameClone/AbilitySystem/LyraAbilitySystemComponent.h"
 #include "UObject/ObjectMacros.h"
+#include "../AbilitySystem/LyraAbilitySet.h"
 #include "LyraEquipmentManagerComponent.generated.h"
 
 class ULyraEquipmentDefinition;
@@ -20,6 +22,9 @@ struct FLyraAppliedEquipmentEntry
 
 	UPROPERTY()
 	TObjectPtr<ULyraEquipmentInstance> Instance = nullptr;
+
+	UPROPERTY()
+	FLyraAbilitySet_GrantedHandles GrantedHandles;
 };
 
 USTRUCT()
@@ -34,6 +39,8 @@ struct FLyraEquipmentList
 
 	ULyraEquipmentInstance* AddEntry(TSubclassOf<ULyraEquipmentDefinition> EquipmentDefinition);
 	void RemoveEntry(ULyraEquipmentInstance* ItemInstance);
+
+	ULyraAbilitySystemComponent* GetAbilitySystemComponent() const;
 
 	UPROPERTY()
 	TArray<FLyraAppliedEquipmentEntry> Entries;

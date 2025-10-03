@@ -3,6 +3,7 @@
 #include "LyraHeroComponent.h"
 #include "LyraPawnData.h"
 #include "LyraPawnExtensionComponent.h"
+#include "LyraStarterGameClone/AbilitySystem/LyraAbilitySystemComponent.h"
 #include "PlayerMappableInputConfig.h"
 #include "InputMappingContext.h"
 #include "../Input/LyraMappableConfigPair.h"
@@ -252,6 +253,13 @@ void ULyraHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputCompo
 				ULyraInputComponent* LyraInputComponent =
 					CastChecked<ULyraInputComponent>(PlayerInputComponent);
 				{
+					{
+						TArray<uint32> BindHandles;
+						LyraInputComponent->BindAbilityActions(InputConfig, this,
+							&ThisClass::Input_AbilityInputTagPressed,
+							&ThisClass::Input_AbilityInputTagReleased, BindHandles);
+					}
+
 					LyraInputComponent->BindNativeAction(InputConfig, GameplayTags.InputTag_Move,
 						ETriggerEvent::Triggered, this, &ThisClass::Input_Move, false);
 					LyraInputComponent->BindNativeAction(InputConfig,
@@ -308,5 +316,37 @@ void ULyraHeroComponent::Input_LookMouse(const FInputActionValue& InputActionVal
 	{
 		double AimInversionValue = -Value.Y;
 		Pawn->AddControllerPitchInput(AimInversionValue);
+	}
+}
+
+void ULyraHeroComponent::Input_AbilityInputTagPressed(FGameplayTag InputTag)
+{
+	if (const APawn* Pawn = GetPawn<APawn>())
+	{
+		if (const ULyraPawnExtensionComponent* PawnExtensionComponent =
+				ULyraPawnExtensionComponent::FindPawnExtensionComponent(Pawn))
+		{
+			if (ULyraAbilitySystemComponent* LyraAbilitySystemComponent =
+					PawnExtensionComponent->GetLyraAbilitySystemComponent())
+			{
+				LyraAbilitySystemComponent->AbilityInputTagPressed(InputTag);
+			}
+		}
+	}
+}
+
+void ULyraHeroComponent::Input_AbilityInputTagReleased(FGameplayTag InputTag)
+{
+	if (const APawn* Pawn = GetPawn<APawn>())
+	{
+		if (const ULyraPawnExtensionComponent* PawnExtensionComponent =
+				ULyraPawnExtensionComponent::FindPawnExtensionComponent(Pawn))
+		{
+			if (ULyraAbilitySystemComponent* LyraAbilitySystemComponent =
+					PawnExtensionComponent->GetLyraAbilitySystemComponent())
+			{
+				LyraAbilitySystemComponent->AbilityInputTagReleased(InputTag);
+			}
+		}
 	}
 }

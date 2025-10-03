@@ -6,6 +6,14 @@
 #include "Abilities/GameplayAbility.h"
 #include "LyraGameplayAbility.generated.h"
 
+UENUM(BlueprintType)
+enum class ELyraAbilityActivationPolicy : uint8
+{
+	OnInputTriggered,
+	WhileInputActive,
+	OnSpawn,
+};
+
 /**
  *
  */
@@ -16,4 +24,7 @@ class LYRASTARTERGAMECLONE_API ULyraGameplayAbility : public UGameplayAbility
 
 public:
 	ULyraGameplayAbility(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Lyra|AbilityActivation")
+	ELyraAbilityActivationPolicy ActivationPolicy;
 };
