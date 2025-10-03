@@ -11,7 +11,7 @@ ULyraAbilitySystemComponent::ULyraAbilitySystemComponent(
 
 void ULyraAbilitySystemComponent::AbilityInputTagPressed(const FGameplayTag& InputTag)
 {
-	if (!InputTag.IsValid())
+	if (InputTag.IsValid())
 	{
 		for (const FGameplayAbilitySpec& AbilitySpec : ActivatableAbilities.Items)
 		{
