@@ -68,7 +68,7 @@ void ULyraGameplayAbility_RangedWeapon::PerformLocalTargeting(TArray<FHitResult>
 		InputData.StartTrace = TargetTransform.GetTranslation();
 		InputData.EndAim = InputData.StartTrace + InputData.AimDir * WeaponData->MaxDamageRange;
 
-#if true
+#if false
 		{
 			static float DebugThickness = 2.0f;
 			DrawDebugLine(GetWorld(), InputData.StartTrace,
@@ -108,7 +108,7 @@ FTransform ULyraGameplayAbility_RangedWeapon::GetTargetingTransform(
 	const FVector WeaponLoc = GetWeaponTargetingSourceLocation();
 	FVector FinalCamLoc = FocalLoc + (((WeaponLoc - FocalLoc) | AimDir) * AimDir);
 
-#if true
+#if false
 	{
 		DrawDebugPoint(GetWorld(), WeaponLoc, 10.0f, FColor::Red, false, 60.0f);
 		DrawDebugPoint(GetWorld(), CamLoc, 10.0f, FColor::Yellow, false, 60.0f);

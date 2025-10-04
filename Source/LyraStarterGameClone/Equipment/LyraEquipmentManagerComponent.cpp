@@ -103,3 +103,21 @@ void ULyraEquipmentManagerComponent::UnequipItem(ULyraEquipmentInstance* ItemIns
 		EquipmentList.RemoveEntry(ItemInstance);
 	}
 }
+
+TArray<ULyraEquipmentInstance*> ULyraEquipmentManagerComponent::GetEquipmentInstancesOfType(
+	TSubclassOf<ULyraEquipmentInstance> InstanceType) const
+{
+	TArray<ULyraEquipmentInstance*> Results;
+
+	for (const FLyraAppliedEquipmentEntry& Entry : EquipmentList.Entries)
+	{
+		if (ULyraEquipmentInstance* Instance = Entry.Instance)
+		{
+			if (Instance->IsA(InstanceType))
+			{
+				Results.Add(Instance);
+			}
+		}
+	}
+	return Results;
+}

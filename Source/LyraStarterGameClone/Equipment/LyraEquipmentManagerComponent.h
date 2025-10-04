@@ -64,6 +64,10 @@ public:
 	ULyraEquipmentInstance* EquipItem(TSubclassOf<ULyraEquipmentDefinition> EquipmentDefinition);
 	void UnequipItem(ULyraEquipmentInstance* ItemInstance);
 
+	UFUNCTION(BlueprintCallable)
+	TArray<ULyraEquipmentInstance*> GetEquipmentInstancesOfType(
+		TSubclassOf<ULyraEquipmentInstance> InstanceType) const;
+
 	UPROPERTY()
 	FLyraEquipmentList EquipmentList;
 };

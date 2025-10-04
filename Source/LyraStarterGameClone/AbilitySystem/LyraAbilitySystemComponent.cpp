@@ -2,11 +2,34 @@
 
 #include "LyraAbilitySystemComponent.h"
 #include "Abilities/LyraGameplayAbility.h"
+#include "GameFramework/Pawn.h"
+#include "../Animation/LyraAnimInstance.h"
 
 ULyraAbilitySystemComponent::ULyraAbilitySystemComponent(
 	const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
+}
+
+void ULyraAbilitySystemComponent::InitAbilityActorInfo(AActor* InOwnerActor, AActor* InAvatarActor)
+{
+	FGameplayAbilityActorInfo* ActorInfo = AbilityActorInfo.Get();
+	check(ActorInfo);
+	check(InOwnerActor);
+
+	const bool bHasNewPawnAvatar =
+		Cast<APawn>(InAvatarActor) && (InAvatarActor != ActorInfo->AvatarActor);
+
+	Super::InitAbilityActorInfo(InOwnerActor, InAvatarActor);
+
+	if (bHasNewPawnAvatar)
+	{
+		if (ULyraAnimInstance* LyraAninInstance =
+				Cast<ULyraAnimInstance>(ActorInfo->GetAnimInstance()))
+		{
+			LyraAninInstance->InitializeWithAbilitySystem(this);
+		}
+	}
 }
 
 void ULyraAbilitySystemComponent::AbilityInputTagPressed(const FGameplayTag& InputTag)
