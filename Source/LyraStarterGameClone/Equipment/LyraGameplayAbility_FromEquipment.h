@@ -6,6 +6,8 @@
 #include "../AbilitySystem/Abilities/LyraGameplayAbility.h"
 #include "LyraGameplayAbility_FromEquipment.generated.h"
 
+class ULyraEquipmentInstance;
+
 /**
  *
  */
@@ -13,4 +15,7 @@ UCLASS(Blueprintable)
 class LYRASTARTERGAMECLONE_API ULyraGameplayAbility_FromEquipment : public ULyraGameplayAbility
 {
 	GENERATED_BODY()
+
+public:
+	ULyraEquipmentInstance* GetAssociatedEquipment() const;
 };
